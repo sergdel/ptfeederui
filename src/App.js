@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import logo from "./logo.svg";
 import "./App.css";
-import Radium from "radium";
 import {
 	Button,
 	Icon,
@@ -56,7 +55,7 @@ class App extends Component {
 	};
 
 	menuSelect = item => {
-		window.alert("clicked" + item);
+		window.alert("clicked " + item);
 	};
 
 	render() {
