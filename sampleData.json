@@ -14,10 +14,7 @@
     "DcaSellValue": "0.6",
     "DcaTrailingBuy": "0",
     "DcaTrailingProfit": "0.25",
-    "ExcludedPairs": "BNB", // coins you don't want PTF to create settings for. These will have no config generated and will appear in watchmode
-    "SomOnlyPairs": "MTL,DGD,TRIG,MTL,SWIFT,ARDR,SAFEX,BTA,DAR,DRACO,SLING,CRYPT,DOGE,UNO,SC,INCNT,NAUT,SJCX,NOTE,TKN,TIME", // these are coins where BASE_COIN_sell_only_mode will be true
-    "DcaExcluded": "", // coins you don't want DCA enabled for no matter what
-    "MaxBuySpread": "1",
+    "ExcludedPairs": "BNB",
     "MaxTrailingBuy": "0.5",
     "MaxTrailingProfit": "0.5",
     "MinBuyBalance": "50",
@@ -34,8 +31,7 @@
     "TopCurrenciesToCheck": "20"
   },
   "MarketConditions": {
-    "Configs": [
-      {
+    "Configs": [{
         "FolderName": "01-superbear",
         "MaxTopCoinAverageChange": "-2",
         "DcaEnabled": "-100",
@@ -57,8 +53,8 @@
         "MaxPairsOffset": "-20",
         "MinBuyBalanceOffset": "25",
         "MaxBuySpreadOffset": "-20",
-        "DcaMaxBuyTimes" : "-20",
-        "DcaEnabled": "-100",
+        "DcaMaxBuyTimes": "-20",
+        "DcaEnabled": "-100"
       },
       {
         "FolderName": "03-boring",
@@ -84,8 +80,7 @@
     ]
   },
   "Price": {
-    "Configs": [
-      {
+    "Configs": [{
         "MaxPrice": "0.0005",
         "CostOffset": "-30"
       },
@@ -96,28 +91,26 @@
     ]
   },
   "Volume": {
-    "Configs": [
-      {
+    "Configs": [{
         "MaxVolume": "1000",
         "CostOffset": "-20",
-        "BuyValueOffset": "-10",
+        "BuyValueOffset": "-10"
       },
       {
         "MaxVolume": "2500",
         "CostOffset": "-10",
-        "BuyValueOffset": "-5",
+        "BuyValueOffset": "-5"
       },
       {
         "MaxVolume": "4000",
         "MinBuyBalanceOffset": "-20",
-        "DcaMaxBuyTimes" : "-50",
-        "BuyValueOffset": "-3",
+        "DcaMaxBuyTimes": "-50",
+        "BuyValueOffset": "-3"
       }
     ]
   },
   "PriceTrendChange": {
-    "Configs": [
-      {
+    "Configs": [{
         "MaxPriceTrendPercentageChange": "-3",
         "DcaEnabled": "-200",
         "BuyValueOffset": "-50",
@@ -148,8 +141,7 @@
     ]
   },
   "LongerTermPriceChange": {
-    "Configs": [
-      {
+    "Configs": [{
         "MaxPriceTrendPercentageChange": "-5",
         "DcaEnabled": "-200",
         "TrailingProfitOffset": "-10",
@@ -169,12 +161,10 @@
     ]
   },
   "AverageCandleSize": {
-    "Configs": [
-      {
-        "MaxPercentageSizeOfPrice": "0.03",
-        "SellOnlyMode": "true",
-        "SellValueOffset": "-30"
-      }
-    ]
+    "Configs": [{
+      "MaxPercentageSizeOfPrice": "0.03",
+      "SellOnlyMode": "true",
+      "SellValueOffset": "-30"
+    }]
   }
 }
