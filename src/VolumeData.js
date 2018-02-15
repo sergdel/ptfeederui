@@ -104,5 +104,26 @@ module.exports = [
 		key: "MinBuyPriceOffset",
 		value: "50",
 		text: "MinBuyPriceOffset"
+	},
+
+	{
+		key: "TrailingBuyOffset",
+		value: "-70",
+		text: "TrailingBuyOffset"
+	},
+	{
+		key: "TrailingProfitOffset",
+		value: "5",
+		text: "TrailingProfitOffset"
+	},
+	{
+		key: "BuyStrategy",
+		value: "50",
+		text: "BuyStrategy"
+	},
+	{
+		key: "MinBuyPriceOffset",
+		value: "50",
+		text: "MinBuyPriceOffset"
 	}
 ];
