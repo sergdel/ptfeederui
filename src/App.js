@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Volume from "./Volume";
 import logo from "./logo.svg";
 import "./App.css";
 import {
@@ -11,16 +12,6 @@ import {
 	Sidebar,
 	Segment
 } from "semantic-ui-react";
-
-const VolumeForm = (
-	<Form>
-		<Form.Group grouped>
-			<Form.Input label="MaxVolume" name="volume" value={0} />
-			<Form.Input label="CostOffset" name="volume" value={0} />
-			<Form.Input label="BuyValueOffset" name="volume" value={0} />
-		</Form.Group>
-	</Form>
-);
 
 const SizeForm = (
 	<Form>
@@ -62,7 +53,7 @@ class App extends Component {
 	render() {
 		const menuItems = {
 			General: <div>General settings</div>,
-			Volume: <div>Volume Settings</div>,
+			Volume: <Volume />,
 			"Price Trend": <div>Price Trend</div>,
 			"Market Condition": <div>Market Condition</div>
 		};
@@ -101,21 +92,6 @@ class App extends Component {
 						))}
 					</Sidebar.Pusher>
 				</Sidebar.Pushable>
-
-				<Accordion vertical>
-					<Menu.Item>
-						<Accordion.Title
-							active={activeIndex === 1}
-							content="Volume"
-							index={1}
-							onClick={this.handleClick}
-						/>
-						<Accordion.Content
-							active={activeIndex === 1}
-							content={VolumeForm}
-						/>
-					</Menu.Item>
-				</Accordion>
 			</div>
 		);
 	}
