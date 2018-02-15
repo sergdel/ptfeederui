@@ -6,33 +6,11 @@ import {
 	Button,
 	Icon,
 	Grid,
-	Accordion,
 	Form,
 	Menu,
 	Sidebar,
 	Segment
 } from "semantic-ui-react";
-
-const SizeForm = (
-	<Form>
-		<Form.Group grouped>
-			<Form.Radio label="Small" name="size" type="radio" value="small" />
-			<Form.Radio
-				label="Medium"
-				name="size"
-				type="radio"
-				value="medium"
-			/>
-			<Form.Radio label="Large" name="size" type="radio" value="large" />
-			<Form.Radio
-				label="X-Large"
-				name="size"
-				type="radio"
-				value="x-large"
-			/>
-		</Form.Group>
-	</Form>
-);
 
 class App extends Component {
 	state = { activeIndex: 0, selectedMenuItem: "" };
