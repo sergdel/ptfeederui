@@ -13,52 +13,89 @@ import {
 	Dropdown
 } from "semantic-ui-react";
 
-const VolumeForm = (
-	<Form>
-		<Form.Group grouped>
-			<Form.Input label="MaxVolume" name="volume" value={0} />
-			<Form.Input label="CostOffset" name="volume" value={0} />
-			<Form.Input label="BuyValueOffset" name="volume" value={0} />
-		</Form.Group>
-	</Form>
-);
-
-const countryOptions = [
-	{ key: "af", value: "af", flag: "af", text: "Afghanistan" }
-];
-
-const DropdownExampleSearchSelection = () => (
-	<Dropdown
-		placeholder="Select Country"
-		fluid
-		search
-		selection
-		options={VolumeData}
-	/>
-);
-
 class VolumeComponent extends Component {
-	state = { activeIndex: 0, selectedMenuItem: "" };
+	state = {
+		config: [],
+		value: [],
+		searchQuery: null,
+		multiple: true,
+		search: true
+	};
+
+	handleChange = (e, { value }) => this.setState({ value });
+	handleSearchChange = (e, { searchQuery }) => this.setState({ searchQuery });
+
+	componentDidCatch(error, info) {
+		this.setState({ hasError: true });
+		console.error(error, info);
+	}
 
 	render() {
-		const { activeIndex } = this.state;
+		const {
+			selectedOption,
+			config,
+			value,
+			searchQuery,
+			multiple,
+			search
+		} = this.state;
+
+		let options = VolumeData;
+
+		if (this.state.config.length > 0) {
+			//reduce available options by what has been added
+			options = _.filter(VolumeData, option => {
+				if (config.indexOf(option.key) == -1) return option;
+			});
+			options = _.without(options, undefined);
+		}
+
+		const VolumeDropDown = () => (
+			<Dropdown
+				fluid
+				selection
+				multiple={multiple}
+				search={search}
+				value={value}
+				options={options}
+				placeholder="Volume Config"
+				onChange={this.handleChange}
+				onSearchChange={this.handleSearchChange}
+			/>
+		);
+
+		const onAddVolumeConfiguration = e => {
+			this.setState({
+				config: config.concat(value),
+				value: []
+			});
+		};
 
 		return (
 			<div>
 				<h2>Volume</h2>
-
-				<Grid columns={3} divided padded>
+				<Grid columns={2} divided>
 					<Grid.Row>
 						<Grid.Column>
 							<Form>
 								<Form.Group>
-									<DropdownExampleSearchSelection />
-									<Button padded>+</Button>
+									<VolumeDropDown />
+									<Button
+										onClick={onAddVolumeConfiguration}
+										icon="plus"
+									/>
 								</Form.Group>
 							</Form>
 						</Grid.Column>
 					</Grid.Row>
 				</Grid>
+				your configurations {value.map(config => <div>{}</div>)}
+				<div>
+					<pre>{JSON.stringify(value, null, 2)}</pre>
+				</div>
+				<div>
+					<pre>{JSON.stringify(config, null, 2)}</pre>
+				</div>
 			</div>
 		);
 	}

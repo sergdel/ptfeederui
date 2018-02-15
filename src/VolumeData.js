@@ -2,128 +2,113 @@ module.exports = [
 	{ key: "DcaEnabled", value: "DcaEnabled", text: "DcaEnabled" },
 	{
 		key: "DcaMaxBuySpreadOffset",
-		value: "50",
+		value: "DcaMaxBuySpreadOffset",
 		text: "DcaMaxBuySpreadOffset"
 	},
 	{
 		key: "DcaMaxBuyTimesOffset",
-		value: "50",
+		value: "DcaMaxBuyTimesOffset",
 		text: "DcaMaxBuyTimesOffset"
 	},
 	{
 		key: "DcaMaxCostOffset",
-		value: "50",
+		value: "DcaMaxCostOffset",
 		text: "DcaMaxCostOffset"
 	},
 	{
 		key: "DcaMinBuyBalanceOffset",
-		value: "50",
+		value: "DcaMinBuyBalanceOffset",
 		text: "DcaMinBuyBalanceOffset"
 	},
 	{
 		key: "DcaSellValueOffset",
-		value: "50",
+		value: "DcaSellValueOffset",
 		text: "DcaSellValueOffset"
 	},
 	{
 		key: "DcaTrailingBuyOffset",
-		value: "50",
+		value: "DcaTrailingBuyOffset",
 		text: "DcaTrailingBuyOffset"
 	},
 	{
 		key: "DcaTrailingProfitOffset",
-		value: "50",
+		value: "DcaTrailingProfitOffset",
 		text: "DcaTrailingProfitOffset"
 	},
 	{
 		key: "DcaSellTriggerOffset",
-		value: "50",
+		value: "DcaSellTriggerOffset",
 		text: "DcaSellTriggerOffset"
 	},
 	{
 		key: "BuyValueOffset",
-		value: "50",
+		value: "BuyValueOffset",
 		text: "BuyValueOffset"
 	},
 	{
 		key: "BuyValueLimitOffset",
-		value: "50",
+		value: "DcaSellTriggerOffset",
 		text: "BuyValueLimitOffset"
 	},
 	{
 		key: "CostOffset",
-		value: "50",
+		value: "CostOffset",
 		text: "CostOffset"
 	},
 	{
 		key: "MaxBuySpreadOffset",
-		value: "50",
+		value: "MaxBuySpreadOffset",
 		text: "MaxBuySpreadOffset"
 	},
 	{
 		key: "MaxPairsOffset",
-		value: "50",
+		value: "MaxPairsOffset",
 		text: "MaxPairsOffset"
 	},
 	{
 		key: "MinBuyBalanceOffset",
-		value: "50",
+		value: "MinBuyBalanceOffset",
 		text: "MinBuyBalanceOffset"
 	},
 	{
 		key: "MinProfitOffset",
-		value: "50",
+		value: "MinProfitOffset",
 		text: "MinProfitOffset"
 	},
 	{
 		key: "SellOnlyMode",
-		value: "50",
+		value: "SellOnlyMode",
 		text: "SellOnlyMode"
 	},
 	{
 		key: "SellValueOffset",
-		value: "50",
+		value: "SellValueOffset",
 		text: "SellValueOffset"
 	},
 	{
-		key: "TrailingBuyOffset",
-		value: "50",
-		text: "TrailingBuyOffset"
-	},
-	{
 		key: "TrailingProfitOffset",
-		value: "50",
+		value: "TrailingProfitOffset",
 		text: "TrailingProfitOffset"
 	},
 	{
 		key: "MinBuyVolumeOffset",
-		value: "50",
+		value: "MinBuyVolumeOffset",
 		text: "MinBuyVolumeOffset"
 	},
 	{
 		key: "MinBuyPriceOffset",
-		value: "50",
+		value: "MinBuyPriceOffset",
 		text: "MinBuyPriceOffset"
 	},
 
 	{
 		key: "TrailingBuyOffset",
-		value: "-70",
+		value: "TrailingBuyOffset",
 		text: "TrailingBuyOffset"
 	},
 	{
-		key: "TrailingProfitOffset",
-		value: "5",
-		text: "TrailingProfitOffset"
-	},
-	{
 		key: "BuyStrategy",
-		value: "50",
+		value: "BuyStrategy",
 		text: "BuyStrategy"
-	},
-	{
-		key: "MinBuyPriceOffset",
-		value: "50",
-		text: "MinBuyPriceOffset"
 	}
 ];
