@@ -44,7 +44,7 @@ const SizeForm = (
 );
 
 class App extends Component {
-	state = { activeIndex: 0 };
+	state = { activeIndex: 0, selectedMenuItem: "" };
 
 	handleClick = (e, titleProps) => {
 		const { index } = titleProps;
@@ -55,18 +55,19 @@ class App extends Component {
 	};
 
 	menuSelect = item => {
-		window.alert("clicked " + item);
+		this.setState({ selectedMenuItem: item });
+		console.log("setting selectedMenuItem to ", item);
 	};
 
 	render() {
-		const { activeIndex } = this.state;
+		const menuItems = {
+			General: <div>General settings</div>,
+			Volume: <div>Volume Settings</div>,
+			"Price Trend": <div>Price Trend</div>,
+			"Market Condition": <div>Market Condition</div>
+		};
 
-		const menuItems = [
-			"General",
-			"Volume",
-			"Price Trend",
-			"Market Condition"
-		];
+		const { selectedMenuItem, activeIndex } = this.state;
 
 		return (
 			<div className="App" style={{ height: "800px" }}>
@@ -76,27 +77,28 @@ class App extends Component {
 						animation="push"
 						visible
 						vertical
+						width="thin"
 						inverted
 					>
-						<Menu.Item name="logo">
-							<Icon name="logo" />
-							Logo
-						</Menu.Item>
+						<Menu.Item name="logo">Logo</Menu.Item>
 
-						{menuItems.map(item => (
+						{Object.keys(menuItems).map(item => (
 							<Menu.Item
 								name="General"
+								key={item}
 								onClick={() => this.menuSelect(item)}
 							>
-								<Icon name={item} />
 								{item}
 							</Menu.Item>
 						))}
 					</Sidebar>
+
 					<Sidebar.Pusher>
-						<Segment basic>
-							{React.Children.toArray(this.props.children)}
-						</Segment>
+						{Object.keys(menuItems).map(item => (
+							<Segment hidden={selectedMenuItem !== item}>
+								{menuItems[item]}
+							</Segment>
+						))}
 					</Sidebar.Pusher>
 				</Sidebar.Pushable>
 
