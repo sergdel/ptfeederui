@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Form } from "semantic-ui-react";
+import { Form, List } from "semantic-ui-react";
 
 class VolumeConfigComponent extends Component {
 	state = {
@@ -9,13 +9,14 @@ class VolumeConfigComponent extends Component {
 
 	render() {
 		return (
-			<Form.Field>
+			<Form.Field inline={false}>
 				<label>
 					{this.props.name}
 					<Form.Input
 						type="number"
 						size="large"
 						placeholder={this.props.name}
+						control="input"
 					/>
 				</label>
 			</Form.Field>

@@ -78,7 +78,7 @@ class VolumeComponent extends Component {
 				<Grid columns={1} divided centered>
 					<Grid.Row centered>
 						<Grid.Column>
-							<Form>
+							<Form unstackable>
 								<Form.Group centered>
 									<VolumeDropDown />
 									<Button
@@ -86,7 +86,7 @@ class VolumeComponent extends Component {
 										icon="plus"
 									/>
 								</Form.Group>
-								<Form.Group unstackable widths={2}>
+								<Form.Group unstackable grouped>
 									{config.map(config => (
 										<VolumeConfigComponent name={config} />
 									))}
