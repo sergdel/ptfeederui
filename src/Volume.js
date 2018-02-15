@@ -44,22 +44,20 @@ class VolumeComponent extends Component {
 
 		return (
 			<div>
-				<DropdownExampleSearchSelection />
+				<h2>Volume</h2>
 
-				<Accordion vertical>
-					<Menu.Item>
-						<Accordion.Title
-							active={activeIndex === 1}
-							content="Volume"
-							index={1}
-							onClick={this.handleClick}
-						/>
-						<Accordion.Content
-							active={activeIndex === 1}
-							content={VolumeForm}
-						/>
-					</Menu.Item>
-				</Accordion>
+				<Grid columns={3} divided padded>
+					<Grid.Row>
+						<Grid.Column>
+							<Form>
+								<Form.Group>
+									<DropdownExampleSearchSelection />
+									<Button padded>+</Button>
+								</Form.Group>
+							</Form>
+						</Grid.Column>
+					</Grid.Row>
+				</Grid>
 			</div>
 		);
 	}
