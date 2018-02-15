@@ -13,15 +13,7 @@ import {
 } from "semantic-ui-react";
 
 class App extends Component {
-	state = { activeIndex: 0, selectedMenuItem: "" };
-
-	handleClick = (e, titleProps) => {
-		const { index } = titleProps;
-		const { activeIndex } = this.state;
-		const newIndex = activeIndex === index ? -1 : index;
-
-		this.setState({ activeIndex: newIndex });
-	};
+	state = { selectedMenuItem: "Volume" };
 
 	menuSelect = item => {
 		this.setState({ selectedMenuItem: item });
