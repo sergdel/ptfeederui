@@ -75,38 +75,25 @@ class VolumeComponent extends Component {
 		return (
 			<div>
 				<h2>Volume</h2>
-				<Grid columns={2} divided>
-					<Grid.Row>
+				<Grid columns={1} divided centered>
+					<Grid.Row centered>
 						<Grid.Column>
 							<Form>
-								<Form.Group>
+								<Form.Group centered>
 									<VolumeDropDown />
 									<Button
 										onClick={onAddVolumeConfiguration}
 										icon="plus"
 									/>
 								</Form.Group>
-							</Form>
-						</Grid.Column>
-						<Grid.Column>
-							<pre>{JSON.stringify(value, null, 2)}</pre>
-						</Grid.Column>
-					</Grid.Row>
-
-					<Grid.Row>
-						<Grid.Column>
-							<Form>
 								<Form.Group unstackable widths={2}>
 									{config.map(config => (
 										<VolumeConfigComponent name={config} />
 									))}
 								</Form.Group>
 							</Form>
-						</Grid.Column>
-						<Grid.Column>
-							<div>
-								<pre>{JSON.stringify(config, null, 2)}</pre>
-							</div>
+							<pre>{JSON.stringify(value, null, 2)}</pre>
+							<pre>{JSON.stringify(config, null, 2)}</pre>
 						</Grid.Column>
 					</Grid.Row>
 				</Grid>

@@ -9,11 +9,12 @@ import {
 	Form,
 	Menu,
 	Sidebar,
-	Segment
+	Segment,
+	Container
 } from "semantic-ui-react";
 
 class App extends Component {
-	state = { selectedMenuItem: "Volume" };
+	state = { selectedMenuItem: "Volume", activeItem: "" };
 
 	menuSelect = item => {
 		this.setState({ selectedMenuItem: item });
@@ -31,30 +32,24 @@ class App extends Component {
 		const { selectedMenuItem, activeIndex } = this.state;
 
 		return (
-			<div className="App" style={{ height: "800px" }}>
-				<Sidebar.Pushable>
-					<Sidebar
-						as={Menu}
-						animation="push"
-						visible
-						vertical
-						width="thin"
-						inverted
-					>
-						<Menu.Item name="logo">Logo</Menu.Item>
+			<Container className="App" style={{ height: "600px" }}>
+				<Grid>
+					<Grid.Column width={4}>
+						<Menu fluid vertical tabular>
+							<Menu.Item name="logo">Logo</Menu.Item>
+							{Object.keys(menuItems).map(item => (
+								<Menu.Item
+									name={item}
+									key={item}
+									onClick={() => this.menuSelect(item)}
+								>
+									{item}
+								</Menu.Item>
+							))}
+						</Menu>
+					</Grid.Column>
 
-						{Object.keys(menuItems).map(item => (
-							<Menu.Item
-								name="General"
-								key={item}
-								onClick={() => this.menuSelect(item)}
-							>
-								{item}
-							</Menu.Item>
-						))}
-					</Sidebar>
-
-					<Sidebar.Pusher>
+					<Grid.Column stretched width={12}>
 						{Object.keys(menuItems).map(item => (
 							<Segment
 								hidden={selectedMenuItem !== item}
@@ -63,9 +58,9 @@ class App extends Component {
 								{menuItems[item]}
 							</Segment>
 						))}
-					</Sidebar.Pusher>
-				</Sidebar.Pushable>
-			</div>
+					</Grid.Column>
+				</Grid>
+			</Container>
 		);
 	}
 }
