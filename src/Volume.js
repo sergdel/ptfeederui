@@ -92,8 +92,14 @@ class VolumeComponent extends Component {
 									))}
 								</Form.Group>
 							</Form>
-							<pre>{JSON.stringify(value, null, 2)}</pre>
-							<pre>{JSON.stringify(config, null, 2)}</pre>
+							<pre>
+								{value.length > 0 &&
+									JSON.stringify(value, null, 2)}
+							</pre>
+							<pre>
+								{config.length > 0 &&
+									JSON.stringify(config, null, 2)}
+							</pre>
 						</Grid.Column>
 					</Grid.Row>
 				</Grid>
