@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import VolumeData from "./VolumeData.js";
 import {
 	Button,
 	Icon,
@@ -7,7 +8,8 @@ import {
 	Form,
 	Menu,
 	Sidebar,
-	Segment
+	Segment,
+	Dropdown
 } from "semantic-ui-react";
 
 const VolumeForm = (
@@ -20,6 +22,20 @@ const VolumeForm = (
 	</Form>
 );
 
+const countryOptions = [
+	{ key: "af", value: "af", flag: "af", text: "Afghanistan" }
+];
+
+const DropdownExampleSearchSelection = () => (
+	<Dropdown
+		placeholder="Select Country"
+		fluid
+		search
+		selection
+		options={VolumeData}
+	/>
+);
+
 class VolumeComponent extends Component {
 	state = { activeIndex: 0, selectedMenuItem: "" };
 
@@ -28,6 +44,8 @@ class VolumeComponent extends Component {
 
 		return (
 			<div>
+				<DropdownExampleSearchSelection />
+
 				<Accordion vertical>
 					<Menu.Item>
 						<Accordion.Title
