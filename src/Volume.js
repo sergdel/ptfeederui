@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import _ from "lodash";
 import VolumeData from "./VolumeData.js";
+import VolumeConfigComponent from "./VolumeConfigComponent";
 import {
 	Button,
 	Icon,
@@ -87,15 +88,28 @@ class VolumeComponent extends Component {
 								</Form.Group>
 							</Form>
 						</Grid.Column>
+						<Grid.Column>
+							<pre>{JSON.stringify(value, null, 2)}</pre>
+						</Grid.Column>
+					</Grid.Row>
+
+					<Grid.Row>
+						<Grid.Column>
+							<Form>
+								<Form.Group unstackable widths={2}>
+									{config.map(config => (
+										<VolumeConfigComponent name={config} />
+									))}
+								</Form.Group>
+							</Form>
+						</Grid.Column>
+						<Grid.Column>
+							<div>
+								<pre>{JSON.stringify(config, null, 2)}</pre>
+							</div>
+						</Grid.Column>
 					</Grid.Row>
 				</Grid>
-				your configurations {value.map(config => <div>{}</div>)}
-				<div>
-					<pre>{JSON.stringify(value, null, 2)}</pre>
-				</div>
-				<div>
-					<pre>{JSON.stringify(config, null, 2)}</pre>
-				</div>
 			</div>
 		);
 	}

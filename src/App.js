@@ -56,7 +56,10 @@ class App extends Component {
 
 					<Sidebar.Pusher>
 						{Object.keys(menuItems).map(item => (
-							<Segment hidden={selectedMenuItem !== item}>
+							<Segment
+								hidden={selectedMenuItem !== item}
+								centered
+							>
 								{menuItems[item]}
 							</Segment>
 						))}
