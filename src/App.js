@@ -25,8 +25,12 @@ class App extends Component {
 		const menuItems = {
 			General: <div>General settings</div>,
 			Volume: <Volume />,
-			"Price Trend": <div>Price Trend</div>,
-			"Market Condition": <div>Market Condition</div>
+			"Price": <div>Price Trend</div>,
+			"Market Conditions": <div>Market Condition</div>,
+			"Exchange": <div>Exchange</div>,
+			"Price Percentage": <div>Price Percentage</div>,
+			"AverageCandleSize": <div>AverageCandleSize</div>,
+			"Volatility": <div>Volatility</div>
 		};
 
 		const { selectedMenuItem, activeIndex } = this.state;
