@@ -29,7 +29,6 @@ class App extends Component {
 			"Market Conditions": <div>Market Condition</div>,
 			"Exchange": <div>Exchange</div>,
 			"Price Percentage": <div>Price Percentage</div>,
-			"AverageCandleSize": <div>AverageCandleSize</div>,
 			"Volatility": <div>Volatility</div>
 		};
 
