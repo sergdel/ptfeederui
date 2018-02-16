@@ -1,4 +1,5 @@
-import React, { Component } from "react";
+import React, { Component, PureComponent } from "react";
+import { Map } from "immutable"
 import _ from "lodash";
 import VolumeData from "./VolumeData.js";
 import VolumeConfigComponent from "./VolumeConfigComponent";
@@ -14,7 +15,7 @@ import {
 	Dropdown
 } from "semantic-ui-react";
 
-class VolumeComponent extends Component {
+class VolumeComponent extends PureComponent {
 	state = {
 		config: [],
 		value: [],

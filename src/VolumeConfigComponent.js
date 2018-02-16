@@ -1,8 +1,8 @@
-import React, { Component } from "react";
+import React, { Component, PureComponent } from "react";
 import PropTypes from "prop-types";
 import { Form, List } from "semantic-ui-react";
 
-class VolumeConfigComponent extends Component {
+class VolumeConfigComponent extends PureComponent {
 	state = {
 		name: this.props.name
 	};
