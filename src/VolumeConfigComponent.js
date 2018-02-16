@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { textColour, background } from "./colours";
+import { textColour, background, foreground } from "./colours";
 import { Form, List } from "semantic-ui-react";
 
 class VolumeConfigComponent extends Component {
@@ -19,11 +19,12 @@ class VolumeConfigComponent extends Component {
 
 	render() {
 		return (
-			<Form.Field inline={false}>
+			<Form.Field inline={false} style={{paddingTop: "20px"}}>
 				<label
 					style={{
 						backgroundColor: background,
-						color: textColour
+						color: textColour,
+						textAlign: "left"
 					}}
 				>
 					{this.props.name}
@@ -34,7 +35,7 @@ class VolumeConfigComponent extends Component {
 						placeholder={this.props.name}
 						control="input"
 						style={{
-							backgroundColor: background,
+							backgroundColor: foreground,
 							color: textColour
 						}}
 						onKeyPress={this.onKeyPress}

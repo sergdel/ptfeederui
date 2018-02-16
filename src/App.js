@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import Volume from "./Volume";
+import Content from "./DynamicComponent";
 import logo from "./logo.png";
-import { foreground, background, textColour } from './colours';
+import config from "./config.json";
+import { lightBlue, background, textColour, primary } from "./colours";
 import "./App.css";
 import {
 	Button,
@@ -13,60 +15,70 @@ import {
 	Container
 } from "semantic-ui-react";
 
-class App extends Component {
-	state = { selectedMenuItem: "Volume", activeItem: "" };
+const menuItems = config["menu items"];
 
-	menuSelect = item => {
-		this.setState({ selectedMenuItem: item });
-		console.log("setting selectedMenuItem to ", item);
+class App extends Component {
+	state = {
+		selectedMenuItem: "Volume",
+		activeItem: "",
+		menuItems: config["menu items"]
 	};
 
-	render() {
-		const menuItems = {
-			General: <div>General settings</div>,
-			Volume: <Volume />,
-			"Price": <div>Price Trend</div>,
-			"Market Conditions": <div>Market Condition</div>,
-			"Exchange": <div>Exchange</div>,
-			"Price Percentage": <div>Price Percentage</div>,
-			"Volatility": <div>Volatility</div>
-		};
+	menuSelect = item => {
+		this.setState({ selectedMenuItem: item.component });
+		console.log("setting selectedMenuItem to ", item.component);
+	};
 
-		const { selectedMenuItem, activeIndex } = this.state;
+	saveConfiguration() {}
+
+	render() {
+		const { selectedMenuItem, activeIndex, menuItems } = this.state;
 
 		return (
-			<Container className="App" style={{ height: "600px" }} style={{"backgroundColor": foreground}}>
-				<Grid style={{color: textColour}}>
+			<Container
+				className="App"
+				style={{ height: "600px" }}
+				style={{ backgroundColor: lightBlue }}
+			>
+				<Grid style={{ color: textColour }}>
 					<Grid.Column width={4}>
 						<Menu fluid vertical tabular>
-							
-							<Menu.Item name="logo" align="center"><img src={logo} width="50px" height="50px"/></Menu.Item>
-							
-							{Object.keys(menuItems).map(item => (
-								<Menu.Item
-									name={item}
-									key={item}
-									onClick={() => this.menuSelect(item)}
-									style={{color: textColour}}	
-								>
-									{item}
+							<Menu.Item name="logo" align="center">
+								<img src={logo} width="50px" height="50px" />
+							</Menu.Item>
 
+							{menuItems.map(item => (
+								<Menu.Item
+									name={item.title}
+									key={item.title}
+									onClick={() => this.menuSelect(item)}
+									style={{ color: textColour }}
+								>
+									<pre>{item.title}</pre>
 								</Menu.Item>
 							))}
 						</Menu>
 					</Grid.Column>
 
 					<Grid.Column width={10}>
-						{Object.keys(menuItems).map(item => (
-							<Segment style={{"backgroundColor": background, "paddingRight":"30px"}}
-								hidden={selectedMenuItem !== item}
-								key={item}
-							>
-								{menuItems[item]}
-							</Segment>
-						))}
+						<Segment
+							style={{
+								backgroundColor: background,
+								paddingRight: "30px"
+							}}
+						>
+							<Content tag={selectedMenuItem} />
+						</Segment>
 					</Grid.Column>
 				</Grid>
+
+				<Button
+					onClick={this.saveConfiguration}
+					style={{ backgroundColour: primary, marginBottom: "30px" }}
+					disabled
+				>
+					Save All
+				</Button>
 			</Container>
 		);
 	}
