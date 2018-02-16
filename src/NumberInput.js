@@ -11,10 +11,18 @@ class NumberInput extends Component {
 	}
 
 	onKeyPress = event => {
+		const { percentage } = this.props;
 		const keyCode = event.keyCode || event.which;
 		const keyValue = String.fromCharCode(keyCode);
+		const currentInputValue = event.target.value
+
+		const validPercentage = num => {return /^((0|[1-9]\d?)(\.\d{1,2})?|100(\.00?)?)$/.test(num)}
 
 		if (!/^[0-9]{1,45}$/.test(keyValue)) {
+			event.preventDefault();
+		}
+
+		if(percentage && currentInputValue && !validPercentage(currentInputValue+keyValue)){
 			event.preventDefault();
 		}
 	};
@@ -49,7 +57,7 @@ class NumberInput extends Component {
 						}}
 						onKeyPress={this.onKeyPress}
 					/>
-				</label>
+				</label> {percentage ? "%" : ''}
 			</Form.Field>
 		);
 	}

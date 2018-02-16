@@ -3,7 +3,7 @@ import { background } from "./colours";
 import { Map } from "immutable"
 import _ from "lodash";
 import VolumeData from "./VolumeData.js";
-import VolumeConfigComponent from "./VolumeConfigComponent";
+import NumberInput from "./NumberInput";
 import {
 	Button,
 	Icon,
@@ -94,7 +94,7 @@ class VolumeComponent extends PureComponent {
 								</Form.Group>
 								<Form.Group unstackable grouped>
 									{config.map(config => (
-										<VolumeConfigComponent name={config} key={config}/>
+										<NumberInput name={config} key={config} percentage={true}/>
 									))}
 								</Form.Group>
 							</Form>
