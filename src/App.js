@@ -37,8 +37,7 @@ class App extends Component {
 		return (
 			<Container
 				className="App"
-				style={{ height: "600px" }}
-				style={{ backgroundColor: lightBlue }}
+				style={{ height: "600px", backgroundColor: lightBlue, marginTop:"40px" }}
 			>
 				<Grid style={{ color: textColour }}>
 					<Grid.Column width={4}>
