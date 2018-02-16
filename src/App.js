@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Volume from "./Volume";
 import logo from "./logo.png";
+import { foreground, background, textColour } from './colours';
 import "./App.css";
 import {
 	Button,
@@ -8,7 +9,6 @@ import {
 	Grid,
 	Form,
 	Menu,
-	Sidebar,
 	Segment,
 	Container
 } from "semantic-ui-react";
@@ -35,26 +35,30 @@ class App extends Component {
 		const { selectedMenuItem, activeIndex } = this.state;
 
 		return (
-			<Container className="App" style={{ height: "600px" }}>
-				<Grid>
+			<Container className="App" style={{ height: "600px" }} style={{"background-color": foreground}}>
+				<Grid style={{color: textColour}}>
 					<Grid.Column width={4}>
 						<Menu fluid vertical tabular>
+							
 							<Menu.Item name="logo" align="center"><img src={logo} width="50px" height="50px"/></Menu.Item>
+							
 							{Object.keys(menuItems).map(item => (
 								<Menu.Item
 									name={item}
 									key={item}
 									onClick={() => this.menuSelect(item)}
+									style={{color: textColour}}	
 								>
 									{item}
+
 								</Menu.Item>
 							))}
 						</Menu>
 					</Grid.Column>
 
-					<Grid.Column stretched width={12}>
+					<Grid.Column width={10}>
 						{Object.keys(menuItems).map(item => (
-							<Segment
+							<Segment style={{"background-color": background, "padding-right":"30px"}}
 								hidden={selectedMenuItem !== item}
 								centered
 							>

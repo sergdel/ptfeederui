@@ -1,4 +1,5 @@
 import React, { Component, PureComponent } from "react";
+import { background } from "./colours";
 import { Map } from "immutable"
 import _ from "lodash";
 import VolumeData from "./VolumeData.js";
@@ -63,6 +64,10 @@ class VolumeComponent extends PureComponent {
 				placeholder="Volume Config"
 				onChange={this.handleChange}
 				onSearchChange={this.handleSearchChange}
+				style={{
+					"background-color" : background,
+					"color": "white"
+				}}
 			/>
 		);
 
@@ -93,14 +98,14 @@ class VolumeComponent extends PureComponent {
 									))}
 								</Form.Group>
 							</Form>
-							<pre>
+							{/*<pre>
 								{value.length > 0 &&
 									JSON.stringify(value, null, 2)}
 							</pre>
 							<pre>
 								{config.length > 0 &&
 									JSON.stringify(config, null, 2)}
-							</pre>
+							</pre>*/}
 						</Grid.Column>
 					</Grid.Row>
 				</Grid>
