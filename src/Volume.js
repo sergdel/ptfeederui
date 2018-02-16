@@ -94,7 +94,7 @@ class VolumeComponent extends PureComponent {
 								</Form.Group>
 								<Form.Group unstackable grouped>
 									{config.map(config => (
-										<VolumeConfigComponent name={config} />
+										<VolumeConfigComponent name={config} key={config}/>
 									))}
 								</Form.Group>
 							</Form>
