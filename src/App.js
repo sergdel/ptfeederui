@@ -39,7 +39,7 @@ class App extends Component {
 				<Grid>
 					<Grid.Column width={4}>
 						<Menu fluid vertical tabular>
-							<Menu.Item name="logo"><img src={logo} width="50px"/></Menu.Item>
+							<Menu.Item name="logo" align="center"><img src={logo} width="50px" height="50px"/></Menu.Item>
 							{Object.keys(menuItems).map(item => (
 								<Menu.Item
 									name={item}
