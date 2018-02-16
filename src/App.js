@@ -60,7 +60,6 @@ class App extends Component {
 						{Object.keys(menuItems).map(item => (
 							<Segment style={{"backgroundColor": background, "paddingRight":"30px"}}
 								hidden={selectedMenuItem !== item}
-								centered
 								key={item}
 							>
 								{menuItems[item]}

@@ -81,11 +81,11 @@ class VolumeComponent extends PureComponent {
 		return (
 			<div>
 				<h2>Volume</h2>
-				<Grid columns={1} divided centered>
-					<Grid.Row centered>
+				<Grid columns={1}>
+					<Grid.Row>
 						<Grid.Column>
 							<Form unstackable>
-								<Form.Group centered>
+								<Form.Group>
 									<VolumeDropDown />
 									<Button
 										onClick={onAddVolumeConfiguration}
