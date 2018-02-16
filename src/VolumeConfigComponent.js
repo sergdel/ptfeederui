@@ -1,5 +1,6 @@
 import React, { Component, PureComponent } from "react";
 import PropTypes from "prop-types";
+import { textColour, background } from "./colours";
 import { Form, List } from "semantic-ui-react";
 
 class VolumeConfigComponent extends PureComponent {

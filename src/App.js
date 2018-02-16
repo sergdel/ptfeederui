@@ -35,7 +35,7 @@ class App extends Component {
 		const { selectedMenuItem, activeIndex } = this.state;
 
 		return (
-			<Container className="App" style={{ height: "600px" }} style={{"background-color": foreground}}>
+			<Container className="App" style={{ height: "600px" }} style={{"backgroundColor": foreground}}>
 				<Grid style={{color: textColour}}>
 					<Grid.Column width={4}>
 						<Menu fluid vertical tabular>
@@ -58,9 +58,10 @@ class App extends Component {
 
 					<Grid.Column width={10}>
 						{Object.keys(menuItems).map(item => (
-							<Segment style={{"background-color": background, "padding-right":"30px"}}
+							<Segment style={{"backgroundColor": background, "paddingRight":"30px"}}
 								hidden={selectedMenuItem !== item}
 								centered
+								key={item}
 							>
 								{menuItems[item]}
 							</Segment>

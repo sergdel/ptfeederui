@@ -65,7 +65,7 @@ class VolumeComponent extends PureComponent {
 				onChange={this.handleChange}
 				onSearchChange={this.handleSearchChange}
 				style={{
-					"background-color" : background,
+					"backgroundColor" : background,
 					"color": "white"
 				}}
 			/>
