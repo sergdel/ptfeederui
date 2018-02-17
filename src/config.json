@@ -64,10 +64,134 @@
 				{
 					"title": "DcaEnabled",
 					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "DcaMaxBuySpread",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "DcaMaxBuyTimes",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "DcaMaxCost",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "DcaMinBuyBalance",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "DcaSellStrategy",
+					"type": "Number",
 					"acceptBoolean": true
+				},
+				{
+					"title": "DcaSellValue",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "DcaTrailingBuy",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "DcaTrailingProfit",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "ExcludedPairs",
+					"type": "Dropdown",
+					"options": [
+						{ "key": "GBP", "text": "GBP", "value": "GBP" },
+						{ "key": "EUR", "text": "EUR", "value": "EUR" },
+						{ "key": "JPY", "text": "JPY", "value": "JPY" },
+						{ "key": "USD", "text": "USD", "value": "USD" }
+					]
+				},
+				{
+					"title": "MaxTrailingProfit",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "MinBuyBalance",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "MinBuyPrice",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "MinPrice",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "MinProfit",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "MinBuyVolume",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "MinTrailingProfit",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "MinTrailingBuy",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "MinutesForLongerTermTrend",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "MinutesToMeasureTrend",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "NumberOfPairs",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "SellStrategy",
+					"type": "Dropdown",
+					"options": [
+						{ "key": "GBP", "text": "GBP", "value": "GBP" },
+						{ "key": "EUR", "text": "EUR", "value": "EUR" },
+						{ "key": "JPY", "text": "JPY", "value": "JPY" },
+						{ "key": "USD", "text": "USD", "value": "USD" }
+					]
+				},
+				{
+					"title": "SellValue",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "TopCurrenciesToCheck",
+					"type": "Number",
+					"acceptBoolean": false
 				}
-			],
-			"description": "General Settings"
+			]
 		},
 		{
 			"title": "Price",
