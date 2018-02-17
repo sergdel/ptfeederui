@@ -5,6 +5,7 @@ import logo from "./logo.png";
 import config from "./config.json";
 import { lightBlue, background, textColour, primary } from "./colours";
 import "./App.css";
+import Dropdown from "./Dropdown";
 import {
 	Button,
 	Icon,
@@ -15,29 +16,34 @@ import {
 	Container
 } from "semantic-ui-react";
 
-const menuItems = config["menu items"];
-
 class App extends Component {
 	state = {
-		selectedMenuItem: "Volume",
+		selectedMenuItem: "General",
+		availableConfig: null,
 		activeItem: "",
-		menuItems: config["menu items"]
+		menuItems: config["config"]
 	};
 
 	menuSelect = item => {
-		this.setState({ selectedMenuItem: item.component });
+		this.setState({ 
+			selectedMenuItem: item.component,
+			availableConfig: item.options
+		});
 		console.log("setting selectedMenuItem to ", item.component);
 	};
 
 	saveConfiguration() {}
 
 	render() {
-		const { selectedMenuItem, activeIndex, menuItems } = this.state;
+		const { selectedMenuItem, activeIndex, menuItems, availableConfig } = this.state;
 
 		return (
 			<Container
 				className="App"
-				style={{ height: "600px", backgroundColor: lightBlue, marginTop:"40px" }}
+				style={{
+					height: "600px",
+					marginTop: "40px"
+				}}
 			>
 				<Grid style={{ color: textColour }}>
 					<Grid.Column width={4}>
@@ -46,7 +52,7 @@ class App extends Component {
 								<img src={logo} width="50px" height="50px" />
 							</Menu.Item>
 
-							{menuItems.map(item => (
+							{menuItems && menuItems.map(item => (
 								<Menu.Item
 									name={item.title}
 									key={item.title}
@@ -61,12 +67,17 @@ class App extends Component {
 
 					<Grid.Column width={10}>
 						<Segment
+							align="left"
 							style={{
 								backgroundColor: background,
 								paddingRight: "30px"
 							}}
 						>
-							<Content tag={selectedMenuItem} />
+							{/*<Content tag={selectedMenuItem} />*/}
+
+							{availableConfig && availableConfig.map((item)=>
+								<Content tag={item.type} data={item}/>
+							)}
 						</Segment>
 					</Grid.Column>
 				</Grid>

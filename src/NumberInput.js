@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { textColour, background, foreground } from "./colours";
-import { Form, List } from "semantic-ui-react";
+import { Form, List, Input } from "semantic-ui-react";
 
 class NumberInput extends Component {
 
@@ -39,22 +39,17 @@ class NumberInput extends Component {
 			<Form.Field inline={false} style={{paddingTop: "20px"}}>
 				<label
 					style={{
-						backgroundColor: background,
 						color: textColour,
 						textAlign: "left"
 					}}
 				>
-					{this.props.name}
-					<input
+					{this.props.title}<br />
+					<Input
 						type="text"
-						size="large"
+						size="small"
 						pattern="[0-9]*"
-						placeholder={this.props.name}
+						placeholder={this.props.title}
 						control="input"
-						style={{
-							backgroundColor: foreground,
-							color: textColour
-						}}
 						onKeyPress={this.onKeyPress}
 					/>
 				</label> {percentage ? "%" : ''}

@@ -1,18 +1,40 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import Volume from "./Volume";
+import Dropdown from "./Dropdown";
+import NumberInput from "./NumberInput";
 
 class DynamicComponent extends Component {
 	state = {};
 
 	components = {
-		"Volume" : <Volume/>
-	}
+		Volume: <Volume />,
+		Dropdown: <Dropdown />,
+		Number: <NumberInput />
+	};
 
 	render() {
-		switch(this.props.tag) {
-			case "Volume": return <Volume/>
-			break;
-			default : return <div></div>
+		const { data: {title, options, allowAdditions, type} } = this.props;
+
+		switch (type) {
+			case "Volume":
+				return <Volume />;
+				break;
+			case "Dropdown":
+				return (
+					<Dropdown
+						title={title}
+						options={options}
+						allowAdditions={allowAdditions}
+					/>
+				);
+				break;
+			case "Number":
+				return (
+					<NumberInput title={title}/>
+					)
+				break;
+			default:
+				return <div />;
 		}
 	}
 }
