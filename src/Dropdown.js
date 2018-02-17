@@ -1,35 +1,42 @@
 import React, { PureComponent, Component } from "react";
 import PropTypes from "prop-types";
-import { Dropdown } from 'semantic-ui-react'
+import { textColour, background, foreground } from "./colours";
+import { Dropdown, Form } from "semantic-ui-react";
 
 export default class DropDown extends PureComponent {
 	PropTypes = {
 		options: PropTypes.array.required,
-		allowAdditions: PropTypes.bool,
+		allowAdditions: PropTypes.bool
 	};
 
-	handleAddition(){}
-	handleChange(){}
+	handleAddition() {}
+	handleChange() {}
 
 	render() {
-		const { options, title, allowAdditions} = this.props;
+		const { options, title, allowAdditions } = this.props;
 		return (
-			<div>
-				
-				<label style={{textAlign: "left", display: "block", fontSize: "12px"}}>{title}
+			<Form.Field inline={false} style={{ paddingTop: "20px" }}>
+				<label
+					style={{
+						color: textColour,
+						textAlign: "left"
+					}}
+				>
+					{title}
 
-				<Dropdown 
-				placeholder={title} 
-				size="large"
-				fluid search selection options={options}
-				allowAdditions={allowAdditions}
-				onAddItem={this.handleAddition}
-        		onChange={this.handleChange}
-				/>
-				
+					<Dropdown
+						placeholder={title}
+						size="large"
+						fluid
+						search
+						selection
+						options={options}
+						allowAdditions={allowAdditions}
+						onAddItem={this.handleAddition}
+						onChange={this.handleChange}
+					/>
 				</label>
-
-			</div>
+			</Form.Field>
 		);
 	}
 }
