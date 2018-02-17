@@ -96,23 +96,12 @@ class App extends Component {
 					</Grid.Column>
 
 					<Grid.Column width={12}>
-						<Segment
-							align="left"
-							style={{
-								backgroundColor: background,
-								paddingRight: "30px"
-							}}
-						>
-							<Form.Group>
-								{availableConfig &&
-									availableConfig.map(item => (
-										<Componentd
-											tag={item.type}
-											data={item}
-										/>
-									))}
-							</Form.Group>
-						</Segment>
+						<Form.Group align="left" inline>
+							{availableConfig &&
+								availableConfig.map(item => (
+									<Componentd tag={item.type} data={item} />
+								))}
+						</Form.Group>
 					</Grid.Column>
 				</Grid>
 
