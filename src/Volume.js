@@ -1,6 +1,5 @@
 import React, { Component, PureComponent } from "react";
 import { background } from "./colours";
-import { Map } from "immutable"
 import _ from "lodash";
 import VolumeData from "./VolumeData.js";
 import NumberInput from "./NumberInput";
