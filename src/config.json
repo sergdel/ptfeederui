@@ -9,10 +9,10 @@
 					"title": "BaseCurrency",
 					"type": "Dropdown",
 					"options": [
-						{"key": "GBP", "text":"GBP", "value":"GBP"}
-						,{"key": "EUR", "text":"EUR", "value":"EUR"}
-						,{"key": "JPY", "text":"JPY", "value":"JPY"}
-						,{"key": "USD", "text":"USD", "value":"USD"}
+						{ "key": "GBP", "text": "GBP", "value": "GBP" },
+						{ "key": "EUR", "text": "EUR", "value": "EUR" },
+						{ "key": "JPY", "text": "JPY", "value": "JPY" },
+						{ "key": "USD", "text": "USD", "value": "USD" }
 					],
 					"allowAdditions": true,
 					"required": false
@@ -21,42 +21,49 @@
 					"title": "BuyStrategy - select or create",
 					"type": "Dropdown",
 					"options": [
-						{"key": "strategy1", "text":"strategy1", "value":"strategy1"}
-						,{"key": "strategy2", "text":"strategy2", "value":"strategy2"}
-						,{"key": "strategy3", "text":"strategy3", "value":"strategy3"}
-						,{"key": "strategy4", "text":"strategy4", "value":"strategy4"}
+						{
+							"key": "strategy1",
+							"text": "strategy1",
+							"value": "strategy1"
+						},
+						{
+							"key": "strategy2",
+							"text": "strategy2",
+							"value": "strategy2"
+						},
+						{
+							"key": "strategy3",
+							"text": "strategy3",
+							"value": "strategy3"
+						},
+						{
+							"key": "strategy4",
+							"text": "strategy4",
+							"value": "strategy4"
+						}
 					],
 					"allowAdditions": true,
 					"required": false
-				}
-				, {"title": "BuyValue", "type": "Number"} 
-				, {"title": "Cost", "type": "Number"} 
-				, {"title": "DcaEnabled", "type": "Number"} 
-				, {"title": "DcaMaxBuySpread", "type": "Number"} 
-				, {"title": "DcaMaxBuyTimes", "type": "Number"} 
-				, {"title": "DcaMaxCost", "type": "Number"} 
-				, {"title": "DcaMinBuyBalance", "type": "Number"} 
-				, {"title": "DcaSellStrategy", "type": "Number"} 
+				},
+				{ "title": "BuyValue", "type": "Number" },
+				{ "title": "Cost", "type": "Number" },
+				{ "title": "DcaEnabled", "type": "Number" },
+				{ "title": "DcaMaxBuySpread", "type": "Number" },
+				{ "title": "DcaMaxBuyTimes", "type": "Number" },
+				{ "title": "DcaMaxCost", "type": "Number" },
+				{ "title": "DcaMinBuyBalance", "type": "Number" },
+				{ "title": "DcaSellStrategy", "type": "Number" }
 			]
 		},
-
-
-
-
-
-
-
-
-
-
 
 		{
 			"title": "Volume",
 			"description": "some description",
 			"component": "Volume",
 			"options": [
-				{"title": "DcaEnabled",
-					"type" : "Number",
+				{
+					"title": "DcaEnabled",
+					"type": "Number",
 					"acceptBoolean": true
 				}
 			],
