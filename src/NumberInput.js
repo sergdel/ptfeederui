@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { textColour, background, foreground } from "./colours";
-import { Form, List, Input } from "semantic-ui-react";
+import { Form, List, Input, Dropdown } from "semantic-ui-react";
 
 class NumberInput extends Component {
 
 
 	PropTypes = {
-		percentage: PropTypes.bool
+		percentage: PropTypes.bool,
+		acceptBoolean: PropTypes.bool
 	}
 
 	onKeyPress = event => {
@@ -27,13 +28,32 @@ class NumberInput extends Component {
 		}
 	};
 
+
+
 	state = {
 		name: this.props.name
 	};
 
 	render() {
 
-		const { percentage } = this.props;
+		const { percentage, acceptBoolean, title } = this.props;
+
+
+		if(acceptBoolean){
+			return <Dropdown 
+				placeholder={title} 
+				size="large"
+				fluid search selection 
+				options={[
+					{key: "true", value: "true", text: "true"}
+					, {key: "false", value: "false", text: "false"}
+					]}
+				allowAdditions={true}
+				onAddItem={this.handleAddition}
+				onKeyPress={this.onKeyPress}
+        		onChange={this.handleChange}
+				/>
+		}
 
 		return (
 			<Form.Field inline={false} style={{paddingTop: "20px"}}>

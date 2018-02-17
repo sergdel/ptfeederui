@@ -52,8 +52,14 @@
 
 		{
 			"title": "Volume",
+			"description": "some description",
 			"component": "Volume",
-			"sub-menus": [],
+			"options": [
+				{"title": "DcaEnabled",
+					"type" : "Number",
+					"acceptBoolean": true
+				}
+			],
 			"description": "General Settings"
 		},
 		{

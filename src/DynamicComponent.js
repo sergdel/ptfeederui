@@ -13,7 +13,7 @@ class DynamicComponent extends Component {
 	};
 
 	render() {
-		const { data: {title, options, allowAdditions, type} } = this.props;
+		const { data: {title, options, allowAdditions, acceptBoolean, type} } = this.props;
 
 		switch (type) {
 			case "Volume":
@@ -30,7 +30,7 @@ class DynamicComponent extends Component {
 				break;
 			case "Number":
 				return (
-					<NumberInput title={title}/>
+					<NumberInput title={title} acceptBoolean={acceptBoolean}/>
 					)
 				break;
 			default:
