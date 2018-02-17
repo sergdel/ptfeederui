@@ -1,23 +1,21 @@
 import React, { Component } from "react";
-import Volume from "./Volume";
-import Content from "./DynamicComponent";
+import Componentd from "./DynamicComponent";
 import logo from "./logo.png";
 import config from "./config.json";
-import { lightBlue, background, textColour, primary } from "./colours";
+import { background, textColour, primary } from "./colours";
 import "./App.css";
 import Ajv from "ajv";
 import schema from "./json.schema.json";
-import Dropdown from "./Dropdown";
 import {
 	Button,
-	Icon,
 	Grid,
 	Form,
 	Menu,
 	Segment,
 	Container,
 	Modal,
-	Header
+	Header,
+	Responsive
 } from "semantic-ui-react";
 
 const ajv = new Ajv({ allErrors: true });
@@ -33,7 +31,7 @@ class App extends Component {
 		availableConfig: null,
 		activeItem: "",
 		menuItems: config["config"],
-		invalidConfig: Boolean(valid)===false,
+		invalidConfig: Boolean(valid) === false
 	};
 
 	menuSelect = item => {
@@ -47,20 +45,14 @@ class App extends Component {
 	saveConfiguration() {}
 
 	render() {
-		const {
-			selectedMenuItem,
-			activeIndex,
-			menuItems,
-			availableConfig
-		} = this.state;
+		const { menuItems, availableConfig } = this.state;
 
 		return (
-			<Container
+			<Responsive
+				as={Container}
 				className="App"
-				style={{
-					height: "600px",
-					marginTop: "40px"
-				}}
+				minWidth={400}
+				height="100"
 			>
 				<Modal open={this.state.invalidConfig}>
 					<Modal.Header>ERROR</Modal.Header>
@@ -68,16 +60,25 @@ class App extends Component {
 						<Modal.Description>
 							<Header>Malformed Configuration</Header>
 							<p>JSON does not match the supplied schema</p>
-							<p><pre>{JSON.stringify(validate.errors, null, 2)}</pre></p>
+							<p>
+								<pre>
+									{JSON.stringify(validate.errors, null, 2)}
+								</pre>
+							</p>
 						</Modal.Description>
 					</Modal.Content>
 				</Modal>
 
 				<Grid style={{ color: textColour }}>
 					<Grid.Column width={4}>
-						<Menu fluid vertical tabular>
+						<Menu vertical style={{ backgroundColor: background }}>
 							<Menu.Item name="logo" align="center">
-								<img src={logo} width="50px" height="50px" />
+								<img
+									src={logo}
+									width="50px"
+									height="50px"
+									alt="icon"
+								/>
 							</Menu.Item>
 
 							{menuItems &&
@@ -94,7 +95,7 @@ class App extends Component {
 						</Menu>
 					</Grid.Column>
 
-					<Grid.Column width={10}>
+					<Grid.Column width={12}>
 						<Segment
 							align="left"
 							style={{
@@ -102,12 +103,15 @@ class App extends Component {
 								paddingRight: "30px"
 							}}
 						>
-							{/*<Content tag={selectedMenuItem} />*/}
-
-							{availableConfig &&
-								availableConfig.map(item => (
-									<Content tag={item.type} data={item} />
-								))}
+							<Form.Group>
+								{availableConfig &&
+									availableConfig.map(item => (
+										<Componentd
+											tag={item.type}
+											data={item}
+										/>
+									))}
+							</Form.Group>
 						</Segment>
 					</Grid.Column>
 				</Grid>
@@ -119,7 +123,7 @@ class App extends Component {
 				>
 					Save All
 				</Button>
-			</Container>
+			</Responsive>
 		);
 	}
 }

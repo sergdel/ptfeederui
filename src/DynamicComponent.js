@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Volume from "./Volume";
 import Dropdown from "./Dropdown";
 import NumberInput from "./NumberInput";
 
@@ -7,7 +6,6 @@ class DynamicComponent extends Component {
 	state = {};
 
 	components = {
-		Volume: <Volume />,
 		Dropdown: <Dropdown />,
 		Number: <NumberInput />
 	};
@@ -25,9 +23,6 @@ class DynamicComponent extends Component {
 		} = this.props;
 
 		switch (type) {
-			case "Volume":
-				return <Volume />;
-				break;
 			case "Dropdown":
 				return (
 					<Dropdown
@@ -36,7 +31,6 @@ class DynamicComponent extends Component {
 						allowAdditions={allowAdditions}
 					/>
 				);
-				break;
 			case "Number":
 				return (
 					<NumberInput
@@ -45,7 +39,6 @@ class DynamicComponent extends Component {
 						percentage={percentage}
 					/>
 				);
-				break;
 			default:
 				return <div />;
 		}

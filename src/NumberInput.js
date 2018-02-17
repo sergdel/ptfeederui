@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { textColour, background, foreground } from "./colours";
-import { Form, List, Input, Dropdown } from "semantic-ui-react";
+import { Form, Input, Dropdown, Label } from "semantic-ui-react";
 
 class NumberInput extends Component {
 	PropTypes = {
@@ -41,55 +40,40 @@ class NumberInput extends Component {
 
 		if (acceptBoolean) {
 			return (
-				<Form.Field inline={false} style={{ paddingTop: "20px" }}>
-					<label
-						style={{
-							color: textColour,
-							textAlign: "left"
-						}}
-					>
-						{this.props.title}
-						<br />
-						<Dropdown
-							placeholder={title}
-							size="large"
-							fluid
-							search
-							selection
-							options={[
-								{ key: "true", value: "true", text: "true" },
-								{ key: "false", value: "false", text: "false" }
-							]}
-							allowAdditions={true}
-							onAddItem={this.handleAddition}
-							onKeyPress={this.onKeyPress}
-							onChange={this.handleChange}
-						/>
-					</label>{" "}
+				<Form.Field style={{ paddingTop: "20px" }}>
+					<Label>{title}</Label>
+					<Dropdown
+						placeholder={title}
+						size="large"
+						label={title}
+						fluid
+						search
+						selection
+						options={[
+							{ key: "true", value: "true", text: "true" },
+							{ key: "false", value: "false", text: "false" }
+						]}
+						allowAdditions={true}
+						onAddItem={this.handleAddition}
+						onKeyPress={this.onKeyPress}
+						onChange={this.handleChange}
+					/>
 					{percentage ? "%" : ""}
 				</Form.Field>
 			);
 		}
 
 		return (
-			<Form.Field inline={false} style={{ paddingTop: "20px" }}>
-				<label
-					style={{
-						color: textColour,
-						textAlign: "left"
-					}}
-				>
-					{this.props.title}
-					<br />
-					<Input
-						type="text"
-						size="small"
-						pattern="[0-9]*"
-						placeholder={this.props.title}
-						control="input"
-						onKeyPress={this.onKeyPress}
-					/>
-				</label>{" "}
+			<Form.Field style={{ paddingTop: "20px" }}>
+				<Input
+					type="text"
+					size="small"
+					label={title}
+					pattern="[0-9]*"
+					placeholder={this.props.title}
+					control="input"
+					onKeyPress={this.onKeyPress}
+				/>
 				{percentage ? "%" : ""}
 			</Form.Field>
 		);
