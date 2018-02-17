@@ -64,8 +64,14 @@
 		},
 		{
 			"title": "Price",
-			"component": "Volume",
-			"sub-menus": [],
+			"description": "some description",
+			"options": [
+				{
+					"title": "MaxPriceTrendPercentageChange",
+					"type": "Number",
+					"percentage": true
+				}
+			],
 			"description": "General Settings"
 		},
 		{
