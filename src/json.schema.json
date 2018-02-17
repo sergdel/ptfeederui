@@ -1,0 +1,129 @@
+{
+  "$id": "/",
+  "type": "object",
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "properties": {
+    "config": {
+      "$id": "/properties/config",
+      "type": "array",
+      "items": {
+        "$id": "/properties/config/items",
+        "type": "object",
+        "properties": {
+          "title": {
+            "$id": "/properties/config/items/properties/title",
+            "type": "string",
+            "title": "The Title Schema",
+            "default": "",
+            "examples": [
+              "General"
+            ]
+          },
+          "description": {
+            "$id": "/properties/config/items/properties/description",
+            "type": "string",
+            "title": "The Description Schema",
+            "default": "",
+            "examples": [
+              "General Settings"
+            ]
+          },
+          "component": {
+            "$id": "/properties/config/items/properties/component",
+            "type": "string",
+            "title": "The Component Schema",
+            "default": "",
+            "examples": [
+              "Dropdown"
+            ]
+          },
+          "options": {
+            "$id": "/properties/config/items/properties/options",
+            "type": "array",
+            "items": {
+              "$id": "/properties/config/items/properties/options/items",
+              "type": "object",
+              "properties": {
+                "title": {
+                  "$id": "/properties/config/items/properties/options/items/properties/title",
+                  "type": "string",
+                  "title": "The Title Schema",
+                  "default": "",
+                  "examples": [
+                    "BaseCurrency"
+                  ]
+                },
+                "type": {
+                  "$id": "/properties/config/items/properties/options/items/properties/type",
+                  "type": "string",
+                  "title": "The Type Schema",
+                  "default": "",
+                  "examples": [
+                    "Dropdown"
+                  ]
+                },
+                "options": {
+                  "$id": "/properties/config/items/properties/options/items/properties/options",
+                  "type": "array",
+                  "items": {
+                    "$id": "/properties/config/items/properties/options/items/properties/options/items",
+                    "type": "object",
+                    "properties": {
+                      "key": {
+                        "$id": "/properties/config/items/properties/options/items/properties/options/items/properties/key",
+                        "type": "string",
+                        "title": "The Key Schema",
+                        "default": "",
+                        "examples": [
+                          "GBP"
+                        ]
+                      },
+                      "text": {
+                        "$id": "/properties/config/items/properties/options/items/properties/options/items/properties/text",
+                        "type": "string",
+                        "title": "The Text Schema",
+                        "default": "",
+                        "examples": [
+                          "GBP"
+                        ]
+                      },
+                      "value": {
+                        "$id": "/properties/config/items/properties/options/items/properties/options/items/properties/value",
+                        "type": "string",
+                        "title": "The Value Schema",
+                        "default": "",
+                        "examples": [
+                          "GBP"
+                        ]
+                      }
+                    }
+                  }
+                },
+                "allowAdditions": {
+                  "$id": "/properties/config/items/properties/options/items/properties/allowAdditions",
+                  "type": "boolean",
+                  "title": "The Allowadditions Schema",
+                  "default": false,
+                  "examples": [
+                    true
+                  ]
+                },
+                "required": {
+                  "$id": "/properties/config/items/properties/options/items/properties/required",
+                  "type": "boolean",
+                  "title": "The Required Schema",
+                  "default": false,
+                  "examples": [
+                    false
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "required" : ["config"]
+}
