@@ -25,6 +25,7 @@ export default class DropDown extends PureComponent {
 					label={title}
 					search
 					selection
+					name={title}
 					options={options}
 					allowAdditions={allowAdditions}
 					onAddItem={this.handleAddition}

@@ -64,7 +64,12 @@ class DynamicComponent extends Component {
 			case "String":
 				return (
 					<Form.Field style={{ paddingTop: "20px" }}>
-						<Input placeholder={title} label={title} type="text" />
+						<Input
+							placeholder={title}
+							label={title}
+							type="text"
+							name={title}
+						/>
 					</Form.Field>
 				);
 			default:

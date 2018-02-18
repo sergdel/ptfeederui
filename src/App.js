@@ -9,6 +9,7 @@ import schema from "./json.schema.json";
 import { observable, autorun } from "mobx";
 import DevTools from "mobx-react-devtools";
 import { observer } from "mobx-react";
+import _ from "lodash";
 import {
 	Button,
 	Grid,
@@ -40,10 +41,10 @@ class App extends Component {
 		menuItems: options["config"],
 		invalidConfig: Boolean(valid) === false,
 		userData: {},
-		config: options.config
+		savedConfig: {},
+		config: options.config,
+		someting: ""
 	};
-
-	bag = observable({ active: true });
 
 	menuSelect = item => {
 		this.setState({
@@ -52,13 +53,27 @@ class App extends Component {
 		console.log("setting selectedMenuItem to ", item.component);
 	};
 
-	saveConfiguration() {}
+	save = () => {
+		const result = Array.from(document.querySelector("form").elements)
+			.filter(function(item) {
+				return item.name && item.value;
+			})
+			.map(function(item) {
+				return { [item.name]: item.value };
+			});
+
+		this.setState({ savedConfig: result });
+
+		// const form = document.querySelector("#form");
+
+		// this.setState({
+		// 	savedConfig: serialize(form, { hash: true })
+		// });
+	};
+
+	handleChange = (e, { name, value }) => this.setState({ [name]: value });
 
 	render() {
-		autorun(() => console.log(this.bag));
-
-		this.bag.active = false;
-
 		const { menuItems, config } = this.state;
 
 		return (
@@ -69,6 +84,10 @@ class App extends Component {
 				width="500"
 			>
 				<DevTools />
+
+				<pre style={{ color: "white" }}>
+					{JSON.stringify(this.state.savedConfig)}
+				</pre>
 
 				<Modal open={this.state.invalidConfig}>
 					<Modal.Header>ERROR</Modal.Header>
@@ -132,7 +151,12 @@ class App extends Component {
 							</Sticky>
 						</Grid.Column>
 						<Grid.Column width={7}>
-							<Form inverted>
+							<Form
+								inverted
+								id="form"
+								action=""
+								onSubmit={this.handleChange}
+							>
 								{config.map(group => (
 									<ComponentGroup group={group.options} />
 								))}
@@ -147,7 +171,7 @@ class App extends Component {
 							</Segment>
 							<Sticky>
 								<Segment padded>
-									<Button primary fluid>
+									<Button primary fluid onClick={this.save}>
 										Save all changes
 									</Button>
 									<Divider horizontal>Or</Divider>

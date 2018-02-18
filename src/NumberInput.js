@@ -46,6 +46,7 @@ class NumberInput extends Component {
 						placeholder={title}
 						size="large"
 						label={title}
+						name={title}
 						fluid
 						search
 						selection
@@ -72,6 +73,7 @@ class NumberInput extends Component {
 					control="input"
 					placeholder={title}
 					onKeyPress={this.onKeyPress}
+					name={title}
 				/>
 				{percentage ? "%" : ""}
 				{note ? (
