@@ -55,6 +55,129 @@
 				{ "title": "DcaSellStrategy", "type": "Number" }
 			]
 		},
+		{
+			"title": "Market Conditions",
+			"component": "Volume",
+			"sub-menus": [],
+			"description": "General Settings",
+			"options": [
+				{
+					"title": "FolderName - STRING",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "MaxTopCoinAverageChange ONE OR OTHER",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "MinBaseCoinPriceChange  ONE OR OTHER",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "BuyValueOffset",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "BuyValueLimitOffset",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "CostOffset",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "DcaEnabled",
+					"type": "Number",
+					"acceptBoolean": true
+				},
+				{
+					"title": "MaxBuySpreadOffset",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "MaxPairsOffset",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "MinBuyBalanceOffset",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "MinProfitOffset",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "SellOnlyMode",
+					"type": "Number",
+					"acceptBoolean": true
+				},
+				{
+					"title": "SellValueOffset",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "TrailingBuyOffset",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "TrailingProfitOffset",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "DcaMaxBuySpreadOffset",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "DcaMaxBuyTimesOffset",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "DcaMaxCostOffset",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "DcaMinBuyBalanceOffset",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "DcaSellValueOffset",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "DcaTrailingBuyOffset",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "DcaTrailingProfitOffset",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "DcaSellTriggerOffset",
+					"type": "Number",
+					"acceptBoolean": false
+				}
+			]
+		},
 
 		{
 			"title": "Volume",
@@ -62,132 +185,107 @@
 			"component": "Volume",
 			"options": [
 				{
+					"title": "MaxVolume",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "MaxValueOffset",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "MaxValueLimitOffset",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "CostOffset",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
 					"title": "DcaEnabled",
-					"type": "Number",
-					"acceptBoolean": false
-				},
-				{
-					"title": "DcaMaxBuySpread",
-					"type": "Number",
-					"acceptBoolean": false
-				},
-				{
-					"title": "DcaMaxBuyTimes",
-					"type": "Number",
-					"acceptBoolean": false
-				},
-				{
-					"title": "DcaMaxCost",
-					"type": "Number",
-					"acceptBoolean": false
-				},
-				{
-					"title": "DcaMinBuyBalance",
-					"type": "Number",
-					"acceptBoolean": false
-				},
-				{
-					"title": "DcaSellStrategy",
 					"type": "Number",
 					"acceptBoolean": true
 				},
 				{
-					"title": "DcaSellValue",
+					"title": "DcaMaxBuySpreadOffset",
 					"type": "Number",
 					"acceptBoolean": false
 				},
 				{
-					"title": "DcaTrailingBuy",
+					"title": "MaxPairsOffset",
 					"type": "Number",
 					"acceptBoolean": false
 				},
 				{
-					"title": "DcaTrailingProfit",
+					"title": "MinBuyBalanceOffset",
 					"type": "Number",
 					"acceptBoolean": false
 				},
 				{
-					"title": "ExcludedPairs",
-					"type": "Dropdown",
-					"options": [
-						{ "key": "GBP", "text": "GBP", "value": "GBP" },
-						{ "key": "EUR", "text": "EUR", "value": "EUR" },
-						{ "key": "JPY", "text": "JPY", "value": "JPY" },
-						{ "key": "USD", "text": "USD", "value": "USD" }
-					]
-				},
-				{
-					"title": "MaxTrailingProfit",
+					"title": "MinProfitOffset",
 					"type": "Number",
 					"acceptBoolean": false
 				},
 				{
-					"title": "MinBuyBalance",
+					"title": "SellOnlyMode",
+					"type": "Number",
+					"acceptBoolean": true
+				},
+				{
+					"title": "SellValueOffset",
+					"type": "Number",
+					"acceptBoolean": true
+				},
+				{
+					"title": "TrailingBuyOffset",
 					"type": "Number",
 					"acceptBoolean": false
 				},
 				{
-					"title": "MinBuyPrice",
+					"title": "TrailingProfitOffset",
 					"type": "Number",
 					"acceptBoolean": false
 				},
 				{
-					"title": "MinPrice",
+					"title": "DcaMaxBuySpreadOffset",
 					"type": "Number",
 					"acceptBoolean": false
 				},
 				{
-					"title": "MinProfit",
+					"title": "DcaMaxBuyTimesOffset",
 					"type": "Number",
 					"acceptBoolean": false
 				},
 				{
-					"title": "MinBuyVolume",
+					"title": "DcaMaxCostOffset",
 					"type": "Number",
 					"acceptBoolean": false
 				},
 				{
-					"title": "MinTrailingProfit",
+					"title": "DcaMinBuyBalanceOffset",
 					"type": "Number",
 					"acceptBoolean": false
 				},
 				{
-					"title": "MinTrailingBuy",
+					"title": "DcaSellValueOffset",
 					"type": "Number",
 					"acceptBoolean": false
 				},
 				{
-					"title": "MinutesForLongerTermTrend",
+					"title": "DcaTrailingBuyOffset",
 					"type": "Number",
 					"acceptBoolean": false
 				},
 				{
-					"title": "MinutesToMeasureTrend",
+					"title": "DcaTrailingProfitOffset",
 					"type": "Number",
 					"acceptBoolean": false
 				},
 				{
-					"title": "NumberOfPairs",
-					"type": "Number",
-					"acceptBoolean": false
-				},
-				{
-					"title": "SellStrategy",
-					"type": "Dropdown",
-					"options": [
-						{ "key": "GBP", "text": "GBP", "value": "GBP" },
-						{ "key": "EUR", "text": "EUR", "value": "EUR" },
-						{ "key": "JPY", "text": "JPY", "value": "JPY" },
-						{ "key": "USD", "text": "USD", "value": "USD" }
-					]
-				},
-				{
-					"title": "SellValue",
-					"type": "Number",
-					"acceptBoolean": false
-				},
-				{
-					"title": "TopCurrenciesToCheck",
+					"title": "DcaSellTriggerOffset",
 					"type": "Number",
 					"acceptBoolean": false
 				}
@@ -201,15 +299,199 @@
 					"title": "MaxPriceTrendPercentageChange",
 					"type": "Number",
 					"percentage": true
+				},
+				{
+					"title": "BuyValueOffset",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "BuyValueLimitOffset",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "DcaEnabled",
+					"type": "Number",
+					"acceptBoolean": true
+				},
+				{
+					"title": "MaxBuySpreadOffset",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "MaxPairsOffset",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "MinBuyBalanceOffset",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "SellOnlyMode",
+					"type": "Number",
+					"acceptBoolean": true
+				},
+				{
+					"title": "SellValueOffset",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "TrailingBuyOffset",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "TrailingProfitOffset",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "DcaMaxBuySpreadOffset",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "DcaMaxBuyTimesOffset",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "DcaMaxCostOffset",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "DcaMinBuyBalanceOffset",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "DcaSellValueOffset",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "DcaTrailingBuyOffset",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "DcaTrailingProfitOffset",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "DcaSellTriggerOffset",
+					"type": "Number",
+					"acceptBoolean": false
 				}
-			],
-			"description": "General Settings"
+			]
 		},
 		{
-			"title": "Market Conditions",
-			"component": "Volume",
-			"sub-menus": [],
-			"description": "General Settings"
+			"title": "Price Change",
+			"description": "some description",
+			"options": [
+				{
+					"title": "MaxPriceTrendPercentageChange",
+					"type": "Number",
+					"percentage": true
+				},
+				{
+					"title": "BuyValueOffset",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "BuyValueLimitOffset",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "DcaEnabled",
+					"type": "Number",
+					"acceptBoolean": true
+				},
+				{
+					"title": "MaxBuySpreadOffset",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "MaxPairsOffset",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "MinBuyBalanceOffset",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "SellOnlyMode",
+					"type": "Number",
+					"acceptBoolean": true
+				},
+				{
+					"title": "SellValueOffset",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "TrailingBuyOffset",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "TrailingProfitOffset",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "DcaMaxBuySpreadOffset",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "DcaMaxBuyTimesOffset",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "DcaMaxCostOffset",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "DcaMinBuyBalanceOffset",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "DcaSellValueOffset",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "DcaTrailingBuyOffset",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "DcaTrailingProfitOffset",
+					"type": "Number",
+					"acceptBoolean": false
+				},
+				{
+					"title": "DcaSellTriggerOffset",
+					"type": "Number",
+					"acceptBoolean": false
+				}
+			]
 		},
 		{
 			"title": "Exchange",
@@ -218,7 +500,7 @@
 			"description": "General Settings"
 		},
 		{
-			"title": "Price Percentage",
+			"title": "HighLowPriceChange",
 			"component": "Volume",
 			"sub-menus": [],
 			"description": "General Settings"
