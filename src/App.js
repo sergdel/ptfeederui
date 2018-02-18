@@ -1,15 +1,14 @@
 import React, { Component } from "react";
-import Componentd, { ComponentGroup } from "./DynamicComponent";
+import { ComponentGroup } from "./DynamicComponent";
 import logo from "./logo.png";
 import options from "./config.json";
-import { background, textColour, primary } from "./colours";
+import { textColour } from "./colours";
 import "./App.css";
 import Ajv from "ajv";
 import schema from "./json.schema.json";
 import { observable, autorun } from "mobx";
 import DevTools from "mobx-react-devtools";
 import { observer } from "mobx-react";
-import _ from "lodash";
 import {
 	Button,
 	Grid,

@@ -47,7 +47,5 @@ import "./theme/semantic.flatly.css";
 // import "./theme/semantic.yeti.min.css";
 // import "./theme/themes";
 
-import { PTFeederStore } from "./PTFeederStore";
-
 ReactDOM.render(<App />, document.getElementById("root"));
 registerServiceWorker();
