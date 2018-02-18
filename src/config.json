@@ -66,14 +66,16 @@
 					"type": "String"
 				},
 				{
-					"title": "MaxTopCoinAverageChange ONE OR OTHER",
+					"title": "MaxTopCoinAverageChange",
 					"type": "Number",
-					"acceptBoolean": false
+					"acceptBoolean": false,
+					"note": "one or other"
 				},
 				{
-					"title": "MinBaseCoinPriceChange  ONE OR OTHER",
+					"title": "MinBaseCoinPriceChange",
 					"type": "Number",
-					"acceptBoolean": false
+					"acceptBoolean": false,
+					"note": "one or other"
 				},
 				{
 					"title": "BuyValueOffset",

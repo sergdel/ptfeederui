@@ -36,7 +36,7 @@ class NumberInput extends Component {
 	};
 
 	render() {
-		const { percentage, acceptBoolean, title } = this.props;
+		const { percentage, acceptBoolean, title, note } = this.props;
 
 		if (acceptBoolean) {
 			return (
@@ -65,16 +65,22 @@ class NumberInput extends Component {
 
 		return (
 			<Form.Field style={{ paddingTop: "20px" }}>
+				<Label>{title}</Label>
 				<Input
 					type="text"
-					size="small"
-					label={title}
 					pattern="[0-9]*"
-					placeholder={this.props.title}
 					control="input"
+					placeholder={title}
 					onKeyPress={this.onKeyPress}
 				/>
 				{percentage ? "%" : ""}
+				{note ? (
+					<Label as="a" color="teal" pointing="above">
+						{note}
+					</Label>
+				) : (
+					""
+				)}
 			</Form.Field>
 		);
 	}

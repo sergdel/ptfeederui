@@ -19,6 +19,7 @@ export default class DropDown extends PureComponent {
 				<Dropdown
 					placeholder={title}
 					size="large"
+					id={title}
 					fluid
 					labeled={true}
 					label={title}

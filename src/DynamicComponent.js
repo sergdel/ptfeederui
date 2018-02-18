@@ -27,7 +27,8 @@ class DynamicComponent extends Component {
 				allowAdditions,
 				acceptBoolean,
 				type,
-				percentage
+				percentage,
+				note
 			}
 		} = this.props;
 
@@ -43,9 +44,10 @@ class DynamicComponent extends Component {
 			case "Number":
 				return (
 					<NumberInput
-						title={title}
 						acceptBoolean={acceptBoolean}
 						percentage={percentage}
+						title={title}
+						note={note}
 					/>
 				);
 

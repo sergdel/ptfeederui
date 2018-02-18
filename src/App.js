@@ -18,7 +18,11 @@ import {
 	Container,
 	Modal,
 	Header,
-	Responsive
+	Divider,
+	Responsive,
+	Sticky,
+	Search,
+	Label
 } from "semantic-ui-react";
 
 const ajv = new Ajv({ allErrors: true });
@@ -61,9 +65,8 @@ class App extends Component {
 			<Responsive
 				as={Container}
 				className="App"
-				minWidth={400}
-				height="100"
 				style={{ fontFamily: "Poppins, sans-serif" }}
+				width="500"
 			>
 				<DevTools />
 
@@ -77,60 +80,85 @@ class App extends Component {
 					</Modal.Content>
 				</Modal>
 
-				<Grid style={{ fontFamily: "Poppins" }}>
-					<Grid.Column width={4}>
-						<Menu
-							vertical
-							style={{
-								backgroundColor: background,
-								fontFamily: "Poppins",
-								fontSize: "16px",
-								boxShadow: "none",
-								border: "none"
-							}}
-						>
-							<Menu.Item name="logo" align="center">
-								<img
-									src={logo}
-									width="50px"
-									height="50px"
-									alt="icon"
-								/>
-							</Menu.Item>
-
-							{menuItems &&
-								menuItems.map(item => (
-									<Menu.Item
-										name={item.title}
-										key={item.title}
-										onClick={() => this.menuSelect(item)}
-										style={{ color: textColour }}
-									>
-										<pre>{item.title}</pre>
-									</Menu.Item>
-								))}
-						</Menu>
-					</Grid.Column>
-					<Grid.Column width={12}>
-						<Form.Group align="left" inline>
-							<pre style={{ color: "white" }}>
-								<pre>
-									{config.map(group => (
-										<ComponentGroup group={group.options} />
-									))}
-								</pre>
-							</pre>
-						</Form.Group>
-					</Grid.Column>
-				</Grid>
-
-				<Button
-					onClick={this.saveConfiguration}
-					style={{ backgroundColour: primary, marginBottom: "30px" }}
-					disabled
+				<Segment
+					as={Header}
+					attached="top"
+					float="left"
+					textAlign="left"
+					dividing
+					style={{
+						backgroundColor: "#2F4259",
+						border: "none",
+						color: "white"
+					}}
 				>
-					Save All
-				</Button>
+					<img src={logo} width="50px" height="50px" alt="icon" />
+					PTFeeder
+				</Segment>
+
+				<Grid
+					style={{ fontFamily: "Poppins" }}
+					centered
+					divided="vertically"
+				>
+					<Grid.Row>
+						<Grid.Column width={5} align="center">
+							<Sticky>
+								<Menu
+									vertical
+									style={{
+										fontFamily: "Poppins",
+										fontSize: "16px",
+										boxShadow: "none",
+										border: "none",
+										width: "auto",
+										textAlign: "center"
+									}}
+								>
+									{menuItems &&
+										menuItems.map(item => (
+											<Menu.Item
+												name={item.title}
+												key={item.title}
+												onClick={() =>
+													this.menuSelect(item)
+												}
+												style={{ color: textColour }}
+											>
+												{item.title}
+											</Menu.Item>
+										))}
+								</Menu>
+							</Sticky>
+						</Grid.Column>
+						<Grid.Column width={7}>
+							<Form inverted>
+								{config.map(group => (
+									<ComponentGroup group={group.options} />
+								))}
+							</Form>
+						</Grid.Column>
+						<Grid.Column width={4}>
+							<Segment>
+								<Search padded size="small" />
+								<Label as="a" color="teal" ribbon>
+									filter list
+								</Label>
+							</Segment>
+							<Sticky>
+								<Segment padded>
+									<Button primary fluid>
+										Save all changes
+									</Button>
+									<Divider horizontal>Or</Divider>
+									<Button secondary fluid>
+										Reload last saved
+									</Button>
+								</Segment>
+							</Sticky>
+						</Grid.Column>
+					</Grid.Row>
+				</Grid>
 			</Responsive>
 		);
 	}
