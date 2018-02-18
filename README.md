@@ -1,1 +1,9 @@
-2018-02-14-15-02 sidebar
+# README
+
+## quick start
+
+`npm install`
+
+`yarn start`
+
+navigate to http://localhost:3000

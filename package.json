@@ -12,7 +12,6 @@
     "react-bootstrap": "^0.32.1",
     "react-dom": "^16.2.0",
     "react-scripts": "1.1.1",
-    "semantic-ui": "^2.2.14",
     "semantic-ui-react": "^0.78.2"
   },
   "scripts": {
