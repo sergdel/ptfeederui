@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { ComponentGroup } from "./DynamicComponent";
 import logo from "./logo.png";
 import options from "./config.json";
-import { textColour } from "./colours";
+import { background, textColour } from "./colours";
 import "./App.css";
 import Ajv from "ajv";
 import schema from "./json.schema.json";
@@ -22,7 +22,8 @@ import {
 	Responsive,
 	Sticky,
 	Search,
-	Label
+	Label,
+	Input
 } from "semantic-ui-react";
 
 const ajv = new Ajv({ allErrors: true });
@@ -42,7 +43,8 @@ class App extends Component {
 		userData: {},
 		savedConfig: {},
 		config: options.config,
-		someting: ""
+		someting: "",
+		activeItem: ""
 	};
 
 	menuSelect = item => {
@@ -73,7 +75,7 @@ class App extends Component {
 	handleChange = (e, { name, value }) => this.setState({ [name]: value });
 
 	render() {
-		const { menuItems, config } = this.state;
+		const { menuItems, config, activeItem } = this.state;
 
 		return (
 			<Responsive
@@ -105,13 +107,53 @@ class App extends Component {
 					textAlign="left"
 					dividing
 					style={{
-						backgroundColor: "#2F4259",
+						backgroundColor: background,
 						border: "none",
 						color: "white"
 					}}
 				>
-					<img src={logo} width="50px" height="50px" alt="icon" />
-					PTFeeder
+					<Menu>
+						<Menu.Item
+							name="logo"
+							active={activeItem === "editorials"}
+							onClick={this.handleItemClick}
+						>
+							<img src={logo} alt="icon" />PTFeeder
+						</Menu.Item>
+
+						<Menu.Menu position="right" borderless padded>
+							<Menu.Item
+								name="wiki"
+								active={activeItem === "upcomingEvents"}
+								onClick={this.handleItemClick}
+							>
+								<a href="https://github.com/mehtadone/PTFeeder/wiki">
+									Wiki
+								</a>
+							</Menu.Item>
+
+							<Menu.Item
+								name="videos"
+								active={activeItem === "upcomingEvents"}
+								onClick={this.handleItemClick}
+							>
+								<a href="https://github.com/mehtadone/PTFeeder/wiki/Videos
+">
+									Videos
+								</a>
+							</Menu.Item>
+
+							<Menu.Item
+								name="support"
+								active={activeItem === "upcomingEvents"}
+								onClick={this.handleItemClick}
+							>
+								<a href="https://github.com/mehtadone/PTFeeder/issues">
+									Support
+								</a>
+							</Menu.Item>
+						</Menu.Menu>
+					</Menu>
 				</Segment>
 
 				<Grid
@@ -163,10 +205,13 @@ class App extends Component {
 						</Grid.Column>
 						<Grid.Column width={4}>
 							<Segment>
-								<Search padded size="small" />
-								<Label as="a" color="teal" ribbon>
-									filter list
-								</Label>
+								<Input
+									icon="search"
+									placeholder="Search..."
+									size="mini"
+									width={1}
+									padded={false}
+								/>
 							</Segment>
 							<Sticky>
 								<Segment padded>

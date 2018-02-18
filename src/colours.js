@@ -4,4 +4,4 @@ module.exports = {
 	lightBlue: "#2F4259",
 	textColour: "#ffffff",
 	primary: "#2F3959"
-}
+};
