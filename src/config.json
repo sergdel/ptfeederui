@@ -62,9 +62,8 @@
 			"description": "General Settings",
 			"options": [
 				{
-					"title": "FolderName - STRING",
-					"type": "Number",
-					"acceptBoolean": false
+					"title": "FolderName",
+					"type": "String"
 				},
 				{
 					"title": "MaxTopCoinAverageChange ONE OR OTHER",
@@ -118,8 +117,7 @@
 				},
 				{
 					"title": "SellOnlyMode",
-					"type": "Number",
-					"acceptBoolean": true
+					"type": "Boolean"
 				},
 				{
 					"title": "SellValueOffset",
@@ -231,8 +229,7 @@
 				},
 				{
 					"title": "SellOnlyMode",
-					"type": "Number",
-					"acceptBoolean": true
+					"type": "Boolean"
 				},
 				{
 					"title": "SellValueOffset",
@@ -329,11 +326,6 @@
 					"title": "MinBuyBalanceOffset",
 					"type": "Number",
 					"acceptBoolean": false
-				},
-				{
-					"title": "SellOnlyMode",
-					"type": "Number",
-					"acceptBoolean": true
 				},
 				{
 					"title": "SellValueOffset",
@@ -433,8 +425,7 @@
 				},
 				{
 					"title": "SellOnlyMode",
-					"type": "Number",
-					"acceptBoolean": true
+					"type": "Boolean"
 				},
 				{
 					"title": "SellValueOffset",

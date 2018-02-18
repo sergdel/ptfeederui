@@ -1,11 +1,14 @@
 import React, { Component } from "react";
-import Componentd from "./DynamicComponent";
+import Componentd, { ComponentGroup } from "./DynamicComponent";
 import logo from "./logo.png";
-import config from "./config.json";
+import options from "./config.json";
 import { background, textColour, primary } from "./colours";
 import "./App.css";
 import Ajv from "ajv";
 import schema from "./json.schema.json";
+import { observable, autorun } from "mobx";
+import DevTools from "mobx-react-devtools";
+import { observer } from "mobx-react";
 import {
 	Button,
 	Grid,
@@ -21,7 +24,7 @@ import {
 const ajv = new Ajv({ allErrors: true });
 const validate = ajv.compile(schema);
 
-const valid = validate(config);
+const valid = validate(options);
 if (valid) console.log("Valid!");
 else console.log("Invalid: " + ajv.errorsText(validate.errors));
 
@@ -30,14 +33,17 @@ class App extends Component {
 		selectedMenuItem: "General",
 		availableConfig: null,
 		activeItem: "",
-		menuItems: config["config"],
-		invalidConfig: Boolean(valid) === false
+		menuItems: options["config"],
+		invalidConfig: Boolean(valid) === false,
+		userData: {},
+		config: options.config
 	};
+
+	bag = observable({ active: true });
 
 	menuSelect = item => {
 		this.setState({
-			selectedMenuItem: item.component,
-			availableConfig: item.options
+			selectedMenuItem: item.component
 		});
 		console.log("setting selectedMenuItem to ", item.component);
 	};
@@ -45,7 +51,11 @@ class App extends Component {
 	saveConfiguration() {}
 
 	render() {
-		const { menuItems, availableConfig } = this.state;
+		autorun(() => console.log(this.bag));
+
+		this.bag.active = false;
+
+		const { menuItems, config } = this.state;
 
 		return (
 			<Responsive
@@ -53,25 +63,32 @@ class App extends Component {
 				className="App"
 				minWidth={400}
 				height="100"
+				style={{ fontFamily: "Poppins, sans-serif" }}
 			>
+				<DevTools />
+
 				<Modal open={this.state.invalidConfig}>
 					<Modal.Header>ERROR</Modal.Header>
 					<Modal.Content image>
 						<Modal.Description>
 							<Header>Malformed Configuration</Header>
 							<p>JSON does not match the supplied schema</p>
-							<p>
-								<pre>
-									{JSON.stringify(validate.errors, null, 2)}
-								</pre>
-							</p>
 						</Modal.Description>
 					</Modal.Content>
 				</Modal>
 
-				<Grid style={{ color: textColour }}>
+				<Grid style={{ fontFamily: "Poppins" }}>
 					<Grid.Column width={4}>
-						<Menu vertical style={{ backgroundColor: background }}>
+						<Menu
+							vertical
+							style={{
+								backgroundColor: background,
+								fontFamily: "Poppins",
+								fontSize: "16px",
+								boxShadow: "none",
+								border: "none"
+							}}
+						>
 							<Menu.Item name="logo" align="center">
 								<img
 									src={logo}
@@ -94,13 +111,15 @@ class App extends Component {
 								))}
 						</Menu>
 					</Grid.Column>
-
 					<Grid.Column width={12}>
 						<Form.Group align="left" inline>
-							{availableConfig &&
-								availableConfig.map(item => (
-									<Componentd tag={item.type} data={item} />
-								))}
+							<pre style={{ color: "white" }}>
+								<pre>
+									{config.map(group => (
+										<ComponentGroup group={group.options} />
+									))}
+								</pre>
+							</pre>
 						</Form.Group>
 					</Grid.Column>
 				</Grid>
@@ -117,4 +136,4 @@ class App extends Component {
 	}
 }
 
-export default App;
+export default observer(App);
