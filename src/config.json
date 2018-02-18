@@ -9,10 +9,10 @@
 					"title": "BaseCurrency",
 					"type": "Dropdown",
 					"options": [
-						{ "key": "GBP", "text": "GBP", "value": "GBP" },
-						{ "key": "EUR", "text": "EUR", "value": "EUR" },
-						{ "key": "JPY", "text": "JPY", "value": "JPY" },
-						{ "key": "USD", "text": "USD", "value": "USD" }
+						{ "key": "BTC", "text": "BTC", "value": "BTC" },
+						{ "key": "ETH", "text": "ETH", "value": "ETH" },
+						{ "key": "BNB", "text": "BNB", "value": "BNB" },
+						{ "key": "USDT", "text": "USDT", "value": "USDT" }
 					],
 					"allowAdditions": true,
 					"required": false
