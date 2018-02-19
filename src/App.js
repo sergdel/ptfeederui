@@ -120,7 +120,10 @@ class App extends Component {
 								active={activeItem === "upcomingEvents"}
 								onClick={this.handleItemClick}
 							>
-								<a href="https://github.com/mehtadone/PTFeeder/wiki">
+								<a
+									href="https://github.com/mehtadone/PTFeeder/wiki"
+									target="_blank"
+								>
 									Wiki
 								</a>
 							</Menu.Item>
@@ -130,8 +133,10 @@ class App extends Component {
 								active={activeItem === "upcomingEvents"}
 								onClick={this.handleItemClick}
 							>
-								<a href="https://github.com/mehtadone/PTFeeder/wiki/Videos
-            ">
+								<a
+									href="https://github.com/mehtadone/PTFeeder/wiki/Videos"
+									target="_blank"
+								>
 									Videos
 								</a>
 							</Menu.Item>
@@ -141,7 +146,10 @@ class App extends Component {
 								active={activeItem === "upcomingEvents"}
 								onClick={this.handleItemClick}
 							>
-								<a href="https://github.com/mehtadone/PTFeeder/issues">
+								<a
+									href="https://github.com/mehtadone/PTFeeder/issues"
+									target="_blank"
+								>
 									Support
 								</a>
 							</Menu.Item>
@@ -187,7 +195,20 @@ class App extends Component {
 								</Menu>
 							</Sticky>
 						</Grid.Column>
-						<Grid.Column width={7}>
+						<Grid.Column width={5}>
+							<Input
+								icon="search"
+								placeholder="Search..."
+								width={1}
+								transparent
+								fluid
+								small
+								inverted
+								padded={false}
+							/>
+
+							<Divider />
+
 							<Form inverted id="form" action="">
 								{config.map(group => (
 									<Header
@@ -206,23 +227,14 @@ class App extends Component {
 								))}
 							</Form>
 						</Grid.Column>
-						<Grid.Column width={4}>
-							<Segment>
-								<Input
-									icon="search"
-									placeholder="Search..."
-									size="mini"
-									width={1}
-									padded={false}
-								/>
-							</Segment>
+						<Grid.Column width={7}>
 							<Sticky>
-								<Segment padded>
 									<Button primary fluid onClick={this.save}>
 										Save all changes
 									</Button>
-								</Segment>
 							</Sticky>
+
+							<Divider />
 						</Grid.Column>
 					</Grid.Row>
 				</Grid>
