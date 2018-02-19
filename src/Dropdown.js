@@ -3,16 +3,31 @@ import PropTypes from "prop-types";
 import { Dropdown, Form, Label } from "semantic-ui-react";
 
 export default class DropDown extends PureComponent {
+	state = {
+		options: this.props.options
+	};
+
 	PropTypes = {
 		options: PropTypes.array.required,
 		allowAdditions: PropTypes.bool
 	};
 
-	handleAddition() {}
+	handleAddition = (e, { value }) => {
+		const { options } = this.state;
+		this.setState({
+			options: options.concat({
+				key: value,
+				value: value,
+				text: value
+			})
+		});
+	};
+
 	handleChange() {}
 
 	render() {
-		const { options, title, allowAdditions } = this.props;
+		const { title, allowAdditions } = this.props;
+		const { options } = this.state;
 		return (
 			<Form.Field style={{ paddingTop: "20px" }}>
 				<Label>{title}</Label>
