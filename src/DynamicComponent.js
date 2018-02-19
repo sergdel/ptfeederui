@@ -7,7 +7,7 @@ export const ComponentGroup = ({ group }) => (
 	<div>
 		{group &&
 			group.map(item => (
-				<DynamicComponent
+				<ComponentFactory
 					category={group.title}
 					tag={item.type}
 					data={item}
@@ -16,7 +16,7 @@ export const ComponentGroup = ({ group }) => (
 	</div>
 );
 
-class DynamicComponent extends Component {
+class ComponentFactory extends Component {
 	state = {};
 
 	render() {
@@ -79,4 +79,4 @@ class DynamicComponent extends Component {
 	}
 }
 
-export default DynamicComponent;
+export default ComponentFactory;
