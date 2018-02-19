@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import { ComponentGroup } from "./DynamicComponent";
-import logo from "./logo.png";
-import options from "./config.json";
-import { background, textColour } from "./colours";
+import { ComponentGroup } from "./components/ComponentFactory";
+import logo from "./assets/images/logo.png";
+import options from "./config/config.json";
+import { background, textColour } from "./config/constants";
 import "./App.css";
 import Ajv from "ajv";
-import schema from "./json.schema.json";
+import schema from "./config/json.schema.json";
 import DevTools from "mobx-react-devtools";
 import { observer } from "mobx-react";
 import {
