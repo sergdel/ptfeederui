@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Form, Input, Dropdown, Label, Popup } from "semantic-ui-react";
 import InfoLabel from "./InfoLabel";
 
-class NumberInput extends Component {
+export default class NumberInput extends PureComponent {
 	PropTypes = {
 		percentage: PropTypes.bool,
 		acceptBoolean: PropTypes.bool
@@ -88,5 +88,3 @@ class NumberInput extends Component {
 		);
 	}
 }
-
-export default NumberInput;
