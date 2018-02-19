@@ -6,24 +6,20 @@ import { background, textColour } from "./colours";
 import "./App.css";
 import Ajv from "ajv";
 import schema from "./json.schema.json";
-import { observable, autorun } from "mobx";
 import DevTools from "mobx-react-devtools";
 import { observer } from "mobx-react";
 import {
-	Button,
-	Grid,
-	Form,
-	Menu,
-	Segment,
-	Container,
-	Modal,
-	Header,
-	Divider,
-	Responsive,
-	Sticky,
-	Search,
-	Label,
-	Input
+  Button,
+  Grid,
+  Form,
+  Menu,
+  Segment,
+  Container,
+  Modal,
+  Header,
+  Divider,
+  Sticky,
+  Input
 } from "semantic-ui-react";
 
 const ajv = new Ajv({ allErrors: true });
