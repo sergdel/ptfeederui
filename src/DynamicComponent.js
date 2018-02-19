@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Dropdown from "./Dropdown";
 import NumberInput from "./NumberInput";
-import { Form, Input } from "semantic-ui-react";
+import { Form, Input, Label } from "semantic-ui-react";
 
 export const ComponentGroup = ({ group }) => (
 	<div>
