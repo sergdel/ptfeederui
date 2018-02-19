@@ -63,10 +63,10 @@ class ComponentFactory extends Component {
 				);
 			case "String":
 				return (
-					<Form.Field style={{ paddingTop: "20px" }}>
+					<Form.Field>
+						<Label>{title}</Label>
 						<Input
 							placeholder={title}
-							label={title}
 							type="text"
 							name={title}
 							size="mini"
