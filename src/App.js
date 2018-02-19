@@ -28,8 +28,8 @@ import {
 
 const ajv = new Ajv({ allErrors: true });
 const validate = ajv.compile(schema);
-
 const valid = validate(options);
+
 if (valid) console.log("Valid!");
 else console.log("Invalid: " + ajv.errorsText(validate.errors));
 
@@ -43,13 +43,12 @@ class App extends Component {
 		userData: {},
 		savedConfig: {},
 		config: options.config,
-		someting: "",
 		activeItem: ""
 	};
 
 	menuSelect = item => {
 		this.setState({
-			selectedMenuItem: item.component
+			selectedMenuItem: item.title
 		});
 		console.log("setting selectedMenuItem to ", item.component);
 	};
@@ -60,28 +59,22 @@ class App extends Component {
 				return item.name && item.value;
 			})
 			.map(function(item) {
-				return { [item.name]: item.value };
+				return {
+					[item.name]: item.value
+				};
 			});
 
 		this.setState({ savedConfig: result });
-
-		// const form = document.querySelector("#form");
-
-		// this.setState({
-		// 	savedConfig: serialize(form, { hash: true })
-		// });
 	};
 
-	handleChange = (e, { name, value }) => this.setState({ [name]: value });
-
 	render() {
-		const { menuItems, config, activeItem } = this.state;
+		const { menuItems, config, activeItem, selectedMenuItem } = this.state;
 
 		return (
 			<Responsive
 				as={Container}
 				className="App"
-				style={{ fontFamily: "Poppins, sans-serif" }}
+				style={{ fontFamily: "Poppins" }}
 				width="500"
 			>
 				<DevTools />
@@ -91,11 +84,11 @@ class App extends Component {
 				</pre>
 
 				<Modal open={this.state.invalidConfig}>
-					<Modal.Header>ERROR</Modal.Header>
+					<Modal.Header> ERROR </Modal.Header>
 					<Modal.Content image>
 						<Modal.Description>
-							<Header>Malformed Configuration</Header>
-							<p>JSON does not match the supplied schema</p>
+							<Header> Malformed Configuration </Header>
+							<p> JSON does not match the supplied schema </p>
 						</Modal.Description>
 					</Modal.Content>
 				</Modal>
@@ -118,7 +111,7 @@ class App extends Component {
 							active={activeItem === "editorials"}
 							onClick={this.handleItemClick}
 						>
-							<img src={logo} alt="icon" />PTFeeder
+							<img src={logo} alt="icon" /> PTFeeder
 						</Menu.Item>
 
 						<Menu.Menu position="right" borderless padded>
@@ -138,7 +131,7 @@ class App extends Component {
 								onClick={this.handleItemClick}
 							>
 								<a href="https://github.com/mehtadone/PTFeeder/wiki/Videos
-">
+            ">
 									Videos
 								</a>
 							</Menu.Item>
@@ -161,11 +154,12 @@ class App extends Component {
 					centered
 					divided="vertically"
 				>
-					<Grid.Row>
-						<Grid.Column width={5} align="center">
+					<Grid.Row style={{ paddingTop: "30px" }}>
+						<Grid.Column width={4} align="center">
 							<Sticky>
 								<Menu
 									vertical
+									point="right"
 									style={{
 										fontFamily: "Poppins",
 										fontSize: "16px",
@@ -183,7 +177,9 @@ class App extends Component {
 												onClick={() =>
 													this.menuSelect(item)
 												}
-												style={{ color: textColour }}
+												style={{
+													color: textColour
+												}}
 											>
 												{item.title}
 											</Menu.Item>
@@ -192,14 +188,21 @@ class App extends Component {
 							</Sticky>
 						</Grid.Column>
 						<Grid.Column width={7}>
-							<Form
-								inverted
-								id="form"
-								action=""
-								onSubmit={this.handleChange}
-							>
+							<Form inverted id="form" action="">
 								{config.map(group => (
-									<ComponentGroup group={group.options} />
+									<Header
+										style={{
+											color: "white",
+											display:
+												selectedMenuItem === group.title
+													? "block"
+													: "none"
+										}}
+									>
+										{group.title}
+
+										<ComponentGroup group={group.options} />
+									</Header>
 								))}
 							</Form>
 						</Grid.Column>
@@ -217,10 +220,6 @@ class App extends Component {
 								<Segment padded>
 									<Button primary fluid onClick={this.save}>
 										Save all changes
-									</Button>
-									<Divider horizontal>Or</Divider>
-									<Button secondary fluid>
-										Reload last saved
 									</Button>
 								</Segment>
 							</Sticky>
