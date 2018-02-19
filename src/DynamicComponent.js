@@ -69,6 +69,7 @@ class DynamicComponent extends Component {
 							label={title}
 							type="text"
 							name={title}
+							size="mini"
 						/>
 					</Form.Field>
 				);
