@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import { Dropdown, Form, Label } from "semantic-ui-react";
+import InfoLabel from "./InfoLabel";
 
 export default class DropDown extends PureComponent {
 	state = {
@@ -30,7 +31,7 @@ export default class DropDown extends PureComponent {
 		const { options } = this.state;
 		return (
 			<Form.Field style={{ paddingTop: "20px" }}>
-				<Label>{title}</Label>
+				<InfoLabel title={title} />
 				<Dropdown
 					placeholder={title}
 					size="large"

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Form, Input, Dropdown, Label } from "semantic-ui-react";
+import { Form, Input, Dropdown, Label, Popup } from "semantic-ui-react";
+import InfoLabel from "./InfoLabel";
 
 class NumberInput extends Component {
 	PropTypes = {
@@ -41,7 +42,7 @@ class NumberInput extends Component {
 		if (acceptBoolean) {
 			return (
 				<Form.Field style={{ paddingTop: "20px" }}>
-					<Label>{title}</Label>
+					<InfoLabel />
 					<Dropdown
 						placeholder={title}
 						size="large"
@@ -66,7 +67,7 @@ class NumberInput extends Component {
 
 		return (
 			<Form.Field style={{ paddingTop: "20px" }}>
-				<Label>{title}</Label>
+				<InfoLabel title={title} />
 				<Input
 					type="text"
 					pattern="[0-9]*"

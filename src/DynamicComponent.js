@@ -1,17 +1,18 @@
 import React, { Component } from "react";
 import Dropdown from "./Dropdown";
 import NumberInput from "./NumberInput";
-import { Form, Input, Label } from "semantic-ui-react";
+import { Form, Input, Label, Popup } from "semantic-ui-react";
+import InfoLabel from "./InfoLabel";
 
 export const ComponentGroup = ({ group }) => (
 	<div>
 		{group &&
 			group.map(item => (
-				<ComponentFactory
-					category={group.title}
-					tag={item.type}
-					data={item}
-				/>
+					<ComponentFactory
+						category={group.title}
+						tag={item.type}
+						data={item}
+					/>
 			))}
 	</div>
 );
@@ -64,7 +65,7 @@ class ComponentFactory extends Component {
 			case "String":
 				return (
 					<Form.Field>
-						<Label>{title}</Label>
+						<InfoLabel title={title} />
 						<Input
 							placeholder={title}
 							type="text"
