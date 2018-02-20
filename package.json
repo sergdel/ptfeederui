@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "ajv": "^6.1.1",
+    "concurrently": "^3.5.1",
+    "express": "^4.16.2",
     "fuzzysearch": "^1.0.3",
     "immutable": "^3.8.2",
     "lodash": "^4.17.5",
@@ -18,12 +20,13 @@
     "extends": "react-app"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "concurrently --kill-others-on-fail \"react-scripts start\" \"nodemon server.js\"",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
   "devDependencies": {
     "mobx-react-devtools": "^4.2.15"
-  }
+  },
+  "proxy": "http://localhost:5000"
 }

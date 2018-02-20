@@ -482,14 +482,22 @@
 			]
 		},
 		{
-			"title": "Exchange",
+			"title": "LongerTermPriceChange",
 			"wiki" : "/wiki/general",
-			"options":[]
-		},
-		{
-			"title": "HighLowPriceChange",
-			"wiki" : "/wiki/general",
-			"options":[]
+			"options":[
+				{"title": "MaxPriceTrendPercentageChange",
+				"type":"Number"},
+				{"title": "DcaEnabled",
+				"type":"Number"},
+				{"title": "TrailingProfitOffset",
+				"type":"Number"},
+				{"title": "SellValueOffset",
+				"type":"Number"},
+				{"title": "MaxBuySpreadOffset",
+				"type":"Number"},
+				{"title": "MaxPriceTrendPercentageChange",
+				"type":"Number"}
+			]
 		}
 	]
 }
