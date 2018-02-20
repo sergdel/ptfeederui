@@ -18,7 +18,9 @@ import {
   Header,
   Divider,
   Sticky,
-  Segment
+  Segment,
+  Responsive,
+  Popup
 } from "semantic-ui-react";
 const ajv = new Ajv({ allErrors: true, schemaId: "auto" });
 ajv.addMetaSchema(require("ajv/lib/refs/json-schema-draft-06.json"));
@@ -136,16 +138,20 @@ export default class App extends Component {
               filter={filter}
             />
           </Grid.Column>
-          <Grid.Column>
+
+          {/* RIGHT Side  */}
+          <Responsive as={Grid.Column} {...Responsive.onlyComputer}>
             <Grid.Row>
               <ImportExport />
               <Segment basic style={{ color: "#fff" }}>
                 More Info About <strong>{selectedMenuItem.title}</strong> can be
-                found on the
-                <a href={selectedMenuItem.wiki}> Wiki </a>
+                found on the{" "}
+                <a href={selectedMenuItem.wiki}>
+                  {selectedMenuItem.title} Wiki
+                </a>
               </Segment>
             </Grid.Row>
-          </Grid.Column>
+          </Responsive>
         </Grid.Row>
         {/* FOOTER */}
         <Grid.Row columns={1}>
@@ -158,36 +164,33 @@ export default class App extends Component {
 
 const ImportExport = () => {
   return (
-    <Segment>
-      <Button
-        floating="floating"
-        primary="primary"
-        fluid="fluid"
-        onClick={this.save}
-      >
-        <Label icon="download" />
-        Save Settings
-      </Button>
+    <Segment basic>
+      <Popup
+        trigger={
+          <a fluid="fluid" href="http://localhost:5000/download">
+            <Label icon="download" />
+          </a>
+        }
+        content="save settings"
+      />
       <br/>
-      <Button
-        floating="floating"
-        primary="primary"
-        fluid="fluid"
-        onClick={this.save}
-      >
-        <Label icon="download" />
-        Export Settings
-      </Button>
+      <Popup
+        trigger={
+          <a fluid="fluid" href="http://localhost:5000/download">
+            <Label icon="download" />
+          </a>
+        }
+        content="import settings"
+      />
       <br/>
-      <Button
-        floating="floating"
-        primary="primary"
-        fluid="fluid"
-        onClick={this.save}
-      >
-        <Label icon="download" />
-        Export Settings
-      </Button>
+      <Popup
+        trigger={
+          <a fluid="fluid" href="http://localhost:5000/download">
+            <Label icon="download" />
+          </a>
+        }
+        content="export settings"
+      />
     </Segment>
   );
 };
