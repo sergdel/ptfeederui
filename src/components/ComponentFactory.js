@@ -4,24 +4,7 @@ import NumberInput from "./NumberInput";
 import { Form, Input } from "semantic-ui-react";
 import InfoLabel from "./InfoLabel";
 
-export const ComponentGroup = ({ group }) => (
-  <div>
-    {group &&
-      group.map(
-        item =>
-          item.options &&
-          item.options.map(data => (
-            <ComponentFactory
-              category={data.title}
-              tag={data.type}
-              data={data}
-            />
-          ))
-      )}
-  </div>
-);
-
-class ComponentFactory extends Component {
+export class ComponentFactory extends Component {
   state = {};
 
   render() {
@@ -78,5 +61,3 @@ class ComponentFactory extends Component {
     }
   }
 }
-
-export default ComponentFactory;

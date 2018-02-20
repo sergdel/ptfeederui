@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { ComponentGroup } from "./components/ComponentFactory";
+import { ComponentFactory } from "./components/ComponentFactory";
 import logo from "./assets/images/logo.png";
 import { config as options } from "./config/config.json";
 import { background, textColour } from "./config/constants";
@@ -19,26 +19,35 @@ import {
   Sticky,
   Segment
 } from "semantic-ui-react";
-
-const ajv = new Ajv({ allErrors: true });
-const validate = ajv.compile(schema);
-const valid = validate(options);
-
-if (valid) console.log("Valid!");
-else console.log("Invalid: " + ajv.errorsText(validate.errors));
+const ajv = new Ajv({ allErrors: true, schemaId: 'auto' });
+ajv.addMetaSchema(require('ajv/lib/refs/json-schema-draft-06.json'));
 
 export default class App extends Component {
+
+componentWillMount(){
+  const validate = ajv.compile(schema);
+  const valid = validate(options||{});
+
+  if (valid) console.log("Valid!");
+  else console.log("Invalid: " + ajv.errorsText(validate.errors));
+
+  this.setState({
+    configHasErrors: Boolean(valid) === false,
+    configErrorMessage: ajv.errorsText(validate.errors),
+  })
+}
+
   state = {
     selectedMenuItem: "General",
     availableConfig: null,
     menuItems: options.map(item => {
       return item.title;
     }),
-    configHasErrors: Boolean(valid) === false,
-    configErrorMessage: ajv.errorsText(validate.errors),
     userData: {},
     savedConfig: {},
-    config: options.config
+    config: options.config,
+    configHasErrors: {},
+    configErrorMessage:{}
   };
 
   onMenuSelect = title => {
@@ -63,7 +72,16 @@ export default class App extends Component {
   };
 
   render() {
-    const { menuItems, selectedMenuItem, configHasErrors } = this.state;
+    const {
+      menuItems,
+      selectedMenuItem,
+      configHasErrors,
+      configErrorMessage
+    } = this.state;
+
+    if(configHasErrors){
+      return <ErrorModal  errorMessage={configErrorMessage}/>
+    }
 
     return (
       <Grid
@@ -72,9 +90,9 @@ export default class App extends Component {
           width: "height: 90vh",
           overflow: "none"
         }}
-        middle={true}
-        aligned
-        center
+        middle="true"
+        aligned="true"
+        center="true"
       >
         {/* <DevTools /> */}
 
@@ -95,8 +113,8 @@ export default class App extends Component {
           <Grid.Column>
             <Segment basic>
               <LeftNav
+                selectedMenuItem={selectedMenuItem}
                 menuItems={menuItems}
-                selectedMenuItem="General"
                 onMenuSelect={this.onMenuSelect}
               />
             </Segment>
@@ -120,7 +138,6 @@ export default class App extends Component {
         <Grid.Row columns={1}>
           <Grid.Column />
         </Grid.Row>
-        <ErrorModal errors={configHasErrors} />
       </Grid>
     );
   }
@@ -154,7 +171,6 @@ const TopMenu = activeItem => {
       <Menu>
         <Menu.Item
           name="logo"
-          active={activeItem === "editorials"}
           onClick={this.handleItemClick}
         >
           <img src={logo} alt="icon" /> PTFeeder
@@ -163,7 +179,6 @@ const TopMenu = activeItem => {
         <Menu.Menu position="right" padded="true">
           <Menu.Item
             name="wiki"
-            active={activeItem === "upcomingEvents"}
             onClick={this.handleItemClick}
           >
             <a
@@ -177,7 +192,6 @@ const TopMenu = activeItem => {
 
           <Menu.Item
             name="videos"
-            active={activeItem === "upcomingEvents"}
             onClick={this.handleItemClick}
           >
             <a
@@ -191,7 +205,6 @@ const TopMenu = activeItem => {
 
           <Menu.Item
             name="support"
-            active={activeItem === "upcomingEvents"}
             onClick={this.handleItemClick}
           >
             <a
@@ -211,13 +224,12 @@ const TopMenu = activeItem => {
   );
 };
 
-const LeftNav = ({ menuItems, selectedMenuItem, onMenuSelect }) => {
+const LeftNav = ({ selectedMenuItem, menuItems, onMenuSelect }) => {
   return (
     <Grid.Column width={4} align="center">
       <Sticky>
         <Menu
           vertical
-          point="right"
           style={{
             fontFamily: "Poppins",
             fontSize: "16px",
@@ -225,7 +237,7 @@ const LeftNav = ({ menuItems, selectedMenuItem, onMenuSelect }) => {
             border: "none",
             width: "auto",
             textAlign: "center",
-            backgroundColor: background
+
           }}
         >
           {menuItems &&
@@ -233,6 +245,7 @@ const LeftNav = ({ menuItems, selectedMenuItem, onMenuSelect }) => {
               <Menu.Item
                 name={title}
                 key={title}
+                active={selectedMenuItem === title}
                 onClick={() => onMenuSelect(title)}
                 style={{
                   color: textColour
@@ -264,31 +277,25 @@ const MainContent = ({ options, menuItems, selectedMenuItem }) => {
       <Divider />
 
       <Form inverted id="form" action="">
-        {menuItems.map(title => (
-          <Header
-            key={title}
-            style={{
-              color: "white",
-              display: selectedMenuItem === title ? "block" : "none"
-            }}
-          >
-            {title}
-            <ComponentGroup group={options} />
-          </Header>
-        ))}
+        {menuItems.map(title => {
+          return _.find(options, { title: title }).options.map(data => (
+            <ComponentFactory data={data} />
+          ));
+        })}
       </Form>
     </Grid.Column>
   );
 };
 
-const ErrorModal = errors => {
+const ErrorModal = ({ errorMessage }) => {
   return (
-    <Modal open={errors}>
+    <Modal open={true}>
       <Modal.Header> ERROR </Modal.Header>
       <Modal.Content image>
         <Modal.Description>
           <Header> Malformed Configuration </Header>
           <p> JSON does not match the supplied schema </p>
+          <p>{errorMessage}</p>
         </Modal.Description>
       </Modal.Content>
     </Modal>
