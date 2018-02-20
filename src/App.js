@@ -197,13 +197,14 @@ const MainContent = ({options, menuItems, selectedMenuItem}) => {
     <Input icon="search" placeholder="Search..." width={1} transparent="transparent" fluid="fluid" small="true" inverted="inverted" padded="false"/>
     <Divider/>
     <Form inverted="inverted" id="form" action="">
-      {menuItems.map(title => <ComponentList title={title}/>)}
+      <Header style={{color: "white"}}>{selectedMenuItem}</Header>
+      {menuItems.map(category => <ComponentList category={category} selectedMenuItem={selectedMenuItem}/>)}
     </Form>
   </Grid.Column>);
 };
 
-const ComponentList = ({title}) => {
-  return _.find(options, {title: title}).options.map(data => (<ComponentFactory data={data}/>));
+const ComponentList = ({category, selectedMenuItem}) => {
+  return category===selectedMenuItem && _.find(options, {title: category}).options.map(data => ( <ComponentFactory data={data} category="category" />));
 }
 
 const ErrorModal = ({errorMessage}) => {
