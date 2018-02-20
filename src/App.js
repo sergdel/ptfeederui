@@ -9,6 +9,7 @@ import schema from "./config/json.schema.json";
 import _ from "lodash";
 // import DevTools from "mobx-react-devtools";
 import { Form, Input, Label } from "semantic-ui-react";
+
 import f from "fuzzysearch";
 import {
   Button,
@@ -330,6 +331,7 @@ const MainContent = ({
 
 const ComponentList = ({ category, selectedMenuItem, filter }) => {
   let currentOptions = _.find(options, { title: category });
+
   return (
     category === selectedMenuItem.title &&
     currentOptions.options.map(
