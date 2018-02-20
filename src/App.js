@@ -91,7 +91,7 @@ export default class App extends Component {
           style={{ backgroundColor: background }}
         >
           <Grid.Column>
-            <Segment>
+            <Segment basic>
               <LeftNav
                 menuItems={menuItems}
                 selectedMenuItem="General"
@@ -109,7 +109,7 @@ export default class App extends Component {
             />
           </Grid.Column>
           <Grid.Column>
-            <Segment>
+            <Segment basic>
               <ImportExport />
             </Segment>
           </Grid.Column>
