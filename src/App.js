@@ -18,7 +18,8 @@ import {
   Header,
   Divider,
   Sticky,
-  Segment
+  Segment,
+  Responsive
 } from "semantic-ui-react";
 const ajv = new Ajv({ allErrors: true, schemaId: "auto" });
 ajv.addMetaSchema(require("ajv/lib/refs/json-schema-draft-06.json"));
@@ -137,7 +138,9 @@ export default class App extends Component {
               filter={filter}
             />
           </Grid.Column>
-          <Grid.Column>
+
+          {/* RIGHT Side  */}
+          <Responsive as={Grid.Column} {...Responsive.onlyComputer}>
             <Grid.Row>
               <ImportExport />
               <Segment basic style={{ color: "#fff" }}>
@@ -148,7 +151,7 @@ export default class App extends Component {
                 </a>
               </Segment>
             </Grid.Row>
-          </Grid.Column>
+          </Responsive>
         </Grid.Row>
         {/* FOOTER */}
         <Grid.Row columns={1}>
