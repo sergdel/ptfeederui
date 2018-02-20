@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "ajv": "^6.1.1",
+    "fuzzysearch": "^1.0.3",
     "immutable": "^3.8.2",
     "lodash": "^4.17.5",
     "mobx": "^3.5.1",

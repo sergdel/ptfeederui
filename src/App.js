@@ -9,6 +9,7 @@ import schema from "./config/json.schema.json";
 import _ from "lodash";
 // import DevTools from "mobx-react-devtools";
 import { Form, Input, Label } from "semantic-ui-react";
+import f from "fuzzysearch";
 import {
   Button,
   Grid,
@@ -17,25 +18,25 @@ import {
   Header,
   Divider,
   Sticky,
-  Segment
+  Segment,
+  Search
 } from "semantic-ui-react";
-const ajv = new Ajv({ allErrors: true, schemaId: 'auto' });
-ajv.addMetaSchema(require('ajv/lib/refs/json-schema-draft-06.json'));
+const ajv = new Ajv({ allErrors: true, schemaId: "auto" });
+ajv.addMetaSchema(require("ajv/lib/refs/json-schema-draft-06.json"));
 
 export default class App extends Component {
+  componentWillMount() {
+    const validate = ajv.compile(schema);
+    const valid = validate(options || {});
 
-componentWillMount(){
-  const validate = ajv.compile(schema);
-  const valid = validate(options||{});
+    if (valid) console.log("Valid!");
+    else console.log("Invalid: " + ajv.errorsText(validate.errors));
 
-  if (valid) console.log("Valid!");
-  else console.log("Invalid: " + ajv.errorsText(validate.errors));
-
-  this.setState({
-    configHasErrors: Boolean(valid) === false,
-    configErrorMessage: ajv.errorsText(validate.errors),
-  })
-}
+    this.setState({
+      configHasErrors: Boolean(valid) === false,
+      configErrorMessage: ajv.errorsText(validate.errors)
+    });
+  }
 
   state = {
     selectedMenuItem: {title: options[0].title, wiki: options[0].wiki},
@@ -47,7 +48,8 @@ componentWillMount(){
     savedConfig: {},
     config: options.config,
     configHasErrors: {},
-    configErrorMessage:{}
+    configErrorMessage: {},
+    filter: ""
   };
 
   onMenuSelect = item => {
@@ -56,6 +58,8 @@ componentWillMount(){
     });
     console.log("setting selectedMenuItem to ", item);
   };
+
+  onFilterList = (event, { value }) => this.setState({ filter: value });
 
   save = () => {
     const result = Array.from(document.querySelector("form").elements)
@@ -76,11 +80,12 @@ componentWillMount(){
       menuItems,
       selectedMenuItem,
       configHasErrors,
-      configErrorMessage
+      configErrorMessage,
+      filter
     } = this.state;
 
-    if(configHasErrors){
-      return <ErrorModal  errorMessage={configErrorMessage}/>
+    if (configHasErrors) {
+      return <ErrorModal errorMessage={configErrorMessage} />;
     }
 
     console.log (selectedMenuItem);
@@ -97,7 +102,7 @@ componentWillMount(){
       >
         {/* <DevTools /> */}
 
-        {/* HEADER  */}
+        {/* HEADER */}
         <Grid.Row columns={1}>
           <Grid.Column>
             <TopMenu activeItem={selectedMenuItem} />
@@ -106,13 +111,15 @@ componentWillMount(){
 
         <Grid.Row
           columns="equal"
-          stretched
-          centered
+          stretched="stretched"
+          centered="centered"
           padded="true"
-          style={{ backgroundColor: background }}
+          style={{
+            backgroundColor: background
+          }}
         >
           <Grid.Column>
-            <Segment basic>
+            <Segment basic="basic">
               <LeftNav
                 selectedMenuItem={selectedMenuItem}
                 menuItems={menuItems}
@@ -127,10 +134,12 @@ componentWillMount(){
               options={options}
               menuItems={menuItems}
               selectedMenuItem={selectedMenuItem}
+              onFilterList={this.onFilterList}
+              filter={filter}
             />
           </Grid.Column>
           <Grid.Column>
-            <Segment basic>
+            <Segment basic="basic">
               <ImportExport />
             </Segment>
           </Grid.Column>
@@ -146,16 +155,23 @@ componentWillMount(){
 
 const ImportExport = () => {
   return (
-    <div>
-      <Button primary fluid onClick={this.save}>
+    <Segment floated="floated" attached="attached">
+      <Button
+        floating="floating"
+        primary="primary"
+        fluid="fluid"
+        onClick={this.save}
+      >
+        <Label icon="download" />
         Import
       </Button>
 
       <Divider />
-      <Button secondary fluid onClick={this.save}>
-        Export
+      <Button secondary="primary" fluid="fluid" onClick={this.save}>
+        <Label icon="download" />
+        Import
       </Button>
-    </div>
+    </Segment>
   );
 };
 
@@ -170,18 +186,13 @@ const TopMenu = props => {
       }}
     >
       <Menu>
-        <Menu.Item
-          name="logo"
-          onClick={this.handleItemClick}
-        >
-          <img src={logo} alt="icon" /> PTFeeder
+        <Menu.Item name="logo" onClick={this.handleItemClick}>
+          <img src={logo} alt="icon" />
+          PTFeeder
         </Menu.Item>
 
         <Menu.Menu position="right" padded="true">
-          <Menu.Item
-            name="wiki"
-            onClick={this.handleItemClick}
-          >
+          <Menu.Item name="wiki" onClick={this.handleItemClick}>
             <a
               href={"https://github.com/mehtadone/PTFeeder"+props.activeItem.wiki}
               target="_blank"
@@ -191,10 +202,7 @@ const TopMenu = props => {
             </a>
           </Menu.Item>
 
-          <Menu.Item
-            name="videos"
-            onClick={this.handleItemClick}
-          >
+          <Menu.Item name="videos" onClick={this.handleItemClick}>
             <a
               href="https://github.com/mehtadone/PTFeeder/wiki/Videos"
               target="_blank"
@@ -204,10 +212,7 @@ const TopMenu = props => {
             </a>
           </Menu.Item>
 
-          <Menu.Item
-            name="support"
-            onClick={this.handleItemClick}
-          >
+          <Menu.Item name="support" onClick={this.handleItemClick}>
             <a
               href="https://github.com/mehtadone/PTFeeder/issues"
               target="_blank"
@@ -230,15 +235,14 @@ const LeftNav = ({ selectedMenuItem, menuItems, onMenuSelect }) => {
     <Grid.Column width={4} align="center">
       <Sticky>
         <Menu
-          vertical
+          vertical="vertical"
           style={{
             fontFamily: "Poppins",
             fontSize: "16px",
             boxShadow: "none",
             border: "none",
             width: "auto",
-            textAlign: "center",
-
+            textAlign: "center"
           }}
         >
           {menuItems &&
@@ -261,41 +265,68 @@ const LeftNav = ({ selectedMenuItem, menuItems, onMenuSelect }) => {
   );
 };
 
-const MainContent = ({ options, menuItems, selectedMenuItem }) => {
+const MainContent = ({
+  options,
+  menuItems,
+  selectedMenuItem,
+  onFilterList,
+  filter
+}) => {
   return (
     <Grid.Column width={5}>
       <Input
         icon="search"
+        type="text"
         placeholder="Search..."
-        width={1}
-        transparent
-        fluid
+        onChange={onFilterList}
+        transparent="transparent"
+        fluid="fluid"
         small="true"
-        inverted
+        inverted="inverted"
         padded="false"
       />
 
       <Divider />
-
-      <Form inverted id="form" action="">
-        {menuItems.map(item => {
-          return _.find(options, { title: item.title }).options.map(data => (
-            <ComponentFactory data={data} />
-          ));
-        })}
+      <Form inverted="inverted" id="form" action="">
+        <Header
+          style={{
+            color: "white"
+          }}
+        >
+          {selectedMenuItem.title}
+        </Header>
+        {menuItems.map(item => (
+          <ComponentList
+            category={item.title}
+            selectedMenuItem={selectedMenuItem}
+            filter={filter}
+          />
+        ))}
       </Form>
     </Grid.Column>
+  );
+};
+
+const ComponentList = ({ category, selectedMenuItem, filter }) => {
+  return (
+    category === selectedMenuItem &&
+    _.find(options, { title: category }).options.map(
+      data =>
+        f(filter.toLowerCase(), data.title.toLowerCase()) && (
+          <ComponentFactory data={data} category="category" />
+        )
+    )
   );
 };
 
 const ErrorModal = ({ errorMessage }) => {
   return (
     <Modal open={true}>
-      <Modal.Header> ERROR </Modal.Header>
-      <Modal.Content image>
+      <Modal.Header>ERROR</Modal.Header>
+      <Modal.Content image="image">
         <Modal.Description>
-          <Header> Malformed Configuration </Header>
-          <p> JSON does not match the supplied schema </p>
+          <Header>Malformed Configuration</Header>
+          <p>JSON does not match the supplied schema</p>
           <p>{errorMessage}</p>
         </Modal.Description>
       </Modal.Content>
