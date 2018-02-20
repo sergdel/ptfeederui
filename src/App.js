@@ -138,9 +138,14 @@ export default class App extends Component {
             />
           </Grid.Column>
           <Grid.Column>
-            <Segment basic="basic">
+            <Grid.Row>
               <ImportExport />
-            </Segment>
+              <Segment basic style={{ color: "#fff" }}>
+                More Info About <strong>{selectedMenuItem.title}</strong> can be
+                found on the
+                <a href={selectedMenuItem.wiki}> Wiki </a>
+              </Segment>
+            </Grid.Row>
           </Grid.Column>
         </Grid.Row>
         {/* FOOTER */}
@@ -154,7 +159,7 @@ export default class App extends Component {
 
 const ImportExport = () => {
   return (
-    <Segment floated="floated" attached="attached">
+    <Segment>
       <Button
         floating="floating"
         primary="primary"
