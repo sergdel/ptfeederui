@@ -57,7 +57,6 @@ export default class App extends Component {
     this.setState({
       selectedMenuItem: item
     });
-    console.log("setting selectedMenuItem to ", item);
   };
 
   onFilterList = (event, { value }) => this.setState({ filter: value });
