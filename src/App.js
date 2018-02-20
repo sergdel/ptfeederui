@@ -87,7 +87,6 @@ export default class App extends Component {
       return <ErrorModal errorMessage={configErrorMessage} />;
     }
 
-    console.log(selectedMenuItem);
     return (
       <Grid
         style={{
@@ -160,6 +159,26 @@ export default class App extends Component {
 const ImportExport = () => {
   return (
     <Segment>
+      <Button
+        floating="floating"
+        primary="primary"
+        fluid="fluid"
+        onClick={this.save}
+      >
+        <Label icon="download" />
+        Save Settings
+      </Button>
+      <br/>
+      <Button
+        floating="floating"
+        primary="primary"
+        fluid="fluid"
+        onClick={this.save}
+      >
+        <Label icon="download" />
+        Export Settings
+      </Button>
+      <br/>
       <Button
         floating="floating"
         primary="primary"
@@ -308,9 +327,10 @@ const MainContent = ({
 };
 
 const ComponentList = ({ category, selectedMenuItem, filter }) => {
+  let currentOptions = _.find(options, { title: category });
   return (
     category === selectedMenuItem.title &&
-    _.find(options, { title: category }).options.map(
+    currentOptions.options.map(
       data =>
         f(filter.toLowerCase(), data.title.toLowerCase()) && (
           <ComponentFactory data={data} category="category" />

@@ -27,11 +27,11 @@ export default class DropDown extends PureComponent {
   handleChange() {}
 
   render() {
-    const { title, allowAdditions } = this.props;
+    const { title, allowAdditions, wiki } = this.props;
     const { options } = this.state;
     return (
       <Form.Field style={{ paddingTop: "20px" }}>
-        <InfoLabel title={title} />
+        <InfoLabel title={title} wiki={wiki}/>
         <Dropdown
           placeholder={title}
           size="large"

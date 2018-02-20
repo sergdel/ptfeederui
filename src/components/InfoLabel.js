@@ -3,7 +3,8 @@ import { Label, Popup } from "semantic-ui-react";
 
 class InfoLabel extends Component {
   render() {
-    const { title } = this.props;
+    const { title, wiki } = this.props;
+    console.log (this.props);
     return (
       <Popup
         trigger={
@@ -20,7 +21,7 @@ class InfoLabel extends Component {
             {title || ""}
           </Label>
         }
-        content="more info"
+        content={wiki ? wiki : "more info"}
       />
     );
   }

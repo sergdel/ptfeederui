@@ -37,12 +37,12 @@ export default class NumberInput extends PureComponent {
   };
 
   render() {
-    const { percentage, acceptBoolean, title, note } = this.props;
+    const { percentage, acceptBoolean, title, note, wiki } = this.props;
 
     if (acceptBoolean) {
       return (
         <Form.Field style={{ paddingTop: "20px" }}>
-          <InfoLabel />
+          <InfoLabel wiki={wiki}/>
           <Dropdown
             placeholder={title}
             size="large"
@@ -67,7 +67,7 @@ export default class NumberInput extends PureComponent {
 
     return (
       <Form.Field style={{ paddingTop: "20px" }}>
-        <InfoLabel title={title} />
+        <InfoLabel title={title} wiki={wiki}/>
         <Input
           type="text"
           pattern="[0-9]*"

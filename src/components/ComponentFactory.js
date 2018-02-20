@@ -16,7 +16,8 @@ export class ComponentFactory extends Component {
         acceptBoolean,
         type,
         percentage,
-        note
+        note,
+        wiki
       }
     } = this.props;
 
@@ -27,6 +28,7 @@ export class ComponentFactory extends Component {
             title={title}
             options={options}
             allowAdditions={allowAdditions}
+            wiki={wiki}
           />
         );
       case "Number":
@@ -36,6 +38,7 @@ export class ComponentFactory extends Component {
             percentage={percentage}
             title={title}
             note={note}
+            wiki={wiki}
           />
         );
 
@@ -47,12 +50,13 @@ export class ComponentFactory extends Component {
               { key: "true", value: "true", text: "true" },
               { key: "false", value: "false", text: "false" }
             ]}
+            wiki={wiki}
           />
         );
       case "String":
         return (
           <Form.Field>
-            <InfoLabel title={title} />
+            <InfoLabel title={title} wiki={wiki}/>
             <Input placeholder={title} type="text" name={title} size="mini" />
           </Form.Field>
         );
