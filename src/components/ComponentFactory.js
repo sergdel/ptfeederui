@@ -7,9 +7,17 @@ import InfoLabel from "./InfoLabel";
 export const ComponentGroup = ({ group }) => (
   <div>
     {group &&
-      group.map(item => (
-        <ComponentFactory category={group.title} tag={item.type} data={item} />
-      ))}
+      group.map(
+        item =>
+          item.options &&
+          item.options.map(data => (
+            <ComponentFactory
+              category={data.title}
+              tag={data.type}
+              data={data}
+            />
+          ))
+      )}
   </div>
 );
 

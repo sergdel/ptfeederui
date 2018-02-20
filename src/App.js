@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { ComponentGroup } from "./components/ComponentFactory";
 import logo from "./assets/images/logo.png";
 import { config as options } from "./config/config.json";
-import { background, textColour, foreground } from "./config/constants";
+import { background, textColour } from "./config/constants";
 import "./App.css";
 import Ajv from "ajv";
 import schema from "./config/json.schema.json";
@@ -30,7 +30,6 @@ export default class App extends Component {
   state = {
     selectedMenuItem: "General",
     availableConfig: null,
-    activeItem: "",
     menuItems: options.map(item => {
       return item.title;
     }),
@@ -40,11 +39,11 @@ export default class App extends Component {
     config: options.config
   };
 
-  onMenuSelect = item => {
+  onMenuSelect = title => {
     this.setState({
-      selectedMenuItem: item.title
+      selectedMenuItem: title
     });
-    console.log("setting selectedMenuItem to ", item.component);
+    console.log("setting selectedMenuItem to ", title);
   };
 
   save = () => {
@@ -71,7 +70,7 @@ export default class App extends Component {
           width: "height: 90vh",
           overflow: "none"
         }}
-        middle
+        middle={true}
         aligned
         center
       >
@@ -88,11 +87,9 @@ export default class App extends Component {
           columns="equal"
           stretched
           centered
-          padded
+          padded="true"
           style={{ backgroundColor: background }}
         >
-          {/* Main Content */}
-
           <Grid.Column>
             <Segment>
               <LeftNav
@@ -102,14 +99,19 @@ export default class App extends Component {
               />
             </Segment>
           </Grid.Column>
+
+          {/* Main Content */}
           <Grid.Column>
-            <Segment>1</Segment>
-            <Segment>2</Segment>
+            <MainContent
+              options={options}
+              menuItems={menuItems}
+              selectedMenuItem={selectedMenuItem}
+            />
           </Grid.Column>
           <Grid.Column>
-            <Segment>1</Segment>
-            <Segment>2</Segment>
-            <Segment>3</Segment>
+            <Segment>
+              <ImportExport />
+            </Segment>
           </Grid.Column>
         </Grid.Row>
         {/* FOOTER */}
@@ -121,11 +123,18 @@ export default class App extends Component {
   }
 }
 
-const SaveButton = () => {
+const ImportExport = () => {
   return (
-    <Button primary fluid onClick={this.save}>
-      Save all changes
-    </Button>
+    <div>
+      <Button primary fluid onClick={this.save}>
+        Import
+      </Button>
+
+      <Divider />
+      <Button secondary fluid onClick={this.save}>
+        Export
+      </Button>
+    </div>
   );
 };
 
@@ -148,7 +157,7 @@ const TopMenu = activeItem => {
           <img src={logo} alt="icon" /> PTFeeder
         </Menu.Item>
 
-        <Menu.Menu position="right" borderless padded>
+        <Menu.Menu position="right" padded="true">
           <Menu.Item
             name="wiki"
             active={activeItem === "upcomingEvents"}
@@ -234,7 +243,7 @@ const LeftNav = ({ menuItems, selectedMenuItem, onMenuSelect }) => {
   );
 };
 
-const MainContent = (config, selectedMenuItem) => {
+const MainContent = ({ options, menuItems, selectedMenuItem }) => {
   return (
     <Grid.Column width={5}>
       <Input
@@ -243,24 +252,24 @@ const MainContent = (config, selectedMenuItem) => {
         width={1}
         transparent
         fluid
-        small
+        small="true"
         inverted
-        padded={false}
+        padded="false"
       />
 
       <Divider />
 
       <Form inverted id="form" action="">
-        {config.map(group => (
+        {menuItems.map(title => (
           <Header
+            key={title}
             style={{
               color: "white",
-              display: selectedMenuItem === group.title ? "block" : "none"
+              display: selectedMenuItem === title ? "block" : "none"
             }}
           >
-            {group.title}
-
-            <ComponentGroup group={group.options} />
+            {title}
+            <ComponentGroup group={options} />
           </Header>
         ))}
       </Form>
