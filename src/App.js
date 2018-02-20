@@ -18,8 +18,7 @@ import {
   Header,
   Divider,
   Sticky,
-  Segment,
-  Search
+  Segment
 } from "semantic-ui-react";
 const ajv = new Ajv({ allErrors: true, schemaId: "auto" });
 ajv.addMetaSchema(require("ajv/lib/refs/json-schema-draft-06.json"));
@@ -88,7 +87,7 @@ export default class App extends Component {
       return <ErrorModal errorMessage={configErrorMessage} />;
     }
 
-    console.log (selectedMenuItem);
+    console.log(selectedMenuItem);
     return (
       <Grid
         style={{
@@ -163,13 +162,7 @@ const ImportExport = () => {
         onClick={this.save}
       >
         <Label icon="download" />
-        Import
-      </Button>
-
-      <Divider />
-      <Button secondary="primary" fluid="fluid" onClick={this.save}>
-        <Label icon="download" />
-        Import
+        Export Settings
       </Button>
     </Segment>
   );
