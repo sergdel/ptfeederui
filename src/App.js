@@ -221,7 +221,8 @@ const LeftNav = ({ menuItems, selectedMenuItem, onMenuSelect }) => {
             boxShadow: "none",
             border: "none",
             width: "auto",
-            textAlign: "center"
+            textAlign: "center",
+            backgroundColor: background
           }}
         >
           {menuItems &&
