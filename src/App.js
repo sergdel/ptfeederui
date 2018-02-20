@@ -142,8 +142,10 @@ export default class App extends Component {
               <ImportExport />
               <Segment basic style={{ color: "#fff" }}>
                 More Info About <strong>{selectedMenuItem.title}</strong> can be
-                found on the
-                <a href={selectedMenuItem.wiki}> Wiki </a>
+                found on the{" "}
+                <a href={selectedMenuItem.wiki}>
+                  {selectedMenuItem.title} Wiki
+                </a>
               </Segment>
             </Grid.Row>
           </Grid.Column>
