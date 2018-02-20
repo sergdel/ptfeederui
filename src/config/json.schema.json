@@ -16,6 +16,15 @@
               "General"
             ]
           },
+          "wiki": {
+            "$id": "/properties/config/items/properties/wiki",
+            "type": "string",
+            "title": "Wiki URL for Property",
+            "default": "",
+            "examples": [
+              "/wiki/general"
+            ]
+          },
           "options": {
             "$id": "/properties/config/items/properties/options",
             "type": "array",

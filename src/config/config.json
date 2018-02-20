@@ -2,6 +2,7 @@
 	"config": [
 		{
 			"title": "General",
+			"wiki" : "/wiki/general",
 			"options": [
 				{
 					"title": "BaseCurrency",
@@ -55,6 +56,7 @@
 		},
 		{
 			"title": "Market Conditions",
+			"wiki" : "/wiki/appsettings.json---Market-Conditions",
 			"options": [
 				{
 					"title": "FolderName",
@@ -175,6 +177,7 @@
 		},
 		{
 			"title": "Volume",
+			"wiki" : "/wiki/general",
 			"options": [
 				{
 					"title": "MaxVolume",
@@ -284,6 +287,7 @@
 		},
 		{
 			"title": "Price",
+			"wiki" : "/wiki/general",
 			"options": [
 				{
 					"title": "MaxPriceTrendPercentageChange",
@@ -379,6 +383,7 @@
 		},
 		{
 			"title": "Price Change",
+			"wiki" : "/wiki/general",
 			"options": [
 				{
 					"title": "MaxPriceTrendPercentageChange",
@@ -478,10 +483,12 @@
 		},
 		{
 			"title": "Exchange",
+			"wiki" : "/wiki/general",
 			"options":[]
 		},
 		{
 			"title": "HighLowPriceChange",
+			"wiki" : "/wiki/general",
 			"options":[]
 		}
 	]

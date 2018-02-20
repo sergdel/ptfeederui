@@ -38,10 +38,10 @@ componentWillMount(){
 }
 
   state = {
-    selectedMenuItem: "General",
+    selectedMenuItem: {title: options[0].title, wiki: options[0].wiki},
     availableConfig: null,
     menuItems: options.map(item => {
-      return item.title;
+      return {title: item.title, wiki: item.wiki};
     }),
     userData: {},
     savedConfig: {},
@@ -50,11 +50,11 @@ componentWillMount(){
     configErrorMessage:{}
   };
 
-  onMenuSelect = title => {
+  onMenuSelect = item => {
     this.setState({
-      selectedMenuItem: title
+      selectedMenuItem: item
     });
-    console.log("setting selectedMenuItem to ", title);
+    console.log("setting selectedMenuItem to ", item);
   };
 
   save = () => {
@@ -83,6 +83,7 @@ componentWillMount(){
       return <ErrorModal  errorMessage={configErrorMessage}/>
     }
 
+    console.log (selectedMenuItem);
     return (
       <Grid
         style={{
@@ -99,7 +100,7 @@ componentWillMount(){
         {/* HEADER  */}
         <Grid.Row columns={1}>
           <Grid.Column>
-            <TopMenu activeItem="none" />
+            <TopMenu activeItem={selectedMenuItem} />
           </Grid.Column>
         </Grid.Row>
 
@@ -158,7 +159,7 @@ const ImportExport = () => {
   );
 };
 
-const TopMenu = activeItem => {
+const TopMenu = props => {
   return (
     <Header
       style={{
@@ -182,7 +183,7 @@ const TopMenu = activeItem => {
             onClick={this.handleItemClick}
           >
             <a
-              href="https://github.com/mehtadone/PTFeeder/wiki"
+              href={"https://github.com/mehtadone/PTFeeder"+props.activeItem.wiki}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -241,17 +242,17 @@ const LeftNav = ({ selectedMenuItem, menuItems, onMenuSelect }) => {
           }}
         >
           {menuItems &&
-            menuItems.map(title => (
+            menuItems.map(item => (
               <Menu.Item
-                name={title}
-                key={title}
-                active={selectedMenuItem === title}
-                onClick={() => onMenuSelect(title)}
+                name={item.title}
+                key={item.title}
+                active={selectedMenuItem === item}
+                onClick={() => onMenuSelect(item)}
                 style={{
                   color: textColour
                 }}
               >
-                {title}
+                {item.title}
               </Menu.Item>
             ))}
         </Menu>
@@ -277,8 +278,8 @@ const MainContent = ({ options, menuItems, selectedMenuItem }) => {
       <Divider />
 
       <Form inverted id="form" action="">
-        {menuItems.map(title => {
-          return _.find(options, { title: title }).options.map(data => (
+        {menuItems.map(item => {
+          return _.find(options, { title: item.title }).options.map(data => (
             <ComponentFactory data={data} />
           ));
         })}
