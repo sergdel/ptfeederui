@@ -39,10 +39,10 @@ export default class App extends Component {
   }
 
   state = {
-    selectedMenuItem: {title: options[0].title, wiki: options[0].wiki},
+    selectedMenuItem: { title: options[0].title, wiki: options[0].wiki },
     availableConfig: null,
     menuItems: options.map(item => {
-      return {title: item.title, wiki: item.wiki};
+      return { title: item.title, wiki: item.wiki };
     }),
     userData: {},
     savedConfig: {},
@@ -194,7 +194,9 @@ const TopMenu = props => {
         <Menu.Menu position="right" padded="true">
           <Menu.Item name="wiki" onClick={this.handleItemClick}>
             <a
-              href={"https://github.com/mehtadone/PTFeeder"+props.activeItem.wiki}
+              href={
+                "https://github.com/mehtadone/PTFeeder" + props.activeItem.wiki
+              }
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -309,7 +311,7 @@ const MainContent = ({
 
 const ComponentList = ({ category, selectedMenuItem, filter }) => {
   return (
-    category === selectedMenuItem &&
+    category === selectedMenuItem.title &&
     _.find(options, { title: category }).options.map(
       data =>
         f(filter.toLowerCase(), data.title.toLowerCase()) && (
