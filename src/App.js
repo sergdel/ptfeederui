@@ -33,7 +33,8 @@ export default class App extends Component {
     menuItems: options.map(item => {
       return item.title;
     }),
-    invalidConfig: Boolean(valid) === false,
+    configHasErrors: Boolean(valid) === false,
+    configErrorMessage: ajv.errorsText(validate.errors),
     userData: {},
     savedConfig: {},
     config: options.config
@@ -61,7 +62,7 @@ export default class App extends Component {
   };
 
   render() {
-    const { menuItems, config, activeItem, selectedMenuItem } = this.state;
+    const { menuItems, selectedMenuItem, configHasErrors } = this.state;
 
     return (
       <Grid
@@ -118,6 +119,7 @@ export default class App extends Component {
         <Grid.Row columns={1}>
           <Grid.Column />
         </Grid.Row>
+        <ErrorModal errors={configHasErrors} />
       </Grid>
     );
   }
@@ -278,9 +280,9 @@ const MainContent = ({ options, menuItems, selectedMenuItem }) => {
   );
 };
 
-const ErrorModal = () => {
+const ErrorModal = errors => {
   return (
-    <Modal open={this.state.invalidConfig}>
+    <Modal open={errors}>
       <Modal.Header> ERROR </Modal.Header>
       <Modal.Content image>
         <Modal.Description>
