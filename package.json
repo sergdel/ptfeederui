@@ -13,6 +13,8 @@
     "mobx-react": "^4.4.2",
     "morgan": "^1.9.0",
     "react": "^16.2.0",
+    "react-app-rewire-mobx": "^1.0.7",
+    "react-app-rewired": "^1.4.1",
     "react-dom": "^16.2.0",
     "react-scripts": "1.1.1",
     "semantic-ui-react": "^0.78.2"
@@ -21,10 +23,10 @@
     "extends": "react-app"
   },
   "scripts": {
-    "start": "concurrently --kill-others-on-fail \"react-scripts start\" \"nodemon server.js\"",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "start": "concurrently --kill-others-on-fail \"react-app-rewired start\" \"nodemon server.js\"",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test --env=jsdom",
+    "eject": "react-app-rewired eject"
   },
   "devDependencies": {
     "mobx-react-devtools": "^4.2.15"
