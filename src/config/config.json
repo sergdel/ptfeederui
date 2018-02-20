@@ -15,7 +15,7 @@
 					],
 					"allowAdditions": true,
 					"required": false,
-					"wiki": "/wiki/BaseCurrency"
+					"wiki": "/wiki#BaseCurrency"
 				},
 				{
 					"title": "BuyStrategy - select or create",
@@ -44,10 +44,10 @@
 					],
 					"allowAdditions": true,
 					"required": false,
-					"wiki": "/wiki/BuyStrategy"
+					"wiki": "/wiki#BuyStrategy"
 				},
 				{ "title": "BuyValue", "type": "Number" },
-				{ "title": "Cost", "type": "Number", "wiki": "/wiki/Cost" },
+				{ "title": "Cost", "type": "Number", "wiki": "/wiki#Cost" },
 				{ "title": "DcaEnabled", "type": "Number" },
 				{ "title": "DcaMaxBuySpread", "type": "Number" },
 				{ "title": "DcaMaxBuyTimes", "type": "Number" },

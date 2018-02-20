@@ -21,8 +21,13 @@ class InfoLabel extends Component {
             {title || ""}
           </Label>
         }
-        content={wiki ? wiki : "more info"}
-      />
+        flowing
+        hoverable
+      >
+        {wiki ?
+          <a href={"https://github.com/mehtadone/PTFeeder"+wiki}>{"https://github.com/mehtadone/PTFeeder"+wiki}</a>
+          : "more info"}
+      </Popup>
     );
   }
 }
