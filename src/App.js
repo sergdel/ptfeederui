@@ -19,7 +19,8 @@ import {
   Divider,
   Sticky,
   Segment,
-  Responsive
+  Responsive,
+  Popup
 } from "semantic-ui-react";
 const ajv = new Ajv({ allErrors: true, schemaId: "auto" });
 ajv.addMetaSchema(require("ajv/lib/refs/json-schema-draft-06.json"));
@@ -164,16 +165,15 @@ export default class App extends Component {
 
 const ImportExport = () => {
   return (
-    <Segment>
-      <Button
-        floating="floating"
-        primary="primary"
-        fluid="fluid"
-        onClick={this.save}
-      >
-        <Label icon="download" />
-        Export Settings
-      </Button>
+    <Segment basic>
+      <Popup
+        trigger={
+          <a fluid="fluid" href="http://localhost:5000/download">
+            <Label icon="download" />
+          </a>
+        }
+        content="export settings"
+      />
     </Segment>
   );
 };
