@@ -234,7 +234,7 @@ const LeftNav = ({ menuItems, selectedMenuItem, onMenuSelect }) => {
   );
 };
 
-const NavigationMenu = (config, selectedMenuItem) => {
+const MainContent = (config, selectedMenuItem) => {
   return (
     <Grid.Column width={5}>
       <Input
