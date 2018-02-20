@@ -1,12 +1,8 @@
 {
   "$id": "/",
-  "type": "object",
+  "type": "array",
   "definitions": {},
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "properties": {
-    "config": {
-      "$id": "/properties/config",
-      "type": "array",
       "items": {
         "$id": "/properties/config/items",
         "type": "object",
@@ -18,24 +14,6 @@
             "default": "",
             "examples": [
               "General"
-            ]
-          },
-          "description": {
-            "$id": "/properties/config/items/properties/description",
-            "type": "string",
-            "title": "The Description Schema",
-            "default": "",
-            "examples": [
-              "General Settings"
-            ]
-          },
-          "component": {
-            "$id": "/properties/config/items/properties/component",
-            "type": "string",
-            "title": "The Component Schema",
-            "default": "",
-            "examples": [
-              "Dropdown"
             ]
           },
           "options": {
@@ -98,32 +76,16 @@
                         ]
                       }
                     }
+                    ,"required":["key", "text", "value"]
                   }
-                },
-                "allowAdditions": {
-                  "$id": "/properties/config/items/properties/options/items/properties/allowAdditions",
-                  "type": "boolean",
-                  "title": "The Allowadditions Schema",
-                  "default": false,
-                  "examples": [
-                    true
-                  ]
-                },
-                "required": {
-                  "$id": "/properties/config/items/properties/options/items/properties/required",
-                  "type": "boolean",
-                  "title": "The Required Schema",
-                  "default": false,
-                  "examples": [
-                    false
-                  ]
                 }
-              }
+              },
+              "required":["title", "type"]
             }
           }
-        }
-      }
-    }
-  },
-  "required" : ["config"]
+        },
+        "required":["title", "options"],
+        "additionalProperties": false
+      },
+      "additionalProperties": false
 }

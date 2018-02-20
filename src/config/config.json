@@ -2,8 +2,6 @@
 	"config": [
 		{
 			"title": "General",
-			"description": "General Settings",
-			"component": "Dropdown",
 			"options": [
 				{
 					"title": "BaseCurrency",
@@ -57,9 +55,6 @@
 		},
 		{
 			"title": "Market Conditions",
-			"component": "Volume",
-			"sub-menus": [],
-			"description": "General Settings",
 			"options": [
 				{
 					"title": "FolderName",
@@ -180,8 +175,6 @@
 		},
 		{
 			"title": "Volume",
-			"description": "some description",
-			"component": "Volume",
 			"options": [
 				{
 					"title": "MaxVolume",
@@ -291,7 +284,6 @@
 		},
 		{
 			"title": "Price",
-			"description": "some description",
 			"options": [
 				{
 					"title": "MaxPriceTrendPercentageChange",
@@ -387,7 +379,6 @@
 		},
 		{
 			"title": "Price Change",
-			"description": "some description",
 			"options": [
 				{
 					"title": "MaxPriceTrendPercentageChange",
@@ -487,15 +478,11 @@
 		},
 		{
 			"title": "Exchange",
-			"component": "Volume",
-			"sub-menus": [],
-			"description": "General Settings"
+			"options":[]
 		},
 		{
 			"title": "HighLowPriceChange",
-			"component": "Volume",
-			"sub-menus": [],
-			"description": "General Settings"
+			"options":[]
 		}
 	]
 }
