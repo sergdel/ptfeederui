@@ -6,7 +6,7 @@ import InfoLabel from "./InfoLabel";
 
 export class ComponentFactory extends Component {
   state = {};
-
+  
   render() {
     const {
       data: {
@@ -17,8 +17,10 @@ export class ComponentFactory extends Component {
         type,
         percentage,
         note,
-        wiki
-      }
+        wiki,
+        value
+      },
+      registerField
     } = this.props;
 
     switch (type) {
@@ -29,6 +31,10 @@ export class ComponentFactory extends Component {
             options={options}
             allowAdditions={allowAdditions}
             wiki={wiki}
+            curvalue={value}
+            ref={(input) => {
+              registerField(title, input);
+            }}
           />
         );
       case "Number":
@@ -39,6 +45,10 @@ export class ComponentFactory extends Component {
             title={title}
             note={note}
             wiki={wiki}
+            curvalue={value}
+            ref={(input) => {
+              registerField(title, input);
+            }}
           />
         );
 
@@ -51,13 +61,20 @@ export class ComponentFactory extends Component {
               { key: "false", value: "false", text: "false" }
             ]}
             wiki={wiki}
+            curvalue={value}
+            ref={(input) => {
+              registerField(title, input);
+            }}
           />
         );
       case "String":
         return (
           <Form.Field>
             <InfoLabel title={title} wiki={wiki}/>
-            <Input placeholder={title} type="text" name={title} size="mini" />
+            <Input placeholder={title} type="text" name={title} size="mini"
+                   curvalue={value}
+                   ref={(input) => { registerField(title, input);}}
+            />
           </Form.Field>
         );
       default:

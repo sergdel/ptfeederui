@@ -27,6 +27,14 @@ const ajv = new Ajv({ allErrors: true, schemaId: "auto" });
 ajv.addMetaSchema(require("ajv/lib/refs/json-schema-draft-06.json"));
 
 export default class App extends Component {
+  constructor(props) {
+    super(props);
+    this.registerField = this.registerField.bind(this);
+    this.save = this.save.bind(this);
+    this.fields = [];
+    this.savedConfig = {};
+  }
+
   componentWillMount() {
     const validate = ajv.compile(schema);
     const valid = validate(options || {});
@@ -63,6 +71,29 @@ export default class App extends Component {
   onFilterList = (event, { value }) => this.setState({ filter: value });
 
   save = () => {
+    /*const result = Array.from(document.querySelector("form").elements)
+      .filter(function(item) {
+        return item.name && item.value;
+      })
+      .map(function(item) {
+        return {
+          [item.name]: item.value
+        };
+      });*/
+
+    const { selectedMenuItem } = this.state;
+    let res = [];
+    let state = this.state;
+    _.each(Object.keys(this.fields), (item, index) => {
+      if (this.fields[item]) {
+        res[item] = this.fields[item].value;
+      }
+    });
+    state.savedConfig[selectedMenuItem.title] = res;
+    this.setState(state);
+  };
+
+  import = () => {
     const result = Array.from(document.querySelector("form").elements)
       .filter(function(item) {
         return item.name && item.value;
@@ -74,6 +105,10 @@ export default class App extends Component {
       });
 
     this.setState({ savedConfig: result });
+  };
+
+  registerField = (title, ref) => {
+    this.fields[title] = ref;
   };
 
   render() {
@@ -136,13 +171,14 @@ export default class App extends Component {
               selectedMenuItem={selectedMenuItem}
               onFilterList={this.onFilterList}
               filter={filter}
+              registerField={this.registerField}
             />
           </Grid.Column>
 
           {/* RIGHT Side  */}
           <Responsive as={Grid.Column} {...Responsive.onlyComputer}>
             <Grid.Row>
-              <ImportExport />
+              <ImportExport save={this.save} export={this.export}/>
               <Segment basic style={{ color: "#fff" }}>
                 More Info About <strong>{selectedMenuItem.title}</strong> can be
                 found on the{" "}
@@ -162,13 +198,13 @@ export default class App extends Component {
   }
 }
 
-const ImportExport = () => {
+const ImportExport = (props) => {
   return (
     <Segment basic>
       <Popup
         trigger={
-          <a fluid="fluid" href="http://localhost:5000/download">
-            <Label icon="download" />
+          <a fluid="fluid" href="#" onClick={props.save}>
+            <Label icon="save" />
           </a>
         }
         content="save settings"
@@ -176,8 +212,8 @@ const ImportExport = () => {
       <br/>
       <Popup
         trigger={
-          <a fluid="fluid" href="http://localhost:5000/download">
-            <Label icon="download" />
+          <a fluid="fluid"  onClick={props.import}>
+            <Label icon="upload" />
           </a>
         }
         content="import settings"
@@ -206,13 +242,13 @@ const TopMenu = props => {
       }}
     >
       <Menu>
-        <Menu.Item name="logo" onClick={this.handleItemClick}>
+        <Menu.Item name="logo" >
           <img src={logo} alt="icon" />
           PTFeeder
         </Menu.Item>
 
         <Menu.Menu position="right" padded="true">
-          <Menu.Item name="wiki" onClick={this.handleItemClick}>
+          <Menu.Item name="wiki" >
             <a
               href={
                 "https://github.com/mehtadone/PTFeeder" + props.activeItem.wiki
@@ -224,7 +260,7 @@ const TopMenu = props => {
             </a>
           </Menu.Item>
 
-          <Menu.Item name="videos" onClick={this.handleItemClick}>
+          <Menu.Item name="videos" >
             <a
               href="https://github.com/mehtadone/PTFeeder/wiki/Videos"
               target="_blank"
@@ -234,7 +270,7 @@ const TopMenu = props => {
             </a>
           </Menu.Item>
 
-          <Menu.Item name="support" onClick={this.handleItemClick}>
+          <Menu.Item name="support" >
             <a
               href="https://github.com/mehtadone/PTFeeder/issues"
               target="_blank"
@@ -292,7 +328,8 @@ const MainContent = ({
   menuItems,
   selectedMenuItem,
   onFilterList,
-  filter
+  filter,
+  registerField
 }) => {
   return (
     <Grid.Column width={5}>
@@ -322,6 +359,7 @@ const MainContent = ({
             category={item.title}
             selectedMenuItem={selectedMenuItem}
             filter={filter}
+            registerField={registerField}
           />
         ))}
       </Form>
@@ -329,7 +367,7 @@ const MainContent = ({
   );
 };
 
-const ComponentList = ({ category, selectedMenuItem, filter }) => {
+const ComponentList = ({ category, selectedMenuItem, filter, registerField }) => {
   let currentOptions = _.find(options, { title: category });
 
   return (
@@ -337,7 +375,7 @@ const ComponentList = ({ category, selectedMenuItem, filter }) => {
     currentOptions.options.map(
       data =>
         f(filter.toLowerCase(), data.title.toLowerCase()) && (
-          <ComponentFactory data={data} category="category" />
+          <ComponentFactory data={data} category="category" registerField={registerField}/>
         )
     )
   );

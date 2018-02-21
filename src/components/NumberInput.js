@@ -9,6 +9,16 @@ export default class NumberInput extends PureComponent {
     acceptBoolean: PropTypes.bool
   };
 
+
+  constructor(props) {
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(evt, { value }) {
+    this.value = value;
+  }
+
   onKeyPress = event => {
     const { percentage } = this.props;
     const keyCode = event.keyCode || event.which;
@@ -75,6 +85,7 @@ export default class NumberInput extends PureComponent {
           placeholder={title}
           onKeyPress={this.onKeyPress}
           name={title}
+          onChange={this.handleChange}
         />
         {percentage ? "%" : ""}
         {note ? (

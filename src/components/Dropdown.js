@@ -8,6 +8,11 @@ export default class DropDown extends PureComponent {
     options: this.props.options
   };
 
+  constructor(props) {
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+  }
+
   PropTypes = {
     options: PropTypes.array.required,
     allowAdditions: PropTypes.bool
@@ -24,10 +29,14 @@ export default class DropDown extends PureComponent {
     });
   };
 
-  handleChange() {}
+  handleChange(evt, { value }) {
+    this.value = value;
+    //console.log (this.value);
+    console.log (value);
+  }
 
   render() {
-    const { title, allowAdditions, wiki } = this.props;
+    const { title, allowAdditions, wiki, value } = this.props;
     const { options } = this.state;
     return (
       <Form.Field style={{ paddingTop: "20px" }}>
@@ -46,6 +55,9 @@ export default class DropDown extends PureComponent {
           allowAdditions={allowAdditions}
           onAddItem={this.handleAddition}
           onChange={this.handleChange}
+          ref={(input) => {
+            this.input = input;
+          }}
         />
       </Form.Field>
     );

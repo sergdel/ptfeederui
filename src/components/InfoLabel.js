@@ -4,7 +4,6 @@ import { Label, Popup } from "semantic-ui-react";
 class InfoLabel extends Component {
   render() {
     const { title, wiki } = this.props;
-    console.log (this.props);
     return (
       <Popup
         trigger={
