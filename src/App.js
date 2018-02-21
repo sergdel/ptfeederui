@@ -90,6 +90,15 @@ export default class App extends Component {
       }
     });
     state.savedConfig[selectedMenuItem.title] = res;
+    fetch('http://localhost:5000/save', {
+      method: 'post',
+      body: {config: state.savedConfig},
+      headers: {
+        "Content-Type": "application/json"
+      },
+    }).then(function(response) {
+      console.log (response.json());
+    });
     this.setState(state);
   };
 
