@@ -9,10 +9,10 @@ import schema from "./config/json.schema.json";
 import _ from "lodash";
 // import DevTools from "mobx-react-devtools";
 import { Form, Input, Label } from "semantic-ui-react";
+import { post } from 'axios';
 
 import f from "fuzzysearch";
 import {
-  Button,
   Grid,
   Menu,
   Modal,
@@ -31,6 +31,7 @@ export default class App extends Component {
     super(props);
     this.registerField = this.registerField.bind(this);
     this.save = this.save.bind(this);
+    this.updateConfig = this.updateConfig.bind(this);
     this.fields = [];
     this.savedConfig = {};
   }
@@ -70,6 +71,20 @@ export default class App extends Component {
 
   onFilterList = (event, { value }) => this.setState({ filter: value });
 
+  updateConfig = (evt) => {
+    const url = 'http://localhost:5000/upload';
+    const formData = new FormData();
+    let file = evt.target.files[0];
+    console.log (file);
+    formData.append('file',file)
+    const config = {
+      headers: {
+        'content-type': 'multipart/form-data'
+      }
+    }
+    return  post(url, formData,config)
+  };
+
   save = () => {
     /*const result = Array.from(document.querySelector("form").elements)
       .filter(function(item) {
@@ -90,30 +105,15 @@ export default class App extends Component {
       }
     });
     state.savedConfig[selectedMenuItem.title] = res;
-    fetch('http://localhost:5000/save', {
-      method: 'post',
-      body: {config: state.savedConfig},
-      headers: {
-        "Content-Type": "application/json"
-      },
-    }).then(function(response) {
-      console.log (response.json());
-    });
+    post('http://localhost:5000/save', {config: state.savedConfig})
+      .then(function(response) {
+        console.log (response);
+      });
     this.setState(state);
   };
 
   import = () => {
-    const result = Array.from(document.querySelector("form").elements)
-      .filter(function(item) {
-        return item.name && item.value;
-      })
-      .map(function(item) {
-        return {
-          [item.name]: item.value
-        };
-      });
-
-    this.setState({ savedConfig: result });
+    this.importButton.click();
   };
 
   registerField = (title, ref) => {
@@ -187,7 +187,7 @@ export default class App extends Component {
           {/* RIGHT Side  */}
           <Responsive as={Grid.Column} {...Responsive.onlyComputer}>
             <Grid.Row>
-              <ImportExport save={this.save} export={this.export}/>
+              <ImportExport save={this.save} export={this.export} import={this.import}/>
               <Segment basic style={{ color: "#fff" }}>
                 More Info About <strong>{selectedMenuItem.title}</strong> can be
                 found on the{" "}
@@ -202,6 +202,9 @@ export default class App extends Component {
         <Grid.Row columns={1}>
           <Grid.Column />
         </Grid.Row>
+        <div className="hidden">
+          <input type="file" onChange={this.updateConfig} ref={(input) => { this.importButton = input; }}/>
+        </div>
       </Grid>
     );
   }
@@ -221,7 +224,7 @@ const ImportExport = (props) => {
       <br/>
       <Popup
         trigger={
-          <a fluid="fluid"  onClick={props.import}>
+          <a fluid="fluid" href="#" onClick={props.import}>
             <Label icon="upload" />
           </a>
         }
