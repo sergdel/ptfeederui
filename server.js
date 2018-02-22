@@ -69,8 +69,9 @@ app.post('/upload', function(req, res) {
             res.status(500);
             res.json({'success': false});
           } else {
+            var obj = JSON.parse(fs.readFileSync(new_path, 'utf8'));
             res.status(200);
-            res.json({'success': true});
+            res.json({'success': true, configobj: obj});
           }
     });
   });

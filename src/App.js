@@ -34,6 +34,20 @@ export default class App extends Component {
     this.updateConfig = this.updateConfig.bind(this);
     this.fields = [];
     this.savedConfig = {};
+    this.state = {
+      selectedMenuItem: { title: options[0].title, wiki: options[0].wiki },
+      availableConfig: null,
+      menuItems: options.map(item => {
+        return { title: item.title, wiki: item.wiki };
+      }),
+      userData: {},
+      savedConfig: {},
+      config: options.config,
+      configHasErrors: {},
+      configErrorMessage: {},
+      filter: "",
+      optionlist: options
+    };
   }
 
   componentWillMount() {
@@ -49,20 +63,6 @@ export default class App extends Component {
     });
   }
 
-  state = {
-    selectedMenuItem: { title: options[0].title, wiki: options[0].wiki },
-    availableConfig: null,
-    menuItems: options.map(item => {
-      return { title: item.title, wiki: item.wiki };
-    }),
-    userData: {},
-    savedConfig: {},
-    config: options.config,
-    configHasErrors: {},
-    configErrorMessage: {},
-    filter: ""
-  };
-
   onMenuSelect = item => {
     this.setState({
       selectedMenuItem: item
@@ -75,14 +75,32 @@ export default class App extends Component {
     const url = 'http://localhost:5000/upload';
     const formData = new FormData();
     let file = evt.target.files[0];
-    console.log (file);
     formData.append('file',file)
     const config = {
       headers: {
         'content-type': 'multipart/form-data'
       }
     }
-    return  post(url, formData,config)
+    post(url, formData,config)
+      .then(function (response) {
+        if (response.data.success == true) {
+          let newconfig = response.data.configobj.config;
+          const validate = ajv.compile(schema);
+          const valid = validate(newconfig || {});
+
+          if (valid) {
+            let state = this.state;
+            state.selectedMenuItem = {title: newconfig[0].title, wiki: newconfig[0].wiki}
+            state.menuItems = newconfig.map(item => {
+              return {title: item.title, wiki: item.wiki};
+            });
+            state.config = newconfig.config;
+            state.optionlist = newconfig;
+            this.setState(state);
+            this.forceUpdate();
+          }
+        }
+      }.bind(this));
   };
 
   save = () => {
@@ -107,7 +125,7 @@ export default class App extends Component {
     state.savedConfig[selectedMenuItem.title] = res;
     post('http://localhost:5000/save', {config: state.savedConfig})
       .then(function(response) {
-        console.log (response);
+        //console.log (response);
       });
     this.setState(state);
   };
@@ -126,7 +144,8 @@ export default class App extends Component {
       selectedMenuItem,
       configHasErrors,
       configErrorMessage,
-      filter
+      filter,
+      optionlist
     } = this.state;
 
     if (configHasErrors) {
@@ -175,7 +194,7 @@ export default class App extends Component {
           {/* Main Content */}
           <Grid.Column>
             <MainContent
-              options={options}
+              optionlist={optionlist}
               menuItems={menuItems}
               selectedMenuItem={selectedMenuItem}
               onFilterList={this.onFilterList}
@@ -336,7 +355,7 @@ const LeftNav = ({ selectedMenuItem, menuItems, onMenuSelect }) => {
 };
 
 const MainContent = ({
-  options,
+  optionlist,
   menuItems,
   selectedMenuItem,
   onFilterList,
@@ -372,6 +391,7 @@ const MainContent = ({
             selectedMenuItem={selectedMenuItem}
             filter={filter}
             registerField={registerField}
+            optionlist={optionlist}
           />
         ))}
       </Form>
@@ -379,8 +399,8 @@ const MainContent = ({
   );
 };
 
-const ComponentList = ({ category, selectedMenuItem, filter, registerField }) => {
-  let currentOptions = _.find(options, { title: category });
+const ComponentList = ({ category, selectedMenuItem, filter, registerField, optionlist }) => {
+  let currentOptions = _.find(optionlist, { title: category });
 
   return (
     category === selectedMenuItem.title &&
