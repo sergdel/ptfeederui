@@ -9,7 +9,7 @@ import schema from "./config/json.schema.json";
 import _ from "lodash";
 // import DevTools from "mobx-react-devtools";
 import { Form, Input, Label } from "semantic-ui-react";
-import { post } from 'axios';
+import { post } from "axios";
 
 import f from "fuzzysearch";
 import {
@@ -72,13 +72,13 @@ export default class App extends Component {
   onFilterList = (event, { value }) => this.setState({ filter: value });
 
   updateConfig = (evt) => {
-    const url = 'http://localhost:5000/upload';
+    const url = "/upload";
     const formData = new FormData();
     let file = evt.target.files[0];
-    formData.append('file',file)
+    formData.append('file',file);
     const config = {
       headers: {
-        'content-type': 'multipart/form-data'
+        "content-type": "multipart/form-data"
       }
     }
     post(url, formData,config)
@@ -123,10 +123,9 @@ export default class App extends Component {
       }
     });
     state.savedConfig[selectedMenuItem.title] = res;
-    post('http://localhost:5000/save', {config: state.savedConfig})
-      .then(function(response) {
-        //console.log (response);
-      });
+    post("/save", { config: state.savedConfig }).then(function(response) {
+      console.log(response);
+    });
     this.setState(state);
   };
 
@@ -206,7 +205,11 @@ export default class App extends Component {
           {/* RIGHT Side  */}
           <Responsive as={Grid.Column} {...Responsive.onlyComputer}>
             <Grid.Row>
-              <ImportExport save={this.save} export={this.export} import={this.import}/>
+              <ImportExport
+                save={this.save}
+                export={this.export}
+                import={this.import}
+              />
               <Segment basic style={{ color: "#fff" }}>
                 More Info About <strong>{selectedMenuItem.title}</strong> can be
                 found on the{" "}
@@ -222,14 +225,20 @@ export default class App extends Component {
           <Grid.Column />
         </Grid.Row>
         <div className="hidden">
-          <input type="file" onChange={this.updateConfig} ref={(input) => { this.importButton = input; }}/>
+          <input
+            type="file"
+            onChange={this.updateConfig}
+            ref={input => {
+              this.importButton = input;
+            }}
+          />
         </div>
       </Grid>
     );
   }
 }
 
-const ImportExport = (props) => {
+const ImportExport = props => {
   return (
     <Segment basic>
       <Popup
@@ -240,7 +249,7 @@ const ImportExport = (props) => {
         }
         content="save settings"
       />
-      <br/>
+      <br />
       <Popup
         trigger={
           <a fluid="fluid" href="#" onClick={props.import}>
@@ -249,10 +258,10 @@ const ImportExport = (props) => {
         }
         content="import settings"
       />
-      <br/>
+      <br />
       <Popup
         trigger={
-          <a fluid="fluid" href="http://localhost:5000/download">
+          <a fluid="fluid" href="/download">
             <Label icon="download" />
           </a>
         }
@@ -273,13 +282,13 @@ const TopMenu = props => {
       }}
     >
       <Menu>
-        <Menu.Item name="logo" >
+        <Menu.Item name="logo">
           <img src={logo} alt="icon" />
           PTFeeder
         </Menu.Item>
 
         <Menu.Menu position="right" padded="true">
-          <Menu.Item name="wiki" >
+          <Menu.Item name="wiki">
             <a
               href={
                 "https://github.com/mehtadone/PTFeeder" + props.activeItem.wiki
@@ -291,7 +300,7 @@ const TopMenu = props => {
             </a>
           </Menu.Item>
 
-          <Menu.Item name="videos" >
+          <Menu.Item name="videos">
             <a
               href="https://github.com/mehtadone/PTFeeder/wiki/Videos"
               target="_blank"
@@ -301,7 +310,7 @@ const TopMenu = props => {
             </a>
           </Menu.Item>
 
-          <Menu.Item name="support" >
+          <Menu.Item name="support">
             <a
               href="https://github.com/mehtadone/PTFeeder/issues"
               target="_blank"
@@ -407,7 +416,11 @@ const ComponentList = ({ category, selectedMenuItem, filter, registerField, opti
     currentOptions.options.map(
       data =>
         f(filter.toLowerCase(), data.title.toLowerCase()) && (
-          <ComponentFactory data={data} category="category" registerField={registerField}/>
+          <ComponentFactory
+            data={data}
+            category="category"
+            registerField={registerField}
+          />
         )
     )
   );
