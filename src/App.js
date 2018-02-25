@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { ComponentFactory } from "./components/ComponentFactory";
+import MenuItem from "./components/MenuItem";
 import logo from "./assets/images/logo.png";
 import { config as options } from "./config/config.json";
 import { background, textColour } from "./config/constants";
@@ -345,7 +346,7 @@ const LeftNav = ({ selectedMenuItem, menuItems, onMenuSelect }) => {
         >
           {menuItems &&
             menuItems.map(item => (
-              <Menu.Item
+              <MenuItem
                 name={item.title}
                 key={item.title}
                 active={selectedMenuItem === item}
@@ -353,9 +354,10 @@ const LeftNav = ({ selectedMenuItem, menuItems, onMenuSelect }) => {
                 style={{
                   color: textColour
                 }}
+                hasTxtFiles={true}
               >
                 {item.title}
-              </Menu.Item>
+              </MenuItem>
             ))}
         </Menu>
       </Sticky>
