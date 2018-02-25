@@ -21,7 +21,8 @@ import {
   Sticky,
   Segment,
   Responsive,
-  Popup
+  Popup,
+  Checkbox
 } from "semantic-ui-react";
 const ajv = new Ajv({ allErrors: true, schemaId: "auto" });
 ajv.addMetaSchema(require("ajv/lib/refs/json-schema-draft-06.json"));
@@ -30,7 +31,6 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.registerField = this.registerField.bind(this);
-    this.save = this.save.bind(this);
     this.updateConfig = this.updateConfig.bind(this);
     this.fields = [];
     this.savedConfig = {};
@@ -71,18 +71,18 @@ export default class App extends Component {
 
   onFilterList = (event, { value }) => this.setState({ filter: value });
 
-  updateConfig = (evt) => {
+  updateConfig = evt => {
     const url = "/upload";
     const formData = new FormData();
     let file = evt.target.files[0];
-    formData.append('file',file);
+    formData.append("file", file);
     const config = {
       headers: {
         "content-type": "multipart/form-data"
       }
-    }
-    post(url, formData,config)
-      .then(function (response) {
+    };
+    post(url, formData, config).then(
+      function(response) {
         if (response.data.success == true) {
           let newconfig = response.data.configobj.config;
           const validate = ajv.compile(schema);
@@ -90,9 +90,12 @@ export default class App extends Component {
 
           if (valid) {
             let state = this.state;
-            state.selectedMenuItem = {title: newconfig[0].title, wiki: newconfig[0].wiki}
+            state.selectedMenuItem = {
+              title: newconfig[0].title,
+              wiki: newconfig[0].wiki
+            };
             state.menuItems = newconfig.map(item => {
-              return {title: item.title, wiki: item.wiki};
+              return { title: item.title, wiki: item.wiki };
             });
             state.config = newconfig.config;
             state.optionlist = newconfig;
@@ -100,30 +103,19 @@ export default class App extends Component {
             this.forceUpdate();
           }
         }
-      }.bind(this));
+      }.bind(this)
+    );
   };
 
   save = () => {
-    /*const result = Array.from(document.querySelector("form").elements)
-      .filter(function(item) {
-        return item.name && item.value;
-      })
-      .map(function(item) {
-        return {
-          [item.name]: item.value
-        };
-      });*/
-
-    const { selectedMenuItem } = this.state;
     let res = [];
-    let state = this.state;
+    let state = { ...this.state };
     _.each(Object.keys(this.fields), (item, index) => {
       if (this.fields[item]) {
         res[item] = this.fields[item].value;
       }
     });
-    state.savedConfig[selectedMenuItem.title] = res;
-    post("/save", { config: state.savedConfig }).then(function(response) {
+    post("/save", { config: res }).then(function(response) {
       console.log(response);
     });
     this.setState(state);
@@ -168,7 +160,7 @@ export default class App extends Component {
         <Grid.Row columns={1}>
           <Grid.Column>
             <TopMenu activeItem={selectedMenuItem} />
-            <StatusIndicators/>
+            <StatusIndicators /> <AdvancedToggle />
           </Grid.Column>
         </Grid.Row>
 
@@ -239,14 +231,33 @@ export default class App extends Component {
   }
 }
 
+const AdvancedToggle = () => {
+  return <Checkbox toggle label="Advanced Mode" inline />;
+};
 
-const StatusIndicators = ({BaseCoinPrice, CurrentMarketCondition, TopCoinChange}) =>{
-  return <Segment basic>
-      <Label> BaseCoinPrice <Label.Detail>{BaseCoinPrice||0}</Label.Detail> </Label>
-      <Label> DogCurrentMarketConditions <Label.Detail>{CurrentMarketCondition||0}</Label.Detail> </Label>
-      <Label> TopCoinChangee <Label.Detail>{TopCoinChange || 0}</Label.Detail> </Label>
-  </Segment>
-}
+const StatusIndicators = ({
+  BaseCoinPrice,
+  CurrentMarketCondition,
+  TopCoinChange
+}) => {
+  return (
+    <Segment basic>
+      <Label>
+        {" "}
+        BaseCoinPrice <Label.Detail>{BaseCoinPrice || 0}</Label.Detail>{" "}
+      </Label>
+      <Label>
+        {" "}
+        DogCurrentMarketConditions{" "}
+        <Label.Detail>{CurrentMarketCondition || 0}</Label.Detail>{" "}
+      </Label>
+      <Label>
+        {" "}
+        TopCoinChangee <Label.Detail>{TopCoinChange || 0}</Label.Detail>{" "}
+      </Label>
+    </Segment>
+  );
+};
 
 const ImportExport = props => {
   return (
@@ -418,7 +429,13 @@ const MainContent = ({
   );
 };
 
-const ComponentList = ({ category, selectedMenuItem, filter, registerField, optionlist }) => {
+const ComponentList = ({
+  category,
+  selectedMenuItem,
+  filter,
+  registerField,
+  optionlist
+}) => {
   let currentOptions = _.find(optionlist, { title: category });
 
   return (
