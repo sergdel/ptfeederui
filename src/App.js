@@ -168,6 +168,7 @@ export default class App extends Component {
         <Grid.Row columns={1}>
           <Grid.Column>
             <TopMenu activeItem={selectedMenuItem} />
+            <StatusIndicators/>
           </Grid.Column>
         </Grid.Row>
 
@@ -236,6 +237,15 @@ export default class App extends Component {
       </Grid>
     );
   }
+}
+
+
+const StatusIndicators = ({BaseCoinPrice, CurrentMarketCondition, TopCoinChange}) =>{
+  return <Segment basic>
+      <Label> BaseCoinPrice <Label.Detail>{BaseCoinPrice||0}</Label.Detail> </Label>
+      <Label> DogCurrentMarketConditions <Label.Detail>{CurrentMarketCondition||0}</Label.Detail> </Label>
+      <Label> TopCoinChangee <Label.Detail>{TopCoinChange || 0}</Label.Detail> </Label>
+  </Segment>
 }
 
 const ImportExport = props => {
