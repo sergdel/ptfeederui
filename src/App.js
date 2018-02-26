@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { ComponentFactory } from "./components/ComponentFactory";
 import MenuItem from "./components/MenuItem";
+import MyEditor from "./components/MyEditor";
 import logo from "./assets/images/logo.png";
 import { config as options } from "./config/config.json";
 import { background, textColour } from "./config/constants";
@@ -33,6 +34,7 @@ export default class App extends Component {
     super(props);
     this.registerField = this.registerField.bind(this);
     this.updateConfig = this.updateConfig.bind(this);
+    this.openFileEditor = this.openFileEditor.bind(this);
     this.fields = [];
     this.savedConfig = {};
     this.state = {
@@ -65,9 +67,17 @@ export default class App extends Component {
   }
 
   onMenuSelect = item => {
-    this.setState({
-      selectedMenuItem: item
-    });
+    let state = this.state;
+    state.selectedMenuItem = item;
+    state.filePath = null;
+    this.setState(state);
+  };
+
+  openFileEditor = filepath => {
+    let state = this.state;
+    console.log (filepath);
+    state.filePath = filepath;
+    this.setState(state);
   };
 
   onFilterList = (event, { value }) => this.setState({ filter: value });
@@ -137,7 +147,8 @@ export default class App extends Component {
       configHasErrors,
       configErrorMessage,
       filter,
-      optionlist
+      optionlist,
+      filePath
     } = this.state;
 
     if (configHasErrors) {
@@ -180,6 +191,7 @@ export default class App extends Component {
                 selectedMenuItem={selectedMenuItem}
                 menuItems={menuItems}
                 onMenuSelect={this.onMenuSelect}
+                openFileEditor={this.openFileEditor}
               />
             </Segment>
           </Grid.Column>
@@ -192,6 +204,7 @@ export default class App extends Component {
               selectedMenuItem={selectedMenuItem}
               onFilterList={this.onFilterList}
               filter={filter}
+              filePath={filePath}
               registerField={this.registerField}
             />
           </Grid.Column>
@@ -350,7 +363,7 @@ const TopMenu = props => {
   );
 };
 
-const LeftNav = ({ selectedMenuItem, menuItems, onMenuSelect }) => {
+const LeftNav = ({ selectedMenuItem, menuItems, onMenuSelect, openFileEditor }) => {
   return (
     <Grid.Column width={4} align="center">
       <Sticky>
@@ -372,6 +385,7 @@ const LeftNav = ({ selectedMenuItem, menuItems, onMenuSelect }) => {
                 key={item.title}
                 active={selectedMenuItem === item}
                 onClick={() => onMenuSelect(item)}
+                openFileEditor={openFileEditor}
                 style={{
                   color: textColour
                 }}
@@ -392,42 +406,52 @@ const MainContent = ({
   selectedMenuItem,
   onFilterList,
   filter,
-  registerField
+  registerField,
+  filePath
 }) => {
   return (
-    <Grid.Column width={5}>
-      <Input
-        icon="search"
-        type="text"
-        placeholder="Search..."
-        onChange={onFilterList}
-        transparent="transparent"
-        fluid="fluid"
-        small="true"
-        inverted="inverted"
-        padded="false"
-      />
+    <div>
+      {
+        filePath ?
+          <Grid.Column width={5}>
+            <MyEditor></MyEditor>
+          </Grid.Column>
+          :
+          <Grid.Column width={5}>
+            <Input
+              icon="search"
+              type="text"
+              placeholder="Search..."
+              onChange={onFilterList}
+              transparent="transparent"
+              fluid="fluid"
+              small="true"
+              inverted="inverted"
+              padded="false"
+            />
 
-      <Divider />
-      <Form inverted="inverted" id="form" action="">
-        <Header
-          style={{
-            color: "white"
-          }}
-        >
-          {selectedMenuItem.title}
-        </Header>
-        {menuItems.map(item => (
-          <ComponentList
-            category={item.title}
-            selectedMenuItem={selectedMenuItem}
-            filter={filter}
-            registerField={registerField}
-            optionlist={optionlist}
-          />
-        ))}
-      </Form>
-    </Grid.Column>
+            <Divider/>
+            <Form inverted="inverted" id="form" action="">
+              <Header
+                style={{
+                  color: "white"
+                }}
+              >
+                {selectedMenuItem.title}
+              </Header>
+              {menuItems.map(item => (
+                <ComponentList
+                  category={item.title}
+                  selectedMenuItem={selectedMenuItem}
+                  filter={filter}
+                  registerField={registerField}
+                  optionlist={optionlist}
+                />
+              ))}
+            </Form>
+          </Grid.Column>
+      }
+    </div>
   );
 };
 

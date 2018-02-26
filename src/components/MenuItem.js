@@ -21,9 +21,12 @@ export default class MenuItem extends PureComponent {
   }
 
   selectFile(evt) {
+    const { name, openFileEditor} = this.props;
     evt.preventDefault();
-    console.log (evt.target);
+    console.log (evt.target.id);
     //console.log( filename);
+    openFileEditor(name+'/'+evt.target.id);
+    evt.stopPropagation();
   }
 
   state = {
