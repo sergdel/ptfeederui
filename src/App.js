@@ -414,7 +414,7 @@ const MainContent = ({
       {
         filePath ?
           <Grid.Column width={5}>
-            <MyEditor></MyEditor>
+            <MyEditor filePath={filePath}></MyEditor>
           </Grid.Column>
           :
           <Grid.Column width={5}>

@@ -1,4 +1,4 @@
-import {Editor, EditorState, ContentBlock} from 'draft-js';
+import {Editor, EditorState, convertToRaw} from 'draft-js';
 import React, { Component } from "react";
 
 export default class MyEditor extends React.Component {
@@ -15,10 +15,15 @@ export default class MyEditor extends React.Component {
   }
 
   saveTxtFile(evt) {
-    const {saveTxtFile} = this.props;
+    const {filePath} = this.props;
     console.log(this.state.editorState.toJS());
-    console.log(this.state.editorState.getCurrentContent().getBlockMap().getText());
-    console.log(this.setDomEditorRef.value);
+    console.log(convertToRaw(this.state.editorState.getCurrentContent()));
+    console.log(this.setDomEditorRef);
+    post("/txt_save", { path: filePath, text: convertToRaw(this.state.editorState.getCurrentContent())})
+      .then(function(response) {
+        console.log(response);
+      });
+    this.setState(state);
   }
 
   render() {
