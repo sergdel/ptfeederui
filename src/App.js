@@ -75,7 +75,7 @@ export default class App extends Component {
 
   openFileEditor = filepath => {
     let state = this.state;
-    console.log (filepath);
+    console.log(filepath);
     state.filePath = filepath;
     this.setState(state);
   };
@@ -94,7 +94,7 @@ export default class App extends Component {
     };
     post(url, formData, config).then(
       function(response) {
-        if (response.data.success == true) {
+        if (response.data.success === true) {
           let newconfig = response.data.configobj.config;
           const validate = ajv.compile(schema);
           const valid = validate(newconfig || {});
@@ -278,7 +278,7 @@ const ImportExport = props => {
     <Segment basic>
       <Popup
         trigger={
-          <a fluid="fluid" href="#" onClick={props.save}>
+          <a fluid="fluid" href="" onClick={props.save}>
             <Label icon="save" />
           </a>
         }
@@ -287,7 +287,7 @@ const ImportExport = props => {
       <br />
       <Popup
         trigger={
-          <a fluid="fluid" href="#" onClick={props.import}>
+          <a fluid="fluid" href="" onClick={props.import}>
             <Label icon="upload" />
           </a>
         }
@@ -363,7 +363,12 @@ const TopMenu = props => {
   );
 };
 
-const LeftNav = ({ selectedMenuItem, menuItems, onMenuSelect, openFileEditor }) => {
+const LeftNav = ({
+  selectedMenuItem,
+  menuItems,
+  onMenuSelect,
+  openFileEditor
+}) => {
   return (
     <Grid.Column width={4} align="center">
       <Sticky>
@@ -411,46 +416,45 @@ const MainContent = ({
 }) => {
   return (
     <div>
-      {
-        filePath ?
-          <Grid.Column width={5}>
-            <MyEditor filePath={filePath}></MyEditor>
-          </Grid.Column>
-          :
-          <Grid.Column width={5}>
-            <Input
-              icon="search"
-              type="text"
-              placeholder="Search..."
-              onChange={onFilterList}
-              transparent="transparent"
-              fluid="fluid"
-              small="true"
-              inverted="inverted"
-              padded="false"
-            />
+      {filePath ? (
+        <Grid.Column width={5}>
+          <MyEditor filePath={filePath} />
+        </Grid.Column>
+      ) : (
+        <Grid.Column width={5}>
+          <Input
+            icon="search"
+            type="text"
+            placeholder="Search..."
+            onChange={onFilterList}
+            transparent="transparent"
+            fluid="fluid"
+            small="true"
+            inverted="inverted"
+            padded="false"
+          />
 
-            <Divider/>
-            <Form inverted="inverted" id="form" action="">
-              <Header
-                style={{
-                  color: "white"
-                }}
-              >
-                {selectedMenuItem.title}
-              </Header>
-              {menuItems.map(item => (
-                <ComponentList
-                  category={item.title}
-                  selectedMenuItem={selectedMenuItem}
-                  filter={filter}
-                  registerField={registerField}
-                  optionlist={optionlist}
-                />
-              ))}
-            </Form>
-          </Grid.Column>
-      }
+          <Divider />
+          <Form inverted="inverted" id="form" action="">
+            <Header
+              style={{
+                color: "white"
+              }}
+            >
+              {selectedMenuItem.title}
+            </Header>
+            {menuItems.map(item => (
+              <ComponentList
+                category={item.title}
+                selectedMenuItem={selectedMenuItem}
+                filter={filter}
+                registerField={registerField}
+                optionlist={optionlist}
+              />
+            ))}
+          </Form>
+        </Grid.Column>
+      )}
     </div>
   );
 };
