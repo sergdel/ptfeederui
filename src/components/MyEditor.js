@@ -1,5 +1,7 @@
 import {Editor, EditorState, convertToRaw} from 'draft-js';
 import React, { Component } from "react";
+import { post } from "axios";
+
 
 export default class MyEditor extends React.Component {
   constructor(props) {
@@ -23,7 +25,7 @@ export default class MyEditor extends React.Component {
       .then(function(response) {
         console.log(response);
       });
-    this.setState(state);
+    //this.setState(state);
   }
 
   render() {
