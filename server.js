@@ -77,4 +77,21 @@ app.post('/upload', function(req, res) {
   });
 });
 
+app
+  .route("/txt_save")
+  .post((req, res) => {
+    if (!req.body.path) {
+      return res.status(400).send("File path is required");
+    } else {
+      fs.writeFile('./'+req.body.path, req.body.text, function(err) {
+        if(err) {
+          res.status(500);
+          return res.json({err: err});
+        }
+
+        return res.sendStatus(200, "ok");
+      });
+    }
+  })
+
 app.listen(port, () => console.log(`Listening on port ${port}`));
