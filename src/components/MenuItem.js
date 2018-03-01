@@ -14,6 +14,7 @@ export default class MenuItem extends PureComponent {
     super(props);
     this.handleChange = this.handleChange.bind(this);
     this.selectFile = this.selectFile.bind(this);
+    this.addFiles = this.addFiles.bind(this);
   }
 
   handleChange(evt, { value }) {
@@ -29,6 +30,12 @@ export default class MenuItem extends PureComponent {
     evt.stopPropagation();
   }
 
+  addFiles() {
+    const {setHasFiles, menuIndex} = this.props;
+    console.log (menuIndex);
+    setHasFiles(menuIndex);
+  }
+
   state = {
     name: this.props.name
   };
@@ -39,12 +46,13 @@ export default class MenuItem extends PureComponent {
     return (
       <a className={active? "active item": "item"} style={style} onClick={onClick}>
         {hasTxtFiles ?
-          <span>
+          <span className="leftmenu-icons">
             <i class="caret down icon"></i>
             <i class="folder open icon"></i>
           </span>
           : null}
         {name}
+        <i class="plus square outline icon" onClick={this.addFiles}></i>
         {
           hasTxtFiles && active ?
             <div>

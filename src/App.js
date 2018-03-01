@@ -38,10 +38,10 @@ export default class App extends Component {
     this.fields = [];
     this.savedConfig = {};
     this.state = {
-      selectedMenuItem: { title: options[0].title, wiki: options[0].wiki },
+      selectedMenuItem: { title: options[0].title, wiki: options[0].wiki, hasfiles: options[0].hasfiles },
       availableConfig: null,
       menuItems: options.map(item => {
-        return { title: item.title, wiki: item.wiki };
+        return { title: item.title, wiki: item.wiki, hasfiles: item.hasfiles };
       }),
       userData: {},
       savedConfig: {},
@@ -103,10 +103,11 @@ export default class App extends Component {
             let state = this.state;
             state.selectedMenuItem = {
               title: newconfig[0].title,
-              wiki: newconfig[0].wiki
+              wiki: newconfig[0].wiki,
+              hasfiles: newconfig[0].hasfiles
             };
             state.menuItems = newconfig.map(item => {
-              return { title: item.title, wiki: item.wiki };
+              return { title: item.title, wiki: item.wiki, hasfiles: item.hasfiles };
             });
             state.config = newconfig.config;
             state.optionlist = newconfig;
@@ -139,6 +140,15 @@ export default class App extends Component {
   registerField = (title, ref) => {
     this.fields[title] = ref;
   };
+
+  setHasFiles = (idx) => {
+    let state = this.state;
+    state.optionlist[idx].hasfiles = true;
+    state.menuItems = state.optionlist.map(item => {
+      return { title: item.title, wiki: item.wiki, hasfiles: item.hasfiles };
+    }),
+    this.setState(state);
+  }
 
   render() {
     const {
@@ -192,6 +202,7 @@ export default class App extends Component {
                 menuItems={menuItems}
                 onMenuSelect={this.onMenuSelect}
                 openFileEditor={this.openFileEditor}
+                setHasFiles={this.setHasFiles}
               />
             </Segment>
           </Grid.Column>
@@ -363,7 +374,7 @@ const TopMenu = props => {
   );
 };
 
-const LeftNav = ({ selectedMenuItem, menuItems, onMenuSelect, openFileEditor }) => {
+const LeftNav = ({ selectedMenuItem, menuItems, onMenuSelect, openFileEditor, setHasFiles }) => {
   return (
     <Grid.Column width={4} align="center">
       <Sticky>
@@ -379,7 +390,7 @@ const LeftNav = ({ selectedMenuItem, menuItems, onMenuSelect, openFileEditor }) 
           }}
         >
           {menuItems &&
-            menuItems.map(item => (
+            menuItems.map((item, index) => (
               <MenuItem
                 name={item.title}
                 key={item.title}
@@ -389,7 +400,9 @@ const LeftNav = ({ selectedMenuItem, menuItems, onMenuSelect, openFileEditor }) 
                 style={{
                   color: textColour
                 }}
-                hasTxtFiles={true}
+                hasTxtFiles={item.hasfiles}
+                setHasFiles={setHasFiles}
+                menuIndex={index}
               >
                 {item.title}
               </MenuItem>

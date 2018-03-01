@@ -43,3 +43,7 @@
 .ui.vertical.menu .item > i.icon.folder {
   float: none;
 }
+
+.leftmenu-icons {
+  margin-left: -45px;
+}

@@ -25,6 +25,15 @@
               "/wiki/general"
             ]
           },
+          "hasfiles": {
+            "$id": "/properties/config/items/properties/hasfiles",
+            "type": "boolean",
+            "title": "Showing Has SubFiles",
+            "default": false,
+            "examples": [
+              true
+            ]
+          },
           "options": {
             "$id": "/properties/config/items/properties/options",
             "type": "array",
