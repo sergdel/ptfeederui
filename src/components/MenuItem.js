@@ -1,14 +1,11 @@
 import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
-import { Form, Input, Dropdown, Label } from "semantic-ui-react";
-import InfoLabel from "./InfoLabel";
 
 export default class MenuItem extends PureComponent {
   PropTypes = {
     percentage: PropTypes.bool,
     acceptBoolean: PropTypes.bool
   };
-
 
   constructor(props) {
     super(props);
@@ -22,11 +19,11 @@ export default class MenuItem extends PureComponent {
   }
 
   selectFile(evt) {
-    const { name, openFileEditor} = this.props;
+    const { name, openFileEditor } = this.props;
     evt.preventDefault();
-    console.log (evt.target.id);
+    console.log(evt.target.id);
     //console.log( filename);
-    openFileEditor(name+'/'+evt.target.id);
+    openFileEditor(name + "/" + evt.target.id);
     evt.stopPropagation();
   }
 
@@ -41,36 +38,54 @@ export default class MenuItem extends PureComponent {
   };
 
   render() {
-    const { name, style, active, onClick, hasTxtFiles} = this.props;
+    const { name, style, active, onClick, hasTxtFiles } = this.props;
 
     return (
-      <a className={active? "active item": "item"} style={style} onClick={onClick}>
-        {hasTxtFiles ?
+      <a
+        className={active ? "active item" : "item"}
+        style={style}
+        onClick={onClick}
+      >
+        {hasTxtFiles ? (
           <span className="leftmenu-icons">
-            <i class="caret down icon"></i>
-            <i class="folder open icon"></i>
+            <i class="caret down icon" />
+            <i class="folder open icon" />
           </span>
-          : null}
+        ) : null}
         {name}
+
         <i class="plus square outline icon" onClick={this.addFiles}></i>
-        {
-          hasTxtFiles && active ?
-            <div>
-              <div href="#" className="fileMenu" id="dca.txt" onClick={this.selectFile}>
-                <i class="file alternate outline icon"></i>
-                dca.txt
-              </div>
-              <div href="#" className="fileMenu" id="indicator.txt" onClick={this.selectFile}>
-                <i class="file alternate outline icon"></i>
-                indicator.txt
-              </div>
-              <div href="#" className="fileMenu" id="pairs.txt" onClick={this.selectFile}>
-                <i class="file alternate outline icon"></i>
-                pairs.txt
-              </div>
+        {hasTxtFiles && active ? (
+          <div>
+            <div
+              href="#"
+              className="fileMenu"
+              id="dca.txt"
+              onClick={this.selectFile}
+            >
+              <i class="file alternate outline icon" />
+              dca.txt
             </div>
-            : null
-        }
+            <div
+              href="#"
+              className="fileMenu"
+              id="indicator.txt"
+              onClick={this.selectFile}
+            >
+              <i class="file alternate outline icon" />
+              indicator.txt
+            </div>
+            <div
+              href="#"
+              className="fileMenu"
+              id="pairs.txt"
+              onClick={this.selectFile}
+            >
+              <i class="file alternate outline icon" />
+              pairs.txt
+            </div>
+          </div>
+        ) : null}
       </a>
     );
   }

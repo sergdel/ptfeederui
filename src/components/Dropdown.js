@@ -32,15 +32,15 @@ export default class DropDown extends PureComponent {
   handleChange(evt, { value }) {
     this.value = value;
     //console.log (this.value);
-    console.log (value);
+    console.log(value);
   }
 
   render() {
-    const { title, allowAdditions, wiki, value } = this.props;
+    const { title, allowAdditions, wiki } = this.props;
     const { options } = this.state;
     return (
       <Form.Field style={{ paddingTop: "20px" }}>
-        <InfoLabel title={title} wiki={wiki}/>
+        <InfoLabel title={title} wiki={wiki} />
         <Dropdown
           placeholder={title}
           size="large"
@@ -55,7 +55,7 @@ export default class DropDown extends PureComponent {
           allowAdditions={allowAdditions}
           onAddItem={this.handleAddition}
           onChange={this.handleChange}
-          ref={(input) => {
+          ref={input => {
             this.input = input;
           }}
         />

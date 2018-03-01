@@ -1,30 +1,31 @@
-import {Editor, EditorState, convertToRaw} from 'draft-js';
+import { Editor, EditorState, convertToRaw } from "draft-js";
 import React, { Component } from "react";
 import { post } from "axios";
 
-
-export default class MyEditor extends React.Component {
+export default class MyEditor extends Component {
   constructor(props) {
     super(props);
-    this.state = {editorState: EditorState.createEmpty()};
-    this.onChange = (editorState) => this.setState({editorState});
+    this.state = { editorState: EditorState.createEmpty() };
+    this.onChange = editorState => this.setState({ editorState });
     this.saveTxtFile = this.saveTxtFile.bind(this);
-    this.setDomEditorRef = ref => this.domEditor = ref;
+    this.setDomEditorRef = ref => (this.domEditor = ref);
   }
 
-  componentDidMount(){
-    this.domEditor.focus()
+  componentDidMount() {
+    this.domEditor.focus();
   }
 
   saveTxtFile(evt) {
-    const {filePath} = this.props;
+    const { filePath } = this.props;
     console.log(this.state.editorState.toJS());
     console.log(convertToRaw(this.state.editorState.getCurrentContent()));
     console.log(this.setDomEditorRef);
-    post("/txt_save", { path: filePath, text: convertToRaw(this.state.editorState.getCurrentContent())})
-      .then(function(response) {
-        console.log(response);
-      });
+    post("/txt_save", {
+      path: filePath,
+      text: convertToRaw(this.state.editorState.getCurrentContent())
+    }).then(function(response) {
+      console.log(response);
+    });
     //this.setState(state);
   }
 
@@ -51,18 +52,18 @@ export default class MyEditor extends React.Component {
 }
 const styles = {
   root: {
-    fontFamily: '\'Helvetica\', sans-serif',
+    fontFamily: "'Helvetica', sans-serif",
     padding: 20,
-    color: '#fff'
+    color: "#fff"
   },
   editor: {
-    border: '1px solid #ccc',
-    cursor: 'text',
+    border: "1px solid #ccc",
+    cursor: "text",
     minHeight: 80,
-    padding: 10,
+    padding: 10
   },
   button: {
     marginTop: 10,
-    textAlign: 'center',
-  },
+    textAlign: "center"
+  }
 };
