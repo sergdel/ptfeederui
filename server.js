@@ -83,7 +83,8 @@ app
     if (!req.body.path) {
       return res.status(400).send("File path is required");
     } else {
-      fs.writeFile('./'+req.body.path, req.body.text, function(err) {
+      //console.log (process.cwd()+'/src/config/data/'+req.body.path);
+      fs.writeFile(process.cwd()+'/src/config/data/'+req.body.path, req.body.text, function(err) {
         if(err) {
           res.status(500);
           return res.json({err: err});

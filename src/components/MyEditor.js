@@ -1,6 +1,10 @@
-import { Editor, EditorState, convertToRaw } from "draft-js";
+import { EditorState, convertToRaw } from "draft-js";
+import { Editor } from 'react-draft-wysiwyg';
 import React, { Component } from "react";
 import { post } from "axios";
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import draftToHtml from 'draftjs-to-html';
+import htmlToDraft from 'html-to-draftjs';
 
 export default class MyEditor extends Component {
   constructor(props) {
@@ -12,21 +16,27 @@ export default class MyEditor extends Component {
   }
 
   componentDidMount() {
-    this.domEditor.focus();
+    //this.domEditor.focus();
   }
 
   saveTxtFile(evt) {
     const { filePath } = this.props;
+    const { editorState } = this.state;
     console.log(this.state.editorState.toJS());
-    console.log(convertToRaw(this.state.editorState.getCurrentContent()));
-    console.log(this.setDomEditorRef);
+    console.log(draftToHtml(convertToRaw(editorState.getCurrentContent())));
     post("/txt_save", {
       path: filePath,
-      text: convertToRaw(this.state.editorState.getCurrentContent())
+      text: draftToHtml(convertToRaw(editorState.getCurrentContent()))
     }).then(function(response) {
       console.log(response);
     });
     //this.setState(state);
+  }
+
+  onChange(editorState) {
+    this.setState({
+      editorState,
+    });
   }
 
   render() {
@@ -34,8 +44,8 @@ export default class MyEditor extends Component {
       <div style={styles.root}>
         <div style={styles.editor} onClick={this.focus}>
           <Editor
-            editorState={this.state.editorState}
-            onChange={this.onChange}
+            initialEditorStat={this.state.editorState}
+            onEditorStateChange={this.onChange}
             placeholder="Enter some text..."
             ref={this.setDomEditorRef}
           />
