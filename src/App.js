@@ -260,7 +260,14 @@ export default class App extends Component {
                 >
                   +
                 </Button>
-                {overrides.map((o, i) => <OverrideKeyPair id={i} />)}
+                {overrides.map((o, i) => (
+                  <OverrideKeyPair
+                    id={i}
+                    ref={input => {
+                      this.registerField(i, input);
+                    }}
+                  />
+                ))}
               </div>
             ) : null}
           </Grid.Column>
