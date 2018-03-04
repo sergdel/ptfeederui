@@ -203,7 +203,7 @@ export default class App extends Component {
           <Grid.Column>
             <TopMenu activeItem={selectedMenuItem} />
             <StatusIndicators />
-            <Segment basic align="left">
+            <Segment basic align="left" floated="left">
               <Label>Advanced Mode</Label>
               <Checkbox
                 onChange={(event, { checked }) => {
@@ -311,7 +311,7 @@ const StatusIndicators = ({
   TopCoinChange
 }) => {
   return (
-    <Segment basic align="center">
+    <Segment basic floated="right">
       <Label>
         BaseCoinPrice <Label.Detail>{BaseCoinPrice || 0}</Label.Detail>{" "}
       </Label>
