@@ -6,7 +6,7 @@ import InfoLabel from "./InfoLabel";
 
 export class ComponentFactory extends Component {
   state = {};
-  
+
   render() {
     const {
       data: {
@@ -18,10 +18,14 @@ export class ComponentFactory extends Component {
         percentage,
         note,
         wiki,
-        value
+        value,
+        advanced
       },
-      registerField
+      registerField,
+      advancedMode
     } = this.props;
+
+    if (advanced && !advancedMode) return null;
 
     switch (type) {
       case "Dropdown":
@@ -32,7 +36,7 @@ export class ComponentFactory extends Component {
             allowAdditions={allowAdditions}
             wiki={wiki}
             curvalue={value}
-            ref={(input) => {
+            ref={input => {
               registerField(title, input);
             }}
           />
@@ -46,7 +50,7 @@ export class ComponentFactory extends Component {
             note={note}
             wiki={wiki}
             curvalue={value}
-            ref={(input) => {
+            ref={input => {
               registerField(title, input);
             }}
           />
@@ -62,7 +66,7 @@ export class ComponentFactory extends Component {
             ]}
             wiki={wiki}
             curvalue={value}
-            ref={(input) => {
+            ref={input => {
               registerField(title, input);
             }}
           />
@@ -70,10 +74,16 @@ export class ComponentFactory extends Component {
       case "String":
         return (
           <Form.Field>
-            <InfoLabel title={title} wiki={wiki}/>
-            <Input placeholder={title} type="text" name={title} size="mini"
-                   curvalue={value}
-                   ref={(input) => { registerField(title, input);}}
+            <InfoLabel title={title} wiki={wiki} />
+            <Input
+              placeholder={title}
+              type="text"
+              name={title}
+              size="mini"
+              curvalue={value}
+              ref={input => {
+                registerField(title, input);
+              }}
             />
           </Form.Field>
         );

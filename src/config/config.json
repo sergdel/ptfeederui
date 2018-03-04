@@ -45,7 +45,8 @@
 					],
 					"allowAdditions": true,
 					"required": false,
-					"wiki": "/wiki#BuyStrategy"
+					"wiki": "/wiki#BuyStrategy",
+					"advanced": true
 				},
 				{ "title": "BuyValue", "type": "Number" },
 				{ "title": "Cost", "type": "Number", "wiki": "/wiki#Cost" },

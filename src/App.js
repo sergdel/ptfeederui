@@ -238,6 +238,7 @@ export default class App extends Component {
               filter={filter}
               filePath={filePath}
               registerField={this.registerField}
+              advancedMode={advancedMode}
             />
           </Grid.Column>
 
@@ -462,7 +463,8 @@ const MainContent = ({
   onFilterList,
   filter,
   registerField,
-  filePath
+  filePath,
+  advancedMode
 }) => {
   return (
     <div>
@@ -500,6 +502,7 @@ const MainContent = ({
                 filter={filter}
                 registerField={registerField}
                 optionlist={optionlist}
+                advancedMode={advancedMode}
               />
             ))}
           </Form>
@@ -514,7 +517,8 @@ const ComponentList = ({
   selectedMenuItem,
   filter,
   registerField,
-  optionlist
+  optionlist,
+  advancedMode
 }) => {
   let currentOptions = _.find(optionlist, { title: category });
 
@@ -527,6 +531,7 @@ const ComponentList = ({
             data={data}
             category="category"
             registerField={registerField}
+            advancedMode={advancedMode}
           />
         )
     )
