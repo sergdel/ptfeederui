@@ -260,7 +260,7 @@ export default class App extends Component {
                 >
                   +
                 </Button>
-                {overrides.map(() => <OverrideComponent />)}
+                {overrides.map((o, i) => <OverrideKeyPair id={i} />)}
               </div>
             ) : null}
           </Grid.Column>
@@ -322,11 +322,12 @@ const StatusIndicators = ({
   );
 };
 
-const OverrideComponent = () => {
+const OverrideKeyPair = ({ id }) => {
   return (
     <div>
-      <Input type="text" size="mini" />
-      <Input type="text" size="mini" />
+      <Label>{id}</Label>
+      <Input type="text" data-type="key" data-id={id} size="mini" />
+      <Input type="text" data-type="value" data-id={id} size="mini" />
     </div>
   );
 };
