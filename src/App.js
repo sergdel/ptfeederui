@@ -190,7 +190,12 @@ export default class App extends Component {
         <Grid.Row columns={1}>
           <Grid.Column>
             <TopMenu activeItem={selectedMenuItem} />
-            <StatusIndicators /> <AdvancedToggle onClick={} />
+            <StatusIndicators />{" "}
+            <AdvancedToggle
+              onClick={checked => {
+                this.setState({ advancedMode: checked });
+              }}
+            />
           </Grid.Column>
         </Grid.Row>
 
@@ -264,8 +269,15 @@ export default class App extends Component {
   }
 }
 
-const AdvancedToggle = () => {
-  return <Checkbox toggle label="Advanced Mode" inline />;
+const AdvancedToggle = props => {
+  return (
+    <Checkbox
+      toggle
+      label="Advanced Mode"
+      inline
+      onClick={(event, data) => props.onClick(data.checked)}
+    />
+  );
 };
 
 const StatusIndicators = ({
