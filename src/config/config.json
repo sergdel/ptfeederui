@@ -3,6 +3,7 @@
 		{
 			"title": "General",
 			"wiki" : "/wiki",
+			"description": "This is the general section",
 			"hasfiles": false,
 			"options": [
 				{
