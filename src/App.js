@@ -38,7 +38,11 @@ export default class App extends Component {
     this.fields = [];
     this.savedConfig = {};
     this.state = {
-      selectedMenuItem: { title: options[0].title, wiki: options[0].wiki, hasfiles: options[0].hasfiles },
+      selectedMenuItem: {
+        title: options[0].title,
+        wiki: options[0].wiki,
+        hasfiles: options[0].hasfiles
+      },
       availableConfig: null,
       menuItems: options.map(item => {
         return { title: item.title, wiki: item.wiki, hasfiles: item.hasfiles };
@@ -107,7 +111,11 @@ export default class App extends Component {
               hasfiles: newconfig[0].hasfiles
             };
             state.menuItems = newconfig.map(item => {
-              return { title: item.title, wiki: item.wiki, hasfiles: item.hasfiles };
+              return {
+                title: item.title,
+                wiki: item.wiki,
+                hasfiles: item.hasfiles
+              };
             });
             state.config = newconfig.config;
             state.optionlist = newconfig;
@@ -141,14 +149,14 @@ export default class App extends Component {
     this.fields[title] = ref;
   };
 
-  setHasFiles = (idx) => {
+  setHasFiles = idx => {
     let state = this.state;
     state.optionlist[idx].hasfiles = true;
     state.menuItems = state.optionlist.map(item => {
       return { title: item.title, wiki: item.wiki, hasfiles: item.hasfiles };
-    }),
+    });
     this.setState(state);
-  }
+  };
 
   render() {
     const {
@@ -182,7 +190,7 @@ export default class App extends Component {
         <Grid.Row columns={1}>
           <Grid.Column>
             <TopMenu activeItem={selectedMenuItem} />
-            <StatusIndicators /> <AdvancedToggle />
+            <StatusIndicators /> <AdvancedToggle onClick={} />
           </Grid.Column>
         </Grid.Row>
 
