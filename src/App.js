@@ -441,6 +441,13 @@ const LeftNav = ({
                   {item.title}
                 </MenuItem>
               ))}
+          <MenuItem
+            name="Overrides"
+            active={selectedMenuItem === "overrides"}
+            onClick={() => onMenuSelect("overrides")}
+          >
+            Overrides
+          </MenuItem>
         </Menu>
       </Sticky>
     </Grid.Column>
