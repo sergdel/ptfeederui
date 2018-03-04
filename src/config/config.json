@@ -486,7 +486,8 @@
 					"type": "Number",
 					"acceptBoolean": false
 				}
-			]
+			],
+			"advanced" : true
 		},
 		{
 			"title": "LongerTermPriceChange",

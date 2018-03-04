@@ -43,9 +43,15 @@ export default class App extends Component {
         wiki: options[0].wiki,
         hasfiles: options[0].hasfiles
       },
+      advancedMode: null,
       availableConfig: null,
       menuItems: options.map(item => {
-        return { title: item.title, wiki: item.wiki, hasfiles: item.hasfiles };
+        return {
+          title: item.title,
+          wiki: item.wiki,
+          hasfiles: item.hasfiles,
+          advanced: item.advanced
+        };
       }),
       userData: {},
       savedConfig: {},
@@ -166,7 +172,8 @@ export default class App extends Component {
       configErrorMessage,
       filter,
       optionlist,
-      filePath
+      filePath,
+      advancedMode
     } = this.state;
 
     if (configHasErrors) {
@@ -216,6 +223,7 @@ export default class App extends Component {
                 onMenuSelect={this.onMenuSelect}
                 openFileEditor={this.openFileEditor}
                 setHasFiles={this.setHasFiles}
+                advancedMode={advancedMode}
               />
             </Segment>
           </Grid.Column>
@@ -399,7 +407,8 @@ const LeftNav = ({
   menuItems,
   onMenuSelect,
   openFileEditor,
-  setHasFiles
+  setHasFiles,
+  advancedMode
 }) => {
   return (
     <Grid.Column width={4} align="center">
@@ -416,23 +425,30 @@ const LeftNav = ({
           }}
         >
           {menuItems &&
-            menuItems.map((item, index) => (
-              <MenuItem
-                name={item.title}
-                key={item.title}
-                active={selectedMenuItem === item}
-                onClick={() => onMenuSelect(item)}
-                openFileEditor={openFileEditor}
-                style={{
-                  color: textColour
-                }}
-                hasTxtFiles={item.hasfiles}
-                setHasFiles={setHasFiles}
-                menuIndex={index}
-              >
-                {item.title}
-              </MenuItem>
-            ))}
+            menuItems
+              .filter(
+                ((advancedMode, option) => {
+                  debugger;
+                  return advancedMode ? true : !!!option.advanced;
+                }).bind(this, advancedMode)
+              )
+              .map((item, index) => (
+                <MenuItem
+                  name={item.title}
+                  key={item.title}
+                  active={selectedMenuItem === item}
+                  onClick={() => onMenuSelect(item)}
+                  openFileEditor={openFileEditor}
+                  style={{
+                    color: textColour
+                  }}
+                  hasTxtFiles={item.hasfiles}
+                  setHasFiles={setHasFiles}
+                  menuIndex={index}
+                >
+                  {item.title}
+                </MenuItem>
+              ))}
         </Menu>
       </Sticky>
     </Grid.Column>
