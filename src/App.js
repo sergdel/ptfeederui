@@ -334,32 +334,19 @@ const OverrideComponent = () => {
 const ImportExport = props => {
   return (
     <Segment basic>
-      <Popup
-        trigger={
-          <a fluid="fluid" href="" onClick={props.save}>
-            <Label icon="save" />
-          </a>
-        }
-        content="save settings"
-      />
+      <Button primary icon="save" onClick={props.save}>
+        Save Settings
+      </Button>
+
       <br />
-      <Popup
-        trigger={
-          <a fluid="fluid" href="" onClick={props.import}>
-            <Label icon="upload" />
-          </a>
-        }
-        content="import settings"
-      />
+      <Button basic icon="upload" onClick={props.import}>
+        Import Settings
+      </Button>
       <br />
-      <Popup
-        trigger={
-          <a fluid="fluid" href="/download">
-            <Label icon="download" />
-          </a>
-        }
-        content="export settings"
-      />
+
+      <Button basic icon="upload" href="/download">
+        Export Settings
+      </Button>
     </Segment>
   );
 };
