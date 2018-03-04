@@ -15,16 +15,17 @@ import { post } from "axios";
 
 import f from "fuzzysearch";
 import {
+  Button,
+  Checkbox,
+  Divider,
   Grid,
+  Header,
   Menu,
   Modal,
-  Header,
-  Divider,
-  Sticky,
-  Segment,
-  Responsive,
   Popup,
-  Checkbox
+  Responsive,
+  Segment,
+  Sticky
 } from "semantic-ui-react";
 const ajv = new Ajv({ allErrors: true, schemaId: "auto" });
 ajv.addMetaSchema(require("ajv/lib/refs/json-schema-draft-06.json"));
@@ -197,12 +198,17 @@ export default class App extends Component {
         <Grid.Row columns={1}>
           <Grid.Column>
             <TopMenu activeItem={selectedMenuItem} />
-            <StatusIndicators />{" "}
-            <AdvancedToggle
-              onClick={checked => {
-                this.setState({ advancedMode: checked });
-              }}
-            />
+
+            <StatusIndicators />
+            <Segment basic align="left">
+              <Label>Advanced Mode</Label>
+              <Checkbox
+                onChange={(event, { checked }) => {
+                  this.setState({ advancedMode: checked });
+                }}
+                checked={this.state.checked}
+              />
+            </Segment>
           </Grid.Column>
         </Grid.Row>
 
@@ -278,35 +284,21 @@ export default class App extends Component {
   }
 }
 
-const AdvancedToggle = props => {
-  return (
-    <Checkbox
-      toggle
-      label="Advanced Mode"
-      inline
-      onClick={(event, data) => props.onClick(data.checked)}
-    />
-  );
-};
-
 const StatusIndicators = ({
   BaseCoinPrice,
   CurrentMarketCondition,
   TopCoinChange
 }) => {
   return (
-    <Segment basic>
+    <Segment basic align="center">
       <Label>
-        {" "}
         BaseCoinPrice <Label.Detail>{BaseCoinPrice || 0}</Label.Detail>{" "}
       </Label>
       <Label>
-        {" "}
         DogCurrentMarketConditions{" "}
-        <Label.Detail>{CurrentMarketCondition || 0}</Label.Detail>{" "}
+        <Label.Detail>{CurrentMarketCondition || 0}</Label.Detail>
       </Label>
       <Label>
-        {" "}
         TopCoinChangee <Label.Detail>{TopCoinChange || 0}</Label.Detail>{" "}
       </Label>
     </Segment>
@@ -429,7 +421,6 @@ const LeftNav = ({
             menuItems
               .filter(
                 ((advancedMode, option) => {
-                  debugger;
                   return advancedMode ? true : !!!option.advanced;
                 }).bind(this, advancedMode)
               )
