@@ -60,7 +60,8 @@ export default class App extends Component {
       configHasErrors: {},
       configErrorMessage: {},
       filter: "",
-      optionlist: options
+      optionlist: options,
+      overrides: [{}]
     };
   }
 
@@ -174,7 +175,8 @@ export default class App extends Component {
       filter,
       optionlist,
       filePath,
-      advancedMode
+      advancedMode,
+      overrides
     } = this.state;
 
     if (configHasErrors) {
@@ -246,6 +248,21 @@ export default class App extends Component {
               registerField={this.registerField}
               advancedMode={advancedMode}
             />
+
+            {selectedMenuItem === "overrides" ? (
+              <div>
+                <Button
+                  onClick={e =>
+                    this.setState({
+                      overrides: overrides.concat({ bleh: "bleh" })
+                    })
+                  }
+                >
+                  +
+                </Button>
+                {overrides.map(() => <OverrideComponent />)}
+              </div>
+            ) : null}
           </Grid.Column>
 
           {/* RIGHT Side  */}
@@ -302,6 +319,15 @@ const StatusIndicators = ({
         TopCoinChangee <Label.Detail>{TopCoinChange || 0}</Label.Detail>{" "}
       </Label>
     </Segment>
+  );
+};
+
+const OverrideComponent = () => {
+  return (
+    <div>
+      <Input type="text" size="mini" />
+      <Input type="text" size="mini" />
+    </div>
   );
 };
 
