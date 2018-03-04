@@ -505,7 +505,8 @@
 				"type":"Number"},
 				{"title": "MaxPriceTrendPercentageChange",
 				"type":"Number"}
-			]
+			],
+			"advanced": true
 		}
 	]
 }
