@@ -25,6 +25,12 @@
               "/wiki/general"
             ]
           },
+          "description": {
+            "$id": "/properties/config/items/properties/description",
+            "type": "string",
+            "title": "Description of menu item",
+            "default": ""
+          },
           "hasfiles": {
             "$id": "/properties/config/items/properties/hasfiles",
             "type": "boolean",

@@ -42,7 +42,8 @@ export default class App extends Component {
       selectedMenuItem: {
         title: options[0].title,
         wiki: options[0].wiki,
-        hasfiles: options[0].hasfiles
+        hasfiles: options[0].hasfiles,
+        description: options[0].description
       },
       advancedMode: null,
       availableConfig: null,
@@ -51,7 +52,8 @@ export default class App extends Component {
           title: item.title,
           wiki: item.wiki,
           hasfiles: item.hasfiles,
-          advanced: item.advanced
+          advanced: item.advanced,
+          description: item.description
         };
       }),
       userData: {},
@@ -200,7 +202,6 @@ export default class App extends Component {
         <Grid.Row columns={1}>
           <Grid.Column>
             <TopMenu activeItem={selectedMenuItem} />
-
             <StatusIndicators />
             <Segment basic align="left">
               <Label>Advanced Mode</Label>
@@ -281,11 +282,7 @@ export default class App extends Component {
                 import={this.import}
               />
               <Segment basic style={{ color: "#fff" }}>
-                More Info About <strong>{selectedMenuItem.title}</strong> can be
-                found on the{" "}
-                <a href={selectedMenuItem.wiki}>
-                  {selectedMenuItem.title} Wiki
-                </a>
+                <strong>{selectedMenuItem.description}</strong>
               </Segment>
             </Grid.Row>
           </Responsive>
