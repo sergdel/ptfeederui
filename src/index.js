@@ -3,49 +3,15 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
+import { Provider } from "mobx-react";
+import Store from "./Store";
 
-// import "./theme/semantic.cyborg.css";
-// import "./theme/semantic.cerulean.css";
-// import "./theme/semantic.cerulean.min.css";
-// import "./theme/semantic.chubby.css";
-// import "./theme/semantic.chubby.min.css";
-// import "./theme/semantic.cosmo.css";
-// import "./theme/semantic.cosmo.min.css";
-// import "./theme/semantic.css";
-// import "./theme/semantic.cyborg.css";
-// import "./theme/semantic.cyborg.min.css";
-// import "./theme/semantic.darkly.css";
-// import "./theme/semantic.darkly.min.css";
 import "./theme/semantic.flatly.css";
-// import "./theme/semantic.flatly.min.css";
-// import "./theme/semantic.journal.css";
-// import "./theme/semantic.journal.min.css";
-// import "./theme/semantic.js";
-// import "./theme/semantic.lumen.css";
-// import "./theme/semantic.lumen.min.css";
-// import "./theme/semantic.min.css";
-// import "./theme/semantic.min.js";
-// import "./theme/semantic.paper.css";
-// import "./theme/semantic.paper.min.css";
-// import "./theme/semantic.readable.css";
-// import "./theme/semantic.readable.min.css";
-// import "./theme/semantic.sandstone.css";
-// import "./theme/semantic.sandstone.min.css";
-// import "./theme/semantic.simplex.css";
-// import "./theme/semantic.simplex.min.css";
-// import "./theme/semantic.slate.css";
-// import "./theme/semantic.slate.min.css";
-// import "./theme/semantic.solar.css";
-// import "./theme/semantic.solar.min.css";
-// import "./theme/semantic.spacelab.css";
-// import "./theme/semantic.spacelab.min.css";
-// import "./theme/semantic.superhero.css";
-// import "./theme/semantic.superhero.min.css";
-// import "./theme/semantic.united.css";
-// import "./theme/semantic.united.min.css";
-// import "./theme/semantic.yeti.css";
-// import "./theme/semantic.yeti.min.css";
-// import "./theme/themes";
 
-ReactDOM.render(<App />, document.getElementById("root"));
+const Root = (
+  <Provider store={Store}>
+    <App />
+  </Provider>
+);
+ReactDOM.render(Root, document.getElementById("root"));
 registerServiceWorker();
