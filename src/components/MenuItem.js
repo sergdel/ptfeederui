@@ -38,8 +38,9 @@ export default class MenuItem extends PureComponent {
   };
 
   render() {
-    const { name, style, active, onClick, hasTxtFiles } = this.props;
+    const { name, style, active, onClick} = this.props;
 
+    let hasTxtFiles = false;
     return (
       <a
         className={active ? "active item" : "item"}
