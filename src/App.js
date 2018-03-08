@@ -81,6 +81,7 @@ export default class App extends Component {
     if (valid) console.log("Valid!");
     else console.log("Invalid: " + ajv.errorsText(validate.errors));
 
+    this.props.store.server.get();
     this.setState({
       configHasErrors: Boolean(valid) === false,
       configErrorMessage: ajv.errorsText(validate.errors)
