@@ -8,8 +8,7 @@ import { background, textColour } from "./config/constants";
 import "./App.css";
 import Ajv from "ajv";
 import schema from "./config/json.schema.json";
-import { observable } from "mobx";
-import { inject, observer } from "mobx-react";
+
 import _ from "lodash";
 import DevTools from "mobx-react-devtools";
 import { Form, Input, Label } from "semantic-ui-react";
@@ -29,6 +28,10 @@ import {
   Segment,
   Sticky
 } from "semantic-ui-react";
+
+import { observable, computed } from "mobx";
+import { inject, observer } from "mobx-react";
+
 const ajv = new Ajv({ allErrors: true, schemaId: "auto" });
 ajv.addMetaSchema(require("ajv/lib/refs/json-schema-draft-06.json"));
 
@@ -37,7 +40,6 @@ ajv.addMetaSchema(require("ajv/lib/refs/json-schema-draft-06.json"));
 export default class App extends Component {
   constructor(props) {
     super(props);
-    debugger;
     this.registerField = this.registerField.bind(this);
     this.updateConfig = this.updateConfig.bind(this);
     this.openFileEditor = this.openFileEditor.bind(this);
