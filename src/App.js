@@ -153,7 +153,7 @@ export default class App extends Component {
         res[item] = this.fields[item].value;
       }
     });
-    post("/save", { config: res).then(function(response) {
+    post("/save", { config: res}).then(function(response) {
       console.log(response);
     });
     this.setState(state);
