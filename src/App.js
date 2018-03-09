@@ -146,14 +146,14 @@ export default class App extends Component {
   };
 
   save = () => {
-    let res = [];
+    let res = {};
     let state = { ...this.state };
     _.each(Object.keys(this.fields), (item, index) => {
       if (this.fields[item]) {
         res[item] = this.fields[item].value;
       }
     });
-    post("/save", { config: res }).then(function(response) {
+    post("/save", { config: res).then(function(response) {
       console.log(response);
     });
     this.setState(state);

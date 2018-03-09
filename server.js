@@ -67,9 +67,13 @@ app.route("/settings").get(async (req, res) => {
 app
   .route("/save")
   .post((req, res) => {
+    
     if (!req.body.config) {
       return res.status(400).send("Config is required");
-    } else return res.sendStatus(200, "ok");
+    } else {
+      server.set(req.body.config);
+      return res.sendStatus(200, "ok");
+    }
   })
   .get((req, res) => res.send("hello"));
 
