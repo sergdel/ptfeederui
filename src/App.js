@@ -23,13 +23,11 @@ import {
   Header,
   Menu,
   Modal,
-  Popup,
   Responsive,
   Segment,
   Sticky
 } from "semantic-ui-react";
 
-import { observable, computed } from "mobx";
 import { inject, observer } from "mobx-react";
 
 const ajv = new Ajv({ allErrors: true, schemaId: "auto" });
@@ -81,7 +79,7 @@ export default class App extends Component {
     if (valid) console.log("Valid!");
     else console.log("Invalid: " + ajv.errorsText(validate.errors));
 
-    this.props.store.server.get();
+    // this.props.store.server.get();
     this.setState({
       configHasErrors: Boolean(valid) === false,
       configErrorMessage: ajv.errorsText(validate.errors)
@@ -206,6 +204,9 @@ export default class App extends Component {
       >
         <DevTools />
 
+        <pre style={{ color: "white" }}>
+          {JSON.stringify(this.props, null, 2)}
+        </pre>
         {/* HEADER */}
         <Grid.Row columns={1}>
           <Grid.Column>

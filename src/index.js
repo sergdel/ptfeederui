@@ -7,42 +7,59 @@ import { observable } from "mobx";
 import axios from "axios";
 import "./index.css";
 import "./theme/semantic.flatly.css";
-//create a store that resembles the incoming get request body
 
-class Store {
-  onReject = err => console.error(err);
-  @observable
-  data = {
-  };
-  @observable
-  server = {
-    get: () => {
-      axios
-        .get("/settings")
-        .then(results => {
-          this.data = results;
-        })
-        .catch(this.onReject);
-    },
+import {
+  types,
+  onSnapshot,
+  applySnapshot,
+  getSnapshot,
+  flow
+} from "mobx-state-tree";
 
-    set: () =>
-      axios
-        .post("http://localhost:5001/api/v1/app/settings")
-        .catch(this.onReject)
-  };
+const onReject = err => console.error(err);
 
-  constructor() {
-    setInterval(() => {
-      this.timer += 1;
-    }, 1000);
-  }
-}
+const profitTrailer = {
+  get: () =>
+    axios
+      .get("/settings")
+      .then(results => {
+        return results.data;
+      })
+      .catch(onReject)
+};
 
-const store = new Store();
+const MenuItem = types.model("MenuItem", {
+  Configs: types.array(types.frozen)
+});
+
+const GeneralSettings = types.model("General", {
+  General: types.frozen,
+  MenuItems: types.optional(types.frozen)
+});
+
+const Settings = types
+  .model({
+    settings: types.frozen
+  })
+  .actions(self => ({
+    fetchSettings: flow(function* fetchSettings() {
+      self.settings = {};
+      try {
+        self.settings = yield profitTrailer.get();
+      } catch (e) {
+        console.error("Failed to fetch projects", e);
+      }
+    })
+  }));
+
+const store = Settings.create();
+store.fetchSettings().then(() => {});
+
 const Root = (
   <Provider store={store}>
     <App />
   </Provider>
 );
+
 ReactDOM.render(Root, document.getElementById("root"));
 registerServiceWorker();
