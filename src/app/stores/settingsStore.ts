@@ -120,7 +120,10 @@ const Settings = t
     }),
     save: (self) => {
       JSON.stringify(this.toJS());
-    }
+    },
+    updateField(category, key, newValue){
+      self[category][key] = newValue
+    } 
   }));
 
 export const settings = Settings.create(dummyData);
