@@ -278,7 +278,7 @@ const LeftNav: React.SFC<any> = inject(
                   >
                     {item}
                   </MenuItem>
-                ) : <div>blah</div>;
+                ) : null;
               })}
               {/* <MenuItem
                 name="Overrides"
