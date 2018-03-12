@@ -2,6 +2,7 @@ import * as React from 'react';
 import { inject, observer } from 'mobx-react';
 import { ComponentFactory } from 'app/components/';
 import { componentDefinitions, settings } from 'app/stores';
+import logo from "../../../assets/logo.png"
 import {
   Grid,
   Segment,
@@ -155,7 +156,7 @@ const TopMenu: React.SFC<{}> = () => {
     >
       <Menu>
         <Menu.Item name="logo">
-          <img src={''} alt="icon" />
+          <img src={logo} alt="icon" />
           PTFeeder
         </Menu.Item>
 
