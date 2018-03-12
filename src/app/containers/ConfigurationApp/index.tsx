@@ -249,7 +249,6 @@ const LeftNav: React.SFC<any> = inject(
       settings: { menuItems },
       componentDefinitions: { menuItemsMeta }
     }) => {
-      debugger;
       return (
         <Grid.Column width={4} align="center">
           <Sticky>
