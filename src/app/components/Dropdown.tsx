@@ -8,7 +8,6 @@ export const DropDown: React.SFC<{
   wiki: string;
   allowAdditions?: boolean;
   value: string;
-
   onChange: any;
   index: number;
 }> = ({
