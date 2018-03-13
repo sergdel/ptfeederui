@@ -2,6 +2,7 @@ import * as React from "react";
 import { inject, observer } from "mobx-react";
 import { ComponentFactory, Preloader } from "app/components/";
 import { componentDefinitions, settings } from "app/stores";
+import { CLIENTONLY } from "app/constants";
 import logo from "../../../assets/logo.png";
 
 import {
@@ -40,7 +41,7 @@ export const ConfigurationApp: React.SFC<any> = inject(
       componentDefinitions,
       appSettings: { isLoaded }
     }) => {
-      return isLoaded ? (
+      return isLoaded || process.env.NODE_ENV === "client" ? (
         <GridBody />
       ) : (
         <Responsive as={Grid} style={{ height: "100vh" }} center middle>
@@ -248,6 +249,11 @@ const StatusIndicators: React.SFC<any> = inject("appSettings")(
           ) : (
             <Label circular color={"red"}>
               Offline
+            </Label>
+          )}
+          {CLIENTONLY && (
+            <Label circular color={"blue"}>
+              Debug
             </Label>
           )}
           <Label>
