@@ -1,6 +1,6 @@
-import * as React from 'react';
-import { Dropdown, Form } from 'semantic-ui-react';
-import InfoLabel from './InfoLabel';
+import * as React from "react";
+import { Dropdown, Form } from "semantic-ui-react";
+import InfoLabel from "./InfoLabel";
 
 export const DropDown: React.SFC<{
   options: object[];
@@ -8,11 +8,21 @@ export const DropDown: React.SFC<{
   wiki: string;
   allowAdditions?: boolean;
   value: string;
+
   onChange: any;
-}> = ({ options, title, wiki, allowAdditions = false, value, onChange }) => {
+  index: number;
+}> = ({
+  options,
+  title,
+  wiki,
+  allowAdditions = false,
+  value,
+  onChange,
+  index = -1
+}) => {
   const handleAddition = (e, { value }) => {};
   return (
-    <Form.Field style={{ paddingTop: '20px' }}>
+    <Form.Field style={{ paddingTop: "20px" }}>
       <InfoLabel title={title} wiki={wiki} />
       <Dropdown
         placeholder={value || title}

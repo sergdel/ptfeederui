@@ -1,12 +1,12 @@
-import * as React from 'react';
-import { DropDown, NumberInput, InfoLabel } from '../components';
-import { Form, Input } from 'semantic-ui-react';
-import { observer, inject } from 'mobx-react';
+import * as React from "react";
+import { DropDown, NumberInput, InfoLabel } from "../components";
+import { Form, Input } from "semantic-ui-react";
+import { observer, inject } from "mobx-react";
 
 export const ComponentFactory: React.SFC<any> = inject(
-  'appSettings',
-  'componentDefinitions',
-  'settings'
+  "appSettings",
+  "componentDefinitions",
+  "settings"
 )(
   observer(
     ({
@@ -14,7 +14,8 @@ export const ComponentFactory: React.SFC<any> = inject(
       settings: { updateField },
       componentDefinitions,
       item,
-      value
+      value,
+      index
     }) => {
       const componentMeta = componentDefinitions.componentTypeForFieldName(
         item
@@ -37,7 +38,7 @@ export const ComponentFactory: React.SFC<any> = inject(
       } = componentMeta;
       if (advanced && !advancedMode) return null;
       switch (componentMeta.type) {
-        case 'Dropdown':
+        case "Dropdown":
           return (
             <DropDown
               title={title}
@@ -46,10 +47,11 @@ export const ComponentFactory: React.SFC<any> = inject(
               wiki={wiki}
               value={value}
               onChange={handleChange}
+              index={index}
             />
           );
 
-        case 'Number':
+        case "Number":
           return (
             <NumberInput
               acceptBoolean={acceptBoolean}
@@ -59,25 +61,28 @@ export const ComponentFactory: React.SFC<any> = inject(
               value={value}
               wiki={wiki}
               onChange={handleChange}
+              index={index}
             />
           );
-        case 'Boolean':
+        case "Boolean":
           return (
             <DropDown
               title={title}
               options={[
-                { key: 'true', value: 'true', text: 'true' },
-                { key: 'false', value: 'false', text: 'false' }
+                { key: "true", value: "true", text: "true" },
+                { key: "false", value: "false", text: "false" }
               ]}
               wiki={wiki}
               value={value}
               onChange={handleChange}
+              index={index}
             />
           );
-        case 'String':
+        case "String":
           return (
             <Form.Field>
               <InfoLabel title={title} wiki={wiki} />
+
               <Input
                 placeholder={title}
                 type="text"
@@ -85,6 +90,7 @@ export const ComponentFactory: React.SFC<any> = inject(
                 size="mini"
                 onChange={handleChange}
                 value={value}
+                index={index}
               />
             </Form.Field>
           );
