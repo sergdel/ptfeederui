@@ -8,7 +8,7 @@ export const ComponentFactory: React.SFC<any> = inject(
   'componentDefinitions'
 )(
   observer(
-    ({ appSettings: { advancedMode }, componentDefinitions, item, value }) => {
+    ({ appSettings: { advancedMode }, componentDefinitions, item, value, index }) => {
       const componentMeta = componentDefinitions.componentTypeForFieldName(
         item
       );
@@ -41,6 +41,7 @@ export const ComponentFactory: React.SFC<any> = inject(
               allowAdditions={allowAdditions}
               wiki={wiki}
               value={value}
+              index={index}
             />
           );
 
@@ -53,6 +54,7 @@ export const ComponentFactory: React.SFC<any> = inject(
               note={note}
               value={value}
               wiki={wiki}
+              index={index}
             />
           );
         case 'Boolean':
@@ -65,13 +67,14 @@ export const ComponentFactory: React.SFC<any> = inject(
               ]}
               wiki={wiki}
               value={value}
+              index={index}
             />
           );
         case 'String':
           return (
             <Form.Field>
               <InfoLabel title={title} wiki={wiki} />
-              <Input placeholder={title} type="text" name={title} size="mini" />
+              <Input placeholder={title} type="text" name={title} size="mini" index={index}/>
             </Form.Field>
           );
         default:

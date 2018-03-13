@@ -10,6 +10,7 @@ export const NumberInput: React.SFC<{
   note?: string;
   value: string;
   wiki?: string;
+  index?: number;
 }> = inject('settings', 'appSettings')(
   observer(
     ({
@@ -20,11 +21,12 @@ export const NumberInput: React.SFC<{
       title,
       value,
       settings: { updateField },
-      appSettings: { selectedMenuItem }
+      appSettings: { selectedMenuItem },
+      index
     }) => {
       const handleChange = (evt, { value }) => {
         // this.value = value; TODO
-        updateField(selectedMenuItem, title, value);
+        updateField(selectedMenuItem, title, value, index);
       };
 
       const onKeyPress = event => {

@@ -8,7 +8,8 @@ export const DropDown: React.SFC<{
   wiki: string;
   allowAdditions?: boolean;
   value: string;
-}> = ({ options, title, wiki, allowAdditions = false, value }) => {
+  index: number;
+}> = ({ options, title, wiki, allowAdditions = false, value, index = -1 }) => {
   const handleAddition = (e, { value }) => {
     //   const { options } = this.state;
     //   this.setState({
