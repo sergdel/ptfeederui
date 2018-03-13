@@ -41,6 +41,10 @@ io.on("connection", function(socket) {
   });
 });
 
+setInterval(() => {
+  server.get().then(() => io.emit("server", { info: "pulse" }));
+}, 5000);
+
 function wait(timeout) {
   return new Promise(resolve => {
     setTimeout(() => {
@@ -51,7 +55,6 @@ function wait(timeout) {
 
 async function requestWithRetry() {
   let response;
-  console.log("trying");
   while (!response)
     try {
       response = await server.get();

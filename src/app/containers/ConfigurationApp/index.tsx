@@ -231,26 +231,40 @@ const TopMenu: React.SFC<{}> = () => {
   );
 };
 
-const StatusIndicators: React.SFC<any> = ({
-  BaseCoinPrice,
-  CurrentMarketCondition,
-  TopCoinChange
-}) => {
-  return (
-    <Segment basic floated="right">
-      <Label>
-        BaseCoinPrice <Label.Detail>{BaseCoinPrice || 0}</Label.Detail>{" "}
-      </Label>
-      <Label>
-        CurrentMarketConditions{" "}
-        <Label.Detail>{CurrentMarketCondition || 0}</Label.Detail>
-      </Label>
-      <Label>
-        TopCoinChangee <Label.Detail>{TopCoinChange || 0}</Label.Detail>{" "}
-      </Label>
-    </Segment>
-  );
-};
+const StatusIndicators: React.SFC<any> = inject("appSettings")(
+  observer(
+    ({
+      BaseCoinPrice,
+      CurrentMarketCondition,
+      TopCoinChange,
+      appSettings: { connected }
+    }) => {
+      return (
+        <Segment basic floated="right">
+          {connected ? (
+            <Label circular color={"green"}>
+              Connected
+            </Label>
+          ) : (
+            <Label circular color={"red"}>
+              Offline
+            </Label>
+          )}
+          <Label>
+            BaseCoinPrice <Label.Detail>{BaseCoinPrice || 0}</Label.Detail>
+          </Label>
+          <Label>
+            CurrentMarketConditions
+            <Label.Detail>{CurrentMarketCondition || 0}</Label.Detail>
+          </Label>
+          <Label>
+            TopCoinChangee <Label.Detail>{TopCoinChange || 0}</Label.Detail>
+          </Label>
+        </Segment>
+      );
+    }
+  )
+);
 
 const ImportExport: React.SFC<any> = ({ save, fileImport }) => {
   return (
