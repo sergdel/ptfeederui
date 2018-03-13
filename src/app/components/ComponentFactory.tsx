@@ -3,11 +3,11 @@ import { DropDown, NumberInput, InfoLabel } from "../components";
 import { Form, Input } from "semantic-ui-react";
 import { observer, inject } from "mobx-react";
 
-export const ComponentFactory: React.SFC<any> = inject(
-  "appSettings",
-  "componentDefinitions",
-  "settings"
-)(
+export const ComponentFactory: React.SFC<{
+  item: string;
+  value: string;
+  index: number;
+}> = inject("appSettings", "componentDefinitions", "settings")(
   observer(
     ({
       appSettings: { advancedMode, selectedMenuItem },
