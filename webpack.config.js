@@ -1,36 +1,36 @@
-var webpack = require('webpack');
-var path = require('path');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+var webpack = require("webpack");
+var path = require("path");
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 
 // variables
-var isProduction = process.argv.indexOf('-p') >= 0;
-var sourcePath = path.join(__dirname, './src');
-var outPath = path.join(__dirname, './dist');
+var isProduction = process.argv.indexOf("-p") >= 0;
+var sourcePath = path.join(__dirname, "./src");
+var outPath = path.join(__dirname, "./dist");
 
 // plugins
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var WebpackCleanupPlugin = require('webpack-cleanup-plugin');
+var HtmlWebpackPlugin = require("html-webpack-plugin");
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
+var WebpackCleanupPlugin = require("webpack-cleanup-plugin");
 
 module.exports = {
   context: sourcePath,
   entry: {
-    main: './main.tsx'
+    main: "./main.tsx"
   },
   output: {
     path: outPath,
-    filename: 'bundle.js',
-    chunkFilename: '[chunkhash].js',
-    publicPath: '/'
+    filename: "bundle.js",
+    chunkFilename: "[chunkhash].js",
+    publicPath: "/"
   },
-  target: 'web',
+  target: "web",
   resolve: {
-    extensions: ['.js', '.ts', '.tsx'],
+    extensions: [".js", ".ts", ".tsx"],
     // Fix webpack's default behavior to not load packages with jsnext:main module
     // (jsnext:main directs not usually distributable es6 format, but es6 sources)
-    mainFields: ['module', 'browser', 'main'],
+    mainFields: ["module", "browser", "main"],
     alias: {
-      app: path.resolve(__dirname, 'src/app/')
+      app: path.resolve(__dirname, "src/app/")
     }
   },
   module: {
@@ -39,34 +39,34 @@ module.exports = {
       {
         test: /\.tsx?$/,
         use: isProduction
-          ? 'ts-loader'
-          : ['babel-loader?plugins=react-hot-loader/babel', 'ts-loader']
+          ? "ts-loader"
+          : ["babel-loader?plugins=react-hot-loader/babel", "ts-loader"]
       },
       // css
       {
         test: /\.css$/,
         use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
+          fallback: "style-loader",
           use: [
             {
-              loader: 'css-loader',
+              loader: "css-loader",
               query: {
                 modules: false,
                 sourceMap: !isProduction,
                 importLoaders: 1,
-                localIdentName: '[local]__[hash:base64:5]'
+                localIdentName: "[local]__[hash:base64:5]"
               }
             },
             {
-              loader: 'postcss-loader',
+              loader: "postcss-loader",
               options: {
-                ident: 'postcss',
+                ident: "postcss",
                 plugins: [
-                  require('postcss-import')({ addDependencyTo: webpack }),
-                  require('postcss-url')(),
-                  require('postcss-cssnext')(),
-                  require('postcss-reporter')(),
-                  require('postcss-browser-reporter')({
+                  require("postcss-import")({ addDependencyTo: webpack }),
+                  require("postcss-url")(),
+                  require("postcss-cssnext")(),
+                  require("postcss-reporter")(),
+                  require("postcss-browser-reporter")({
                     disabled: isProduction
                   })
                 ]
@@ -76,15 +76,15 @@ module.exports = {
         })
       },
       // static assets
-      { test: /\.html$/, use: 'html-loader' },
-      { test: /\.woff$/, use: 'url-loader?limit=10000' },
+      { test: /\.html$/, use: "html-loader" },
+      { test: /\.woff$/, use: "url-loader?limit=10000" },
       {
         test: /\.jpe?g$|\.gif$|\.png$|\.ttf$|\.eot$|\.svg$/,
-        use: 'file-loader?name=[name].[ext]?[hash]'
+        use: "file-loader?name=[name].[ext]?[hash]"
       },
       {
         test: /\.(ttf|eot|svg|woff2?)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: 'url-loader'
+        loader: "url-loader"
       }
     ]
   },
@@ -93,12 +93,12 @@ module.exports = {
       name: true,
       cacheGroups: {
         commons: {
-          chunks: 'initial',
+          chunks: "initial",
           minChunks: 2
         },
         vendors: {
           test: /[\\/]node_modules[\\/]/,
-          chunks: 'all',
+          chunks: "all",
           priority: -10
         }
       }
@@ -141,11 +141,11 @@ module.exports = {
   plugins: [
     new WebpackCleanupPlugin(),
     new ExtractTextPlugin({
-      filename: 'styles.css',
+      filename: "styles.css",
       disable: !isProduction
     }),
     new HtmlWebpackPlugin({
-      template: 'assets/index.html'
+      template: "assets/index.html"
     })
   ],
   devServer: {
@@ -156,15 +156,14 @@ module.exports = {
       disableDotRule: true
     },
     proxy: {
-      '/': 'http://localhost:5000'
+      "/": "http://localhost:5000"
     },
-    stats: 'minimal'
+    stats: "minimal"
   },
-  devtool: 'cheap-module-eval-source-map',
+  devtool: "cheap-module-eval-source-map",
   node: {
-    // workaround for webpack-dev-server issue
-    // https://github.com/webpack/webpack-dev-server/issues/60#issuecomment-103411179
-    fs: 'empty',
-    net: 'empty'
+    fs: "empty",
+    child_process: "empty",
+    readline: "empty"
   }
 };

@@ -5,6 +5,8 @@ import { Provider } from "mobx-react";
 import { createBrowserHistory } from "history";
 import { createStores } from "app/stores";
 import { App } from "app";
+import io from "socket.io-client";
+const socket = io("http://localhost:8000");
 require("./theme/semantic.flatly.css");
 useStrict(true);
 
@@ -18,15 +20,16 @@ ReactDOM.render(
   document.getElementById("root")
 );
 
-(() => {
-  setTimeout(function() {
-    rootStore.settings.fetch().then(() => {
-      rootStore.appSettings.dataLoaded();
-      clearInterval(myInterval);
-    });
-    const myInterval = setInterval(rootStore.settings.fetch, 5000);
-  }, 1000);
-})();
+socket.on("server", function(data) {
+  console.info("client reads: " + data);
+  if (data.settings) {
+    rootStore.settings.set(data.settings);
+    socket.emit("client", { info: "received settings" });
+    rootStore.appSettings.dataLoaded();
+  }
+});
+
+setInterval(() => socket.emit("client", { info: "pulse" }), 15000);
 
 if (process.env.NODE_ENV !== "production") {
   window["store"] = rootStore;

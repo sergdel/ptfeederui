@@ -4,9 +4,71 @@ const app = express();
 const port = process.env.PORT || 5000;
 const formidable = require("formidable");
 const path = require("path");
+const serve = require("http").Server(app);
 const fs = require("fs");
 const axios = require("axios");
-const io = require("socket.io");
+const io = require("socket.io")(serve);
+
+io.listen(8000);
+
+const server = {
+  get: () =>
+    axios.get("http://localhost:5001/api/v1/app/settings").then(results => {
+      console.info("info: server has received data");
+      return results.data;
+    }),
+  // .catch(e => console.error("ensure PTFeeder is running " + e)),
+  set: body =>
+    axios
+      .post("http://localhost:5001/api/v1/app/settings", body, {
+        headers: { "Content-Type": "application/json; charset=utf-8" }
+      })
+      .then(function(response) {
+        console.log(response);
+      })
+      .catch(this.onReject)
+};
+
+io.on("connection", function(socket) {
+  socket.emit("server", { server: "connection established" });
+  socket.on("client", function(data) {
+    console.log(data);
+  });
+
+  requestWithRetry().then(result => {
+    console.info("server: sending data to client " + result);
+    io.emit("server", { settings: result });
+  });
+});
+
+function wait(timeout) {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve();
+    }, timeout);
+  });
+}
+
+async function requestWithRetry() {
+  let response;
+  console.log("trying");
+  while (!response)
+    try {
+      response = await server.get();
+      return response;
+    } catch (err) {
+      const timeout = 4000;
+      console.log("Waiting", timeout, "ms");
+      await wait(timeout);
+      console.log("Retrying", err.message);
+    }
+}
+
+const poll = (fn, check, isDone = false) => {
+  if (isDone) return;
+  const promise = fn();
+  return promise.then(data => poll(fn, check, check(data)));
+};
 
 // Use application-level middleware for common functionality, including
 // logging, parsing, and session handling.
@@ -32,25 +94,6 @@ app.use((request, response, next) => {
 
   next();
 });
-
-const server = {
-  get: () =>
-    axios
-      .get("http://localhost:5001/api/v1/app/settings")
-      .then(results => {
-        return results.data;
-      })
-      .catch(this.onReject),
-  set: body =>
-    axios
-      .post("http://localhost:5001/api/v1/app/settings", body, {
-        headers: { "Content-Type": "application/json; charset=utf-8" }
-      })
-      .then(function(response) {
-        console.log(response);
-      })
-      .catch(this.onReject)
-};
 
 const handleError = (error, response) => {
   console.error("[ERROR] Request handler errored", error);
