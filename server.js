@@ -36,12 +36,19 @@ const server = {
   get: () =>
     axios
       .get('http://localhost:5001/api/v1/app/settings')
-      .then((results) => {
+      .then(results => {
         return results.data;
       })
       .catch(this.onReject),
   set: () =>
-    axios.post('http://localhost:5001/api/v1/app/settings').catch(this.onReject)
+    axios
+      .post('http://localhost:5001/api/v1/app/settings', {
+        headers: { 'Content-Type': 'application/json; charset=utf-8' }
+      })
+      .then(function(response) {
+        console.log(response);
+      })
+      .catch(this.onReject)
 };
 
 const handleError = (error, response) => {
@@ -64,13 +71,8 @@ app.route('/settings').get(async (req, res) => {
 
 app
   .route('/save')
-  .post((req, res) => {
-    if (!req.body.config) {
-      return res.status(400).send('Config is required');
-    } else {
-      server.set(req.body.config);
-      return res.sendStatus(200, 'ok');
-    }
+  .post(req => {
+    server.set(req.body);
   })
   .get((req, res) => res.send('hello'));
 

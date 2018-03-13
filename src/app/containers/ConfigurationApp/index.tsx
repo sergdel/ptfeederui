@@ -2,7 +2,7 @@ import * as React from 'react';
 import { inject, observer } from 'mobx-react';
 import { ComponentFactory } from 'app/components/';
 import { componentDefinitions, settings } from 'app/stores';
-import logo from "../../../assets/logo.png"
+import logo from '../../../assets/logo.png';
 import {
   Grid,
   Segment,
@@ -70,7 +70,7 @@ const GridBody: React.SFC<{}> = inject(
               />
               <AdvancedModeToggle
                 checked={advancedMode}
-                onChecked={(checked) => {}}
+                onChecked={checked => {}}
               />
             </Grid.Column>
           </Grid.Row>
@@ -108,7 +108,7 @@ const GridBody: React.SFC<{}> = inject(
                   <ConfigGroup menuData={Object.entries(menuData)} />
 
                   {menuData['Configs'] &&
-                    menuData['Configs'].map((value) => (
+                    menuData['Configs'].map(value => (
                       <ConfigGroup menuData={Object.entries(value)} />
                     ))}
                 </Form>
@@ -119,7 +119,7 @@ const GridBody: React.SFC<{}> = inject(
             <Responsive as={Grid.Column} {...Responsive.onlyComputer}>
               <Grid.Row>
                 <ImportExport
-                  save={save}
+                  save={() => settings.save(settings)}
                   // export={this.export}
                   // import={this.import}
                 />
@@ -264,8 +264,9 @@ const LeftNav: React.SFC<any> = inject(
               }}
             >
               {menuItems.map((item, index) => {
-                const blah = menuItemsMeta(item);blah;
-                return (!!!blah.advanced || advancedMode) ? (
+                const blah = menuItemsMeta(item);
+                blah;
+                return !!!blah.advanced || advancedMode ? (
                   <MenuItem
                     name={item}
                     key={item}

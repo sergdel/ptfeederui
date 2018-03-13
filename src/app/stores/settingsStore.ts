@@ -1,6 +1,6 @@
 import axios from 'axios';
 import dummyData from './dumyData';
-import { types as t, applySnapshot, flow } from 'mobx-state-tree';
+import { types as t, applySnapshot, flow, getSnapshot } from 'mobx-state-tree';
 
 const onReject = (err) => console.error(err);
 
@@ -12,7 +12,10 @@ const profitTrailer = {
         console.log('got data');
         return results.data;
       })
-      .catch(onReject)
+      .catch(onReject),
+  save: (body) => axios.post('/save', body, {
+    headers:{'Content-Type': 'application/json; charset=utf-8'}
+  }).then((results)=>console.log(results)).catch(onReject)
 };
 
 const Settings = t
@@ -119,7 +122,7 @@ const Settings = t
       }
     }),
     save: (self) => {
-      JSON.stringify(this.toJS());
+      profitTrailer.save(getSnapshot(self))
     },
     updateField(category, key, newValue){
       self[category][key] = newValue
@@ -129,4 +132,4 @@ const Settings = t
 export const settings = Settings.create(dummyData);
 
 settings.fetch();
-setInterval(settings.fetch, 15000);
+
