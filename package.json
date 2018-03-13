@@ -6,8 +6,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start":
-      "concurrently --kill-others-on-fail \"webpack-dev-server --mode development --hot --progress --colors --port 3000 --open\" \"nodemon server.js\"",
+    "start": "concurrently --kill-others-on-fail \"webpack-dev-server --mode development --hot --progress --colors --port 3000 --open\" \"nodemon server.js\"",
     "build": "webpack -p --progress --colors",
     "prettier": "prettier --write \"src/**/*.{ts,tsx,css}\""
   },

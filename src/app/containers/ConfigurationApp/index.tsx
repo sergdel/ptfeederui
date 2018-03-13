@@ -1,8 +1,9 @@
 import * as React from "react";
 import { inject, observer } from "mobx-react";
-import { ComponentFactory } from "app/components/";
+import { ComponentFactory, Preloader } from "app/components/";
 import { componentDefinitions, settings } from "app/stores";
 import logo from "../../../assets/logo.png";
+
 import {
   Grid,
   Segment,
@@ -37,9 +38,19 @@ export const ConfigurationApp: React.SFC<any> = inject(
     ({
       settings: { menuItems },
       componentDefinitions,
-      appSettings: { selectMenuItem, advancedMode }
+      appSettings: { isLoaded }
     }) => {
-      return <GridBody />;
+      return isLoaded ? (
+        <GridBody />
+      ) : (
+        <Responsive as={Grid} style={{ height: "100vh" }} center middle>
+          <Grid.Row columns={1} middle verticalAlign="middle">
+            <Grid.Column style={{ textAlign: "center" }}>
+              <Preloader />
+            </Grid.Column>
+          </Grid.Row>
+        </Responsive>
+      );
     }
   )
 );
