@@ -1,7 +1,7 @@
-import * as React from "react";
-import { Form, Input, Dropdown, Label } from "semantic-ui-react";
-import InfoLabel from "./InfoLabel";
-import { observer, inject } from "mobx-react";
+import * as React from 'react';
+import { Form, Input, Dropdown, Label } from 'semantic-ui-react';
+import InfoLabel from './InfoLabel';
+import { observer, inject } from 'mobx-react';
 
 export const NumberInput: React.SFC<{
   acceptBoolean?: boolean;
@@ -10,12 +10,12 @@ export const NumberInput: React.SFC<{
   note?: string;
   value: string;
   wiki?: string;
-}> = inject("settings", "appSettings")(
+}> = inject('settings', 'appSettings')(
   observer(
     ({
       percentage = false,
-      note = "",
-      wiki = "",
+      note = '',
+      wiki = '',
       acceptBoolean = false,
       title,
       value,
@@ -40,7 +40,7 @@ export const NumberInput: React.SFC<{
 
       if (acceptBoolean) {
         return (
-          <Form.Field style={{ paddingTop: "20px" }}>
+          <Form.Field style={{ paddingTop: '20px' }}>
             <InfoLabel wiki={wiki} />
             <Dropdown
               placeholder={title}
@@ -52,15 +52,15 @@ export const NumberInput: React.SFC<{
               search
               selection
               options={[
-                { key: "true", value: "true", text: "true" },
-                { key: "false", value: "false", text: "false" }
+                { key: 'true', value: 'true', text: 'true' },
+                { key: 'false', value: 'false', text: 'false' }
               ]}
               allowAdditions={true}
               onAddItem={handleAddition}
               onKeyPress={onKeyPress}
               onChange={handleChange}
             />
-            {percentage ? "%" : ""}
+            {percentage ? '%' : ''}
           </Form.Field>
         );
       }
@@ -79,14 +79,14 @@ export const NumberInput: React.SFC<{
             value={value}
           />
 
-          {percentage ? "%" : ""}
+          {percentage ? '%' : ''}
 
           {note ? (
             <Label as="a" color="teal" pointing="above">
               {note}
             </Label>
           ) : (
-            ""
+            ''
           )}
         </div>
       );
