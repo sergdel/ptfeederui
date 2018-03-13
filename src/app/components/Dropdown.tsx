@@ -3,29 +3,14 @@ import { Dropdown, Form } from 'semantic-ui-react';
 import InfoLabel from './InfoLabel';
 
 export const DropDown: React.SFC<{
-  options: Array<object>;
+  options: object[];
   title: string;
   wiki: string;
   allowAdditions?: boolean;
   value: string;
-}> = ({ options, title, wiki, allowAdditions = false, value }) => {
-  const handleAddition = (e, { value }) => {
-    //   const { options } = this.state;
-    //   this.setState({
-    //     options: options.concat({
-    //       key: value,
-    //       value: value,
-    //       text: value
-    //     })
-    //   });
-  };
-
-  const handleChange = (evt, { value }) => {
-    //   this.value = value;
-    //   //console.log (this.value);
-    //   console.log(value);
-  };
-
+  onChange: any;
+}> = ({ options, title, wiki, allowAdditions = false, value, onChange }) => {
+  const handleAddition = (e, { value }) => {};
   return (
     <Form.Field style={{ paddingTop: '20px' }}>
       <InfoLabel title={title} wiki={wiki} />
@@ -43,7 +28,7 @@ export const DropDown: React.SFC<{
         value={value}
         allowAdditions={allowAdditions}
         onAddItem={handleAddition}
-        onChange={handleChange}
+        onChange={onChange}
       />
     </Form.Field>
   );

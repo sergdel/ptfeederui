@@ -5,22 +5,26 @@ import { observer, inject } from 'mobx-react';
 
 export const ComponentFactory: React.SFC<any> = inject(
   'appSettings',
-  'componentDefinitions'
+  'componentDefinitions',
+  'settings'
 )(
   observer(
-    ({ appSettings: { advancedMode }, componentDefinitions, item, value }) => {
+    ({
+      appSettings: { advancedMode, selectedMenuItem },
+      settings: { updateField },
+      componentDefinitions,
+      item,
+      value
+    }) => {
       const componentMeta = componentDefinitions.componentTypeForFieldName(
         item
       );
 
+      const handleChange = (evt, { value }) => {
+        updateField(selectedMenuItem, title, value);
+      };
+
       if (!componentMeta) return null;
-
-      // return (
-      //   <div>
-      //     {componentMeta.title} {componentMeta.wiki} {JSON.stringify(item)}
-      //   </div>
-      // );
-
       const {
         title,
         acceptBoolean,
@@ -41,6 +45,7 @@ export const ComponentFactory: React.SFC<any> = inject(
               allowAdditions={allowAdditions}
               wiki={wiki}
               value={value}
+              onChange={handleChange}
             />
           );
 
@@ -53,6 +58,7 @@ export const ComponentFactory: React.SFC<any> = inject(
               note={note}
               value={value}
               wiki={wiki}
+              onChange={handleChange}
             />
           );
         case 'Boolean':
@@ -65,13 +71,21 @@ export const ComponentFactory: React.SFC<any> = inject(
               ]}
               wiki={wiki}
               value={value}
+              onChange={handleChange}
             />
           );
         case 'String':
           return (
             <Form.Field>
               <InfoLabel title={title} wiki={wiki} />
-              <Input placeholder={title} type="text" name={title} size="mini" />
+              <Input
+                placeholder={title}
+                type="text"
+                name={title}
+                size="mini"
+                onChange={handleChange}
+                value={value}
+              />
             </Form.Field>
           );
         default:

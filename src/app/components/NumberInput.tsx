@@ -10,6 +10,7 @@ export const NumberInput: React.SFC<{
   note?: string;
   value: string;
   wiki?: string;
+  onChange: any;
 }> = inject('settings', 'appSettings')(
   observer(
     ({
