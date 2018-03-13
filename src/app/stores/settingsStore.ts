@@ -124,8 +124,16 @@ const Settings = t
     save: (self) => {
       profitTrailer.save(getSnapshot(self))
     },
-    updateField(category, key, newValue){
-      self[category][key] = newValue
+    updateField(category, key, newValue, index){
+        if (category != 'General') {
+            if (index > -1) {
+                self[category]['Configs'][index][key] = newValue
+            } else {
+                self[category]['Configs'][key] = newValue
+            }
+        } else {
+            self[category][key] = newValue
+        }
     } 
   }));
 

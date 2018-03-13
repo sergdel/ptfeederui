@@ -20,7 +20,8 @@ const Config = t
             t.model('dropdownOption', {
               key: t.optional(t.string, ''),
               text: t.optional(t.string, ''),
-              value: t.optional(t.string, '')
+              value: t.optional(t.string, ''),
+              index: t.optional(t.number, -1)
             })
           ),
           []
