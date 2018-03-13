@@ -131,5 +131,5 @@ const Settings = t
 
 export const settings = Settings.create(dummyData);
 
-settings.fetch();
+
 
