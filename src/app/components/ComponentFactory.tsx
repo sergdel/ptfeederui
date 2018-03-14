@@ -1,17 +1,16 @@
 import * as React from "react";
-import { DropDown, NumberInput, InfoLabel } from "../components";
-import { Form, Input } from "semantic-ui-react";
+import { DropDown, NumberInput, NameInput } from "../components";
 import { observer, inject } from "mobx-react";
 
-export const ComponentFactory: React.SFC<{
-  item: string;
-  value: string;
-  index: number;
-}> = inject("appSettings", "componentDefinitions", "settings")(
+export const ComponentFactory: React.SFC<any> = inject(
+  "appSettings",
+  "settings",
+  "componentDefinitions"
+)(
   observer(
     ({
-      appSettings: { advancedMode, selectedMenuItem },
       settings: { updateField },
+      appSettings: { selectedMenuItem, advancedMode },
       componentDefinitions,
       item,
       value,
@@ -21,11 +20,8 @@ export const ComponentFactory: React.SFC<{
         item
       );
 
-      const handleChange = (evt, { value }) => {
-        updateField(selectedMenuItem, title, value);
-      };
-
       if (!componentMeta) return null;
+
       const {
         title,
         acceptBoolean,
@@ -46,7 +42,6 @@ export const ComponentFactory: React.SFC<{
               allowAdditions={allowAdditions}
               wiki={wiki}
               value={value}
-              onChange={handleChange}
               index={index}
             />
           );
@@ -60,7 +55,6 @@ export const ComponentFactory: React.SFC<{
               note={note}
               value={value}
               wiki={wiki}
-              onChange={handleChange}
               index={index}
             />
           );
@@ -74,25 +68,12 @@ export const ComponentFactory: React.SFC<{
               ]}
               wiki={wiki}
               value={value}
-              onChange={handleChange}
               index={index}
             />
           );
         case "String":
           return (
-            <Form.Field>
-              <InfoLabel title={title} wiki={wiki} />
-
-              <Input
-                placeholder={title}
-                type="text"
-                name={title}
-                size="mini"
-                onChange={handleChange}
-                value={value}
-                index={index}
-              />
-            </Form.Field>
+            <NameInput title={title} value={value} wiki={wiki} index={index} />
           );
         default:
           return <div />;

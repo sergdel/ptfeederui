@@ -4,7 +4,7 @@
       "title": "General",
       "wiki": "/wiki",
       "description": "This is the general section",
-      "advanced" : false
+      "advanced": false
     },
     {
       "title": "MarketConditions",
@@ -34,6 +34,14 @@
       "title": "NewCoins",
       "wiki": "wiki/coins",
       "advanced": true
+    },
+    {
+      "title": "Exchange",
+      "wiki": "/wiki/general"
+    },
+    {
+      "title": "PriceTrendChange",
+      "wiki": "/wiki/general"
     }
   ],
   "ComponentTypes": [

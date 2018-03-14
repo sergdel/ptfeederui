@@ -115,6 +115,7 @@ const Settings = t
       return self[title];
     }
   }))
+
   .actions(self => ({
     fetch: flow(function* fetchSettings() {
       try {
@@ -124,12 +125,13 @@ const Settings = t
         console.error("Failed to fetch projects", e);
       }
     }),
-    set: (snapshot: typeof self) => {
+    set: snapshot => {
       applySnapshot(self, snapshot);
     },
     save: self => {
-      profitTrailer.save(getSnapshot(self));
-      localStorage.setItem("settings", self.toJSON());
+      const settings = getSnapshot(self);
+      profitTrailer.save(settings);
+      localStorage.setItem("settings", JSON.stringify(settings));
     },
     updateField(category, key, newValue, index) {
       if (category != "General") {

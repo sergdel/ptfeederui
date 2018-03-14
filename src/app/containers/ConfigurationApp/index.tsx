@@ -4,7 +4,6 @@ import { ComponentFactory, Preloader } from "app/components";
 import { componentDefinitions, settings } from "app/stores";
 import { CLIENTONLY } from "app/constants";
 import logo from "../../../assets/logo.png";
-
 import {
   Grid,
   Segment,
@@ -39,7 +38,7 @@ export const ConfigurationApp: React.SFC<any> = inject(
     ({
       settings: { menuItems },
       componentDefinitions,
-      appSettings: { isLoaded }
+      appSettings: { selectMenuItem, advancedMode, isLoaded }
     }) => {
       return isLoaded || process.env.NODE_ENV === "client" ? (
         <GridBody />

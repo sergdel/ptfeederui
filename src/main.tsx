@@ -1,14 +1,14 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import { useStrict } from "mobx";
 import { Provider } from "mobx-react";
 import { createBrowserHistory } from "history";
 import { createStores } from "app/stores";
 import { App } from "app";
 import io from "socket.io-client";
+
 require("./theme/semantic.flatly.css");
 require("./app/styles.global.css");
-useStrict(true);
+
 const history = createBrowserHistory();
 const rootStore = createStores(history);
 
@@ -24,7 +24,12 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 const localSettings = localStorage.getItem("settings");
-if (localSettings) rootStore.settings.set(JSON.parse(localSettings));
+if (localSettings)
+  try {
+    rootStore.settings.set(JSON.parse(localSettings));
+  } catch (e) {
+    console.error("unable to fetch from local storage " + e.message);
+  }
 
 if (process.env.NODE_ENV !== "client") {
   const socket = io("http://localhost:8000");

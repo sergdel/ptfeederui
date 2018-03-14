@@ -1,16 +1,16 @@
-var webpack = require("webpack");
-var path = require("path");
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+var webpack = require('webpack');
+var path = require('path');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 // variables
-var isProduction = process.argv.indexOf("-p") >= 0;
-var sourcePath = path.join(__dirname, "./src");
-var outPath = path.join(__dirname, "./dist");
+var isProduction = process.argv.indexOf('-p') >= 0;
+var sourcePath = path.join(__dirname, './src');
+var outPath = path.join(__dirname, './dist');
 
 // plugins
-var HtmlWebpackPlugin = require("html-webpack-plugin");
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
-var WebpackCleanupPlugin = require("webpack-cleanup-plugin");
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var WebpackCleanupPlugin = require('webpack-cleanup-plugin');
 
 module.exports = env => {
   return {

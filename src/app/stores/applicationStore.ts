@@ -3,8 +3,8 @@ const AppSettings = t
   .model({
     advancedMode: t.boolean,
     selectedMenuItem: t.string,
-    dataFetched: t.optional(t.boolean, false),
-    connected: t.optional(t.boolean, false)
+    dataFetched: false,
+    connected: false
   })
   .actions(self => ({
     selectMenuItem: newMenuItem => (self.selectedMenuItem = newMenuItem),
@@ -12,7 +12,9 @@ const AppSettings = t
     dataLoaded: () => {
       self.dataFetched = true;
     },
-    setConnected: (connected: boolean) => (self.connected = connected)
+    setConnected: connected => {
+      self.connected = connected;
+    }
   }))
   .views(self => ({
     get isLoaded() {
