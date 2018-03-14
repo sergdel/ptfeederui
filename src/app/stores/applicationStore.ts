@@ -3,13 +3,17 @@ const AppSettings = t
   .model({
     advancedMode: t.boolean,
     selectedMenuItem: t.string,
-    dataFetched: false
+    dataFetched: false,
+    connected: false
   })
   .actions(self => ({
     selectMenuItem: newMenuItem => (self.selectedMenuItem = newMenuItem),
     toggleAdvancedMode: mode => (self.advancedMode = mode),
     dataLoaded: () => {
       self.dataFetched = true;
+    },
+    setConnected: connected => {
+      self.connected = connected;
     }
   }))
   .views(self => ({
