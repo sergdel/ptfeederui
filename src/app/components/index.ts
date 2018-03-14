@@ -3,3 +3,4 @@ export * from "./Dropdown";
 export * from "./NumberInput";
 export * from "./NameInput";
 export * from "./InfoLabel";
+export * from "./Preloader";
