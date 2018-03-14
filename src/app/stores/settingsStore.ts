@@ -125,6 +125,9 @@ const Settings = t
         console.error("Failed to fetch projects", e);
       }
     }),
+    set: snapshot => {
+      applySnapshot(self, snapshot);
+    },
     save: self => {
       profitTrailer.save(getSnapshot(self));
       localStorage.setItem("settings", self.toJSON());
