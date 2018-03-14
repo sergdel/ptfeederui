@@ -15,9 +15,7 @@ const server = {
   get: () =>
     axios.get("http://localhost:5001/api/v1/app/settings").then(results => {
       console.info("info: server has received data");
-      setInterval(() => {
-        server.get().then(() => io.emit("server", { info: "pulse" }));
-      }, 5000);
+
       return results.data;
     }),
   set: body =>
@@ -39,6 +37,9 @@ io.on("connection", function(socket) {
 
   requestWithRetry().then(result => {
     console.info("server: sending data to client " + result);
+    setInterval(() => {
+      server.get().then(() => io.emit("server", { info: "pulse" }));
+    }, 5000);
     io.emit("server", { settings: result });
   });
 });
