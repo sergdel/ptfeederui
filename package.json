@@ -5,17 +5,20 @@
   "description": "",
   "main": "index.js",
   "prettier": {
-    "overrides": [{
-      "files": "*.js",
-      "options": {
-        "semi": true,
-        "singleQuote": true
+    "overrides": [
+      {
+        "files": "*.js",
+        "options": {
+          "semi": true,
+          "singleQuote": true
+        }
       }
-    }]
+    ]
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "concurrently --kill-others-on-fail \"webpack-dev-server --mode development --hot --progress --colors --port 3000 --open\" \"nodemon server.js\"",
+    "start":
+      "concurrently --kill-others-on-fail \"webpack-dev-server --mode development --hot --progress --colors --port 3000 --open\" \"nodemon server.js\"",
     "build": "webpack -p --progress --colors",
     "prettier": "prettier --write \"src/**/*.{ts,tsx,css}\""
   },
@@ -119,6 +122,7 @@
     "react-scripts": "1.1.1",
     "readdirp": "^2.1.0",
     "repeat-element": "^1.1.2",
+    "tslint-config-prettier": "^1.10.0",
     "repeat-string": "^1.6.1",
     "resolve-cwd": "^2.0.0",
     "rimraf": "^2.6.2",
