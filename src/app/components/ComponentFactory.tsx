@@ -22,12 +22,6 @@ export const ComponentFactory: React.SFC<any> = inject(
 
       if (!componentMeta) return null;
 
-      // return (
-      //   <div>
-      //     {componentMeta.title} {componentMeta.wiki} {JSON.stringify(item)}
-      //   </div>
-      // );
-
       const {
         title,
         acceptBoolean,
