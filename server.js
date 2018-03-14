@@ -15,6 +15,9 @@ const server = {
   get: () =>
     axios.get("http://localhost:5001/api/v1/app/settings").then(results => {
       console.info("info: server has received data");
+      setInterval(() => {
+        server.get().then(() => io.emit("server", { info: "pulse" }));
+      }, 5000);
       return results.data;
     }),
   set: body =>
@@ -40,10 +43,6 @@ io.on("connection", function(socket) {
   });
 });
 
-setInterval(() => {
-  server.get().then(() => io.emit("server", { info: "pulse" }));
-}, 5000);
-
 function wait(timeout) {
   return new Promise(resolve => {
     setTimeout(() => {
@@ -59,9 +58,7 @@ async function requestWithRetry() {
       response = await server.get();
       return response;
     } catch (err) {
-      const timeout = 4000;
-      console.log("Waiting", timeout, "ms");
-      await wait(timeout);
+      await wait(5000);
       console.log("Retrying", err.message);
     }
 }
