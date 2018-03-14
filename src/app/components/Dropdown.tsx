@@ -22,21 +22,10 @@ export const DropDown: React.SFC<{
       value,
       index = -1
     }) => {
-      const handleAddition = (e, { value }) => {
-        //   const { options } = this.state;
-        //   this.setState({
-        //     options: options.concat({
-        //       key: value,
-        //       value: value,
-        //       text: value
-        //     })
-        //   });
-      };
+      //TODO
+      const handleAddition = (e, { value }) => {};
 
       const handleChange = (evt, { value }) => {
-        //   this.value = value;
-        //   //console.log (this.value);
-        //   console.log(value);
         updateField(selectedMenuItem, title, value, index);
       };
 
