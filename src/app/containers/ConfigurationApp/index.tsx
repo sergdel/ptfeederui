@@ -116,16 +116,18 @@ const GridBody: React.SFC<{}> = inject(
                     {selectedMenuItem}
                   </Header>
                   {menuData["Configs"] ? (
-                    menuData["Configs"].map((value, index) => (
-                      <ConfigGroup
-                        menuData={Object.entries(value)}
-                        index={index}
-                      />
-                    ))
+                    menuData["Configs"].map(
+                      (configObject: object, index: number) => (
+                        <ConfigGroup
+                          configObject={Object.entries(configObject)}
+                          configGroupIndex={index}
+                        />
+                      )
+                    )
                   ) : (
                     <ConfigGroup
-                      menuData={Object.entries(menuData)}
-                      index={-1}
+                      configObject={Object.entries(menuData)}
+                      configGroupIndex={-1}
                     />
                   )}
                 </Form>
@@ -136,7 +138,7 @@ const GridBody: React.SFC<{}> = inject(
             <Responsive as={Grid.Column} {...Responsive.onlyComputer}>
               <Grid.Row>
                 <ImportExport
-                  save={() => settings.save(settings)}
+                  save={() => settings.save()}
                   // export={this.export}
                   // import={this.import}
                 />
@@ -152,10 +154,10 @@ const GridBody: React.SFC<{}> = inject(
   )
 );
 
-const ConfigGroup: React.SFC<{ menuData: Array<object>; index }> = ({
-  menuData,
-  index
-}) => {
+const ConfigGroup: React.SFC<{
+  configObject: Array<object>;
+  configGroupIndex: number;
+}> = ({ configObject, configGroupIndex }) => {
   return (
     <div
       style={{
@@ -165,12 +167,12 @@ const ConfigGroup: React.SFC<{ menuData: Array<object>; index }> = ({
         borderRadius: "30px"
       }}
     >
-      {menuData.map((value, index) => (
+      {configObject.map(value => (
         <ComponentFactory
           key={value[0]}
           item={value[0]}
           value={value[1]}
-          index={index}
+          index={configGroupIndex}
         />
       ))}
     </div>
