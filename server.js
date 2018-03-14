@@ -21,9 +21,6 @@ const server = {
       .post('http://localhost:5001/api/v1/app/settings', body, {
         headers: { 'Content-Type': 'application/json; charset=utf-8' }
       })
-      .then(function(response) {
-        console.log(response);
-      })
       .catch(this.onReject)
 };
 
