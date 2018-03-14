@@ -23,6 +23,9 @@ if (process.env.NODE_ENV !== "production") {
   window["store"] = rootStore;
 }
 
+const localSettings = localStorage.getItem("settings");
+if (localSettings) rootStore.settings.set(JSON.parse(localSettings));
+
 if (process.env.NODE_ENV !== "client") {
   const socket = io("http://localhost:8000");
   socket.on("server", function(data) {

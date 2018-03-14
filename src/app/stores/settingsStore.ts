@@ -129,6 +129,7 @@ const Settings = t
     },
     save: self => {
       profitTrailer.save(getSnapshot(self));
+      localStorage.setItem("settings", self.toJSON());
     },
     updateField(category, key, newValue, index) {
       if (category != "General") {
