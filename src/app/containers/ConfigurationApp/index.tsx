@@ -43,8 +43,8 @@ export const ConfigurationApp: React.SFC<any> = inject(
       return isLoaded || process.env.NODE_ENV === "client" ? (
         <GridBody />
       ) : (
-        <Responsive as={Grid} style={{ height: "100vh" }} center middle>
-          <Grid.Row columns={1} middle verticalAlign="middle">
+        <Responsive as={Grid} style={{ height: "100vh" }} centered>
+          <Grid.Row columns={1} verticalAlign="middle">
             <Grid.Column style={{ textAlign: "center" }}>
               <Preloader />
             </Grid.Column>
@@ -276,15 +276,15 @@ const StatusIndicators: React.SFC<any> = inject("appSettings")(
 const ImportExport: React.SFC<any> = ({ save, fileImport }) => {
   return (
     <Segment basic>
-      <Button primary icon="save" onClick={save}>
+      <Button primary onClick={save}>
         Save Settings
       </Button>
       <br />
-      <Button basic icon="upload" onClick={fileImport}>
+      <Button basic onClick={fileImport}>
         Import Settings
       </Button>
       <br />
-      <Button basic icon="upload" href="/download">
+      <Button basic href="/download">
         Export Settings
       </Button>
     </Segment>
