@@ -2,25 +2,25 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 const port = process.env.PORT || 5000;
-const formidable = require("formidable");
-const path = require("path");
-const serve = require("http").Server(app);
-const fs = require("fs");
-const axios = require("axios");
-const io = require("socket.io")(serve);
+const formidable = require('formidable');
+const path = require('path');
+const serve = require('http').Server(app);
+const fs = require('fs');
+const axios = require('axios');
+const io = require('socket.io')(serve);
 
 io.listen(8000);
 
 const server = {
   get: () =>
-    axios.get("http://localhost:5001/api/v1/app/settings").then(results => {
-      console.info("info: received settings");
+    axios.get('http://localhost:5001/api/v1/app/settings').then(results => {
+      console.info('info: received settings');
       return results.data;
     }),
   set: body =>
     axios
-      .post("http://localhost:5001/api/v1/app/settings", body, {
-        headers: { "Content-Type": "application/json; charset=utf-8" }
+      .post('http://localhost:5001/api/v1/app/settings', body, {
+        headers: { 'Content-Type': 'application/json; charset=utf-8' }
       })
       .then(function(response) {
         console.log(response);
@@ -28,18 +28,18 @@ const server = {
       .catch(this.onReject)
 };
 
-io.on("connection", function(socket) {
-  socket.emit("server", { server: "connection established" });
-  socket.on("client", function(data) {
+io.on('connection', function(socket) {
+  socket.emit('server', { server: 'connection established' });
+  socket.on('client', function(data) {
     console.log(data);
   });
 
   requestWithRetry().then(result => {
-    console.info("server: sending data to client " + result);
+    console.info('server: sending data to client ' + result);
     setInterval(() => {
-      server.get().then(() => io.emit("server", { info: "pulse" }));
+      server.get().then(() => io.emit('server', { info: 'pulse' }));
     }, 5000);
-    io.emit("server", { settings: result });
+    io.emit('server', { settings: result });
   });
 });
 
@@ -59,7 +59,7 @@ async function requestWithRetry() {
       return response;
     } catch (err) {
       await wait(5000);
-      console.log("Retrying", err.message);
+      console.log('Retrying', err.message);
     }
 }
 
@@ -93,25 +93,6 @@ app.use((request, response, next) => {
 
   next();
 });
-
-const server = {
-  get: () =>
-    axios
-      .get('http://localhost:5001/api/v1/app/settings')
-      .then(results => {
-        return results.data;
-      })
-      .catch(this.onReject),
-  set: body =>
-    axios
-      .post('http://localhost:5001/api/v1/app/settings', body, {
-        headers: { 'Content-Type': 'application/json; charset=utf-8' }
-      })
-      .then(function(response) {
-        console.log(response);
-      })
-      .catch(this.onReject)
-};
 
 const handleError = (error, response) => {
   console.error('[ERROR] Request handler errored', error);
