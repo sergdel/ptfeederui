@@ -4,6 +4,15 @@
   "private": true,
   "description": "",
   "main": "index.js",
+  "prettier": {
+    "overrides": [{
+      "files": "*.js",
+      "options": {
+        "semi": true,
+        "singleQuote": true
+      }
+    }]
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "concurrently --kill-others-on-fail \"webpack-dev-server --mode development --hot --progress --colors --port 3000 --open\" \"nodemon server.js\"",
