@@ -25,7 +25,12 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 const localSettings = localStorage.getItem("settings");
-if (localSettings) rootStore.settings.set(JSON.parse(localSettings));
+if (localSettings)
+  try {
+    rootStore.settings.set(JSON.parse(localSettings));
+  } catch (e) {
+    console.error("unable to fetch from local storage " + e.message);
+  }
 
 if (process.env.NODE_ENV !== "client") {
   const socket = io("http://localhost:8000");

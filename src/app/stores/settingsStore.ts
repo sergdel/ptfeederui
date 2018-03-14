@@ -129,8 +129,9 @@ const Settings = t
       applySnapshot(self, snapshot);
     },
     save: self => {
-      profitTrailer.save(getSnapshot(self));
-      localStorage.setItem("settings", self.toJSON());
+      const settings = getSnapshot(self);
+      profitTrailer.save(settings);
+      localStorage.setItem("settings", JSON.stringify(settings));
     },
     updateField(category, key, newValue, index) {
       if (category != "General") {
