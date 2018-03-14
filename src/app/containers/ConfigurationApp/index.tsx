@@ -160,7 +160,7 @@ const ConfigGroup: React.SFC<{ menuData: Array<object>; index }> = ({
     <div
       style={{
         marginTop: "30px",
-        backgroundColor: "rgb(54, 58, 82)",
+        backgroundColor: "#2F4259",
         padding: "30px",
         borderRadius: "30px"
       }}

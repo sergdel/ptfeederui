@@ -6,7 +6,6 @@ export const InfoLabel: React.SFC<any> = ({ title, wiki }) => {
     <Popup
       trigger={
         <Label
-          style={{ height: "28px" }}
           onClick={() =>
             window.open("https://github.com/mehtadone/PTFeeder/wiki", "_blank")
           }
@@ -15,8 +14,6 @@ export const InfoLabel: React.SFC<any> = ({ title, wiki }) => {
           {title || ""}
         </Label>
       }
-      flowing
-      hoverable
     >
       {wiki ? (
         <a href={"https://github.com/mehtadone/PTFeeder" + wiki}>

@@ -37,8 +37,6 @@ export const DropDown: React.SFC<{
             size="large"
             id={title}
             fluid
-            labeled={true}
-            label={title}
             search
             selection
             name={title}
