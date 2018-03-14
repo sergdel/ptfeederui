@@ -38,6 +38,7 @@ if (process.env.NODE_ENV !== "client") {
     if (data.settings) {
       rootStore.settings.set(data.settings);
       socket.emit("client", { info: "received settings" });
+      rootStore.appSettings.lastData = data.settings;
       rootStore.appSettings.dataLoaded();
     }
   });
