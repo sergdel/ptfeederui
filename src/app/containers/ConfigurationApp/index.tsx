@@ -115,18 +115,19 @@ const GridBody: React.SFC<{}> = inject(
                   >
                     {selectedMenuItem}
                   </Header>
-
-                  <ConfigGroup menuData={Object.entries(menuData)} index={-1} />
-
-                  {menuData["Configs"] &&
+                  {menuData["Configs"] ? (
                     menuData["Configs"].map((value, index) => (
-                      <div className={index}>
-                        <ConfigGroup
-                          menuData={Object.entries(value)}
-                          index={index}
-                        />
-                      </div>
-                    ))}
+                      <ConfigGroup
+                        menuData={Object.entries(value)}
+                        index={index}
+                      />
+                    ))
+                  ) : (
+                    <ConfigGroup
+                      menuData={Object.entries(menuData)}
+                      index={-1}
+                    />
+                  )}
                 </Form>
               </Grid.Column>
             </Grid.Column>
@@ -156,8 +157,15 @@ const ConfigGroup: React.SFC<{ menuData: Array<object>; index }> = ({
   index
 }) => {
   return (
-    <div>
-      {menuData.map(value => (
+    <div
+      style={{
+        marginTop: "30px",
+        backgroundColor: "rgb(54, 58, 82)",
+        padding: "30px",
+        borderRadius: "30px"
+      }}
+    >
+      {menuData.map((value, index) => (
         <ComponentFactory
           key={value[0]}
           item={value[0]}
