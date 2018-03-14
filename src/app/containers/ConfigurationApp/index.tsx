@@ -1,8 +1,8 @@
-import * as React from 'react';
-import { inject, observer } from 'mobx-react';
-import { ComponentFactory } from 'app/components/';
-import { componentDefinitions, settings } from 'app/stores';
-import logo from '../../../assets/logo.png';
+import * as React from "react";
+import { inject, observer } from "mobx-react";
+import { ComponentFactory } from "app/components/";
+import { componentDefinitions, settings } from "app/stores";
+import logo from "../../../assets/logo.png";
 import {
   Grid,
   Segment,
@@ -16,7 +16,7 @@ import {
   Form,
   Button,
   Responsive
-} from 'semantic-ui-react';
+} from "semantic-ui-react";
 
 // const styles = {
 //   background: '#263342',
@@ -29,9 +29,9 @@ import {
 componentDefinitions;
 settings;
 export const ConfigurationApp: React.SFC<any> = inject(
-  'settings',
-  'componentDefinitions',
-  'appSettings'
+  "settings",
+  "componentDefinitions",
+  "appSettings"
 )(
   observer(
     ({
@@ -45,9 +45,9 @@ export const ConfigurationApp: React.SFC<any> = inject(
 );
 
 const GridBody: React.SFC<{}> = inject(
-  'appSettings',
-  'settings',
-  'componentDefinitions'
+  "appSettings",
+  "settings",
+  "componentDefinitions"
 )(
   observer(
     ({
@@ -57,7 +57,7 @@ const GridBody: React.SFC<{}> = inject(
     }) => {
       const menuData = getMenuData(selectedMenuItem);
       const menuMeta = menuItemsMeta(selectedMenuItem);
-      const { description = '' } = menuMeta;
+      const { description = "" } = menuMeta;
       return (
         <Grid>
           <Grid.Row columns={1}>
@@ -99,19 +99,22 @@ const GridBody: React.SFC<{}> = inject(
                 <Form inverted id="form" action="">
                   <Header
                     style={{
-                      color: 'white'
+                      color: "white"
                     }}
                   >
                     {selectedMenuItem}
                   </Header>
 
-                  <ConfigGroup menuData={Object.entries(menuData)} index={-1}/>
+                  <ConfigGroup menuData={Object.entries(menuData)} index={-1} />
 
-                  {menuData['Configs'] &&
-                    menuData['Configs'].map((value, index)=> (
-                        <div className={index}>
-                      <ConfigGroup menuData={Object.entries(value)} index={index} />
-                        </div>
+                  {menuData["Configs"] &&
+                    menuData["Configs"].map((value, index) => (
+                      <div className={index}>
+                        <ConfigGroup
+                          menuData={Object.entries(value)}
+                          index={index}
+                        />
+                      </div>
                     ))}
                 </Form>
               </Grid.Column>
@@ -125,8 +128,8 @@ const GridBody: React.SFC<{}> = inject(
                   // export={this.export}
                   // import={this.import}
                 />
-                <Segment basic style={{ color: '#fff' }}>
-                  <strong>{description ? description : ''}</strong>
+                <Segment basic style={{ color: "#fff" }}>
+                  <strong>{description ? description : ""}</strong>
                 </Segment>
               </Grid.Row>
             </Responsive>
@@ -137,11 +140,19 @@ const GridBody: React.SFC<{}> = inject(
   )
 );
 
-const ConfigGroup: React.SFC<{ menuData: Array<object>, index}> = ({ menuData, index }) => {
+const ConfigGroup: React.SFC<{ menuData: Array<object>; index }> = ({
+  menuData,
+  index
+}) => {
   return (
     <div>
-      {menuData.map((value) => (
-        <ComponentFactory key={value[0]} item={value[0]} value={value[1]} index={index}/>
+      {menuData.map(value => (
+        <ComponentFactory
+          key={value[0]}
+          item={value[0]}
+          value={value[1]}
+          index={index}
+        />
       ))}
     </div>
   );
@@ -151,9 +162,9 @@ const TopMenu: React.SFC<{}> = () => {
   return (
     <Header
       style={{
-        border: 'noneindex',
-        color: 'white',
-        boxShadow: 'none'
+        border: "noneindex",
+        color: "white",
+        boxShadow: "none"
       }}
     >
       <Menu>
@@ -165,7 +176,7 @@ const TopMenu: React.SFC<{}> = () => {
         <Menu.Menu position="right" padded="true">
           <Menu.Item name="wiki">
             <a
-              href={'https://github.com/mehtadone/PTFeeder'}
+              href={"https://github.com/mehtadone/PTFeeder"}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -209,14 +220,14 @@ const StatusIndicators: React.SFC<any> = ({
   return (
     <Segment basic floated="right">
       <Label>
-        BaseCoinPrice <Label.Detail>{BaseCoinPrice || 0}</Label.Detail>{' '}
+        BaseCoinPrice <Label.Detail>{BaseCoinPrice || 0}</Label.Detail>{" "}
       </Label>
       <Label>
-        CurrentMarketConditions{' '}
+        CurrentMarketConditions{" "}
         <Label.Detail>{CurrentMarketCondition || 0}</Label.Detail>
       </Label>
       <Label>
-        TopCoinChangee <Label.Detail>{TopCoinChange || 0}</Label.Detail>{' '}
+        TopCoinChangee <Label.Detail>{TopCoinChange || 0}</Label.Detail>{" "}
       </Label>
     </Segment>
   );
@@ -241,9 +252,9 @@ const ImportExport: React.SFC<any> = ({ save, fileImport }) => {
 };
 ImportExport;
 const LeftNav: React.SFC<any> = inject(
-  'appSettings',
-  'settings',
-  'componentDefinitions'
+  "appSettings",
+  "settings",
+  "componentDefinitions"
 )(
   observer(
     ({
@@ -257,12 +268,12 @@ const LeftNav: React.SFC<any> = inject(
             <Menu
               vertical
               style={{
-                fontFamily: 'Poppins',
-                fontSize: '16px',
-                boxShadow: 'none',
-                border: 'none',
-                width: 'auto',
-                textAlign: 'center'
+                fontFamily: "Poppins",
+                fontSize: "16px",
+                boxShadow: "none",
+                border: "none",
+                width: "auto",
+                textAlign: "center"
               }}
             >
               {menuItems.map((item, index) => {
@@ -275,7 +286,7 @@ const LeftNav: React.SFC<any> = inject(
                     active={selectedMenuItem === item}
                     onClick={selectMenuItem.bind(this, item)}
                     style={{
-                      color: 'white'
+                      color: "white"
                     }}
                     menuIndex={index}
                   >
@@ -300,7 +311,7 @@ const LeftNav: React.SFC<any> = inject(
 const MenuItem: React.SFC<any> = ({ name, style, active, onClick }) => {
   return (
     <a
-      className={active ? 'active item' : 'item'}
+      className={active ? "active item" : "item"}
       style={style}
       onClick={onClick}
     >
@@ -309,7 +320,7 @@ const MenuItem: React.SFC<any> = ({ name, style, active, onClick }) => {
   );
 };
 
-const AdvancedModeToggle: React.SFC<any> = inject('appSettings')(
+const AdvancedModeToggle: React.SFC<any> = inject("appSettings")(
   observer(({ appSettings: { advancedMode, toggleAdvancedMode } }) => {
     return (
       <Segment basic align="left" floated="left">

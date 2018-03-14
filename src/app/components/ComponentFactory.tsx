@@ -1,13 +1,21 @@
-import * as React from 'react';
-import { DropDown, NumberInput, NameInput } from '../components';
-import { observer, inject } from 'mobx-react';
+import * as React from "react";
+import { DropDown, NumberInput, NameInput } from "../components";
+import { observer, inject } from "mobx-react";
 
 export const ComponentFactory: React.SFC<any> = inject(
-  'appSettings', 'settings',
-  'componentDefinitions'
+  "appSettings",
+  "settings",
+  "componentDefinitions"
 )(
   observer(
-    ({ settings: { updateField }, appSettings: { selectedMenuItem, advancedMode }, componentDefinitions, item, value, index }) => {
+    ({
+      settings: { updateField },
+      appSettings: { selectedMenuItem, advancedMode },
+      componentDefinitions,
+      item,
+      value,
+      index
+    }) => {
       const componentMeta = componentDefinitions.componentTypeForFieldName(
         item
       );
@@ -32,7 +40,7 @@ export const ComponentFactory: React.SFC<any> = inject(
       } = componentMeta;
       if (advanced && !advancedMode) return null;
       switch (componentMeta.type) {
-        case 'Dropdown':
+        case "Dropdown":
           return (
             <DropDown
               title={title}
@@ -44,7 +52,7 @@ export const ComponentFactory: React.SFC<any> = inject(
             />
           );
 
-        case 'Number':
+        case "Number":
           return (
             <NumberInput
               acceptBoolean={acceptBoolean}
@@ -56,27 +64,22 @@ export const ComponentFactory: React.SFC<any> = inject(
               index={index}
             />
           );
-        case 'Boolean':
+        case "Boolean":
           return (
             <DropDown
               title={title}
               options={[
-                { key: 'true', value: 'true', text: 'true' },
-                { key: 'false', value: 'false', text: 'false' }
+                { key: "true", value: "true", text: "true" },
+                { key: "false", value: "false", text: "false" }
               ]}
               wiki={wiki}
               value={value}
               index={index}
             />
           );
-        case 'String':
+        case "String":
           return (
-              <NameInput
-                  title={title}
-                  value={value}
-                  wiki={wiki}
-                  index={index}
-              />
+            <NameInput title={title} value={value} wiki={wiki} index={index} />
           );
         default:
           return <div />;
