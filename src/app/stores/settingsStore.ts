@@ -128,12 +128,12 @@ const Settings = t
     set: snapshot => {
       applySnapshot(self, snapshot);
     },
-    save: self => {
-      const settings = getSnapshot(self);
-      profitTrailer.save(settings);
-      localStorage.setItem("settings", JSON.stringify(settings));
+    save: () => {
+      const output = getSnapshot(self);
+      profitTrailer.save(output);
+      localStorage.setItem("settings", JSON.stringify(output));
     },
-    updateField(category, key, newValue, index) {
+    updateField: (category, key, newValue, index) => {
       if (category != "General") {
         if (index > -1) {
           self[category]["Configs"][index][key] = newValue;
@@ -143,6 +143,11 @@ const Settings = t
       } else {
         self[category][key] = newValue;
       }
+
+      //TODO - how to invoke other actions?
+      //self.save();
+      const output = getSnapshot(self);
+      localStorage.setItem("settings", JSON.stringify(output));
     }
   }));
 
