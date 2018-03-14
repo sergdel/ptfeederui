@@ -17,7 +17,6 @@ const server = {
       console.info("info: server has received data");
       return results.data;
     }),
-  // .catch(e => console.error("ensure PTFeeder is running " + e)),
   set: body =>
     axios
       .post("http://localhost:5001/api/v1/app/settings", body, {
