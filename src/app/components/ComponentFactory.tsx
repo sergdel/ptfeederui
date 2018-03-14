@@ -1,14 +1,13 @@
 import * as React from 'react';
-import { DropDown, NumberInput, InfoLabel } from '../components';
-import { Form, Input } from 'semantic-ui-react';
+import { DropDown, NumberInput, NameInput } from '../components';
 import { observer, inject } from 'mobx-react';
 
 export const ComponentFactory: React.SFC<any> = inject(
-  'appSettings',
+  'appSettings', 'settings',
   'componentDefinitions'
 )(
   observer(
-    ({ appSettings: { advancedMode }, componentDefinitions, item, value, index }) => {
+    ({ settings: { updateField }, appSettings: { selectedMenuItem, advancedMode }, componentDefinitions, item, value, index }) => {
       const componentMeta = componentDefinitions.componentTypeForFieldName(
         item
       );
@@ -72,10 +71,12 @@ export const ComponentFactory: React.SFC<any> = inject(
           );
         case 'String':
           return (
-            <Form.Field>
-              <InfoLabel title={title} wiki={wiki} />
-              <Input placeholder={title} type="text" name={title} size="mini" index={index}/>
-            </Form.Field>
+              <NameInput
+                  title={title}
+                  value={value}
+                  wiki={wiki}
+                  index={index}
+              />
           );
         default:
           return <div />;

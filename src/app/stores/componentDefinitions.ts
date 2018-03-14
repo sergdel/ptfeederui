@@ -36,6 +36,7 @@ const Config = t
   .views((self) => ({
     menuItemsMeta(title: string = 'General'): object {
       const menuData = _.find(self.Menu, { title: title });
+      console.log (self);
       if (!menuData) {
         console.error('configuration for menu data not found ' + title);
         return { description: '' };
