@@ -38,7 +38,7 @@ export const ConfigurationApp: React.SFC<any> = inject(
     ({
       settings: { menuItems },
       componentDefinitions,
-      appSettings: { selectMenuItem, advancedMode }
+      appSettings: { selectMenuItem, advancedMode, isLoaded }
     }) => {
       return isLoaded || process.env.NODE_ENV === "client" ? (
         <GridBody />
@@ -222,7 +222,6 @@ const TopMenu: React.SFC<{}> = () => {
     </Header>
   );
 };
-
 
 const StatusIndicators: React.SFC<any> = inject("appSettings")(
   observer(
