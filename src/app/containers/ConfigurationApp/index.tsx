@@ -1,7 +1,8 @@
 import * as React from "react";
 import { inject, observer } from "mobx-react";
-import { ComponentFactory } from "app/components/";
+import { ComponentFactory, Preloader } from "app/components";
 import { componentDefinitions, settings } from "app/stores";
+import { CLIENTONLY } from "app/constants";
 import logo from "../../../assets/logo.png";
 import {
   Grid,
@@ -39,7 +40,17 @@ export const ConfigurationApp: React.SFC<any> = inject(
       componentDefinitions,
       appSettings: { selectMenuItem, advancedMode }
     }) => {
-      return <GridBody />;
+      return isLoaded || process.env.NODE_ENV === "client" ? (
+        <GridBody />
+      ) : (
+        <Responsive as={Grid} style={{ height: "100vh" }} center middle>
+          <Grid.Row columns={1} middle verticalAlign="middle">
+            <Grid.Column style={{ textAlign: "center" }}>
+              <Preloader />
+            </Grid.Column>
+          </Grid.Row>
+        </Responsive>
+      );
     }
   )
 );
@@ -212,26 +223,46 @@ const TopMenu: React.SFC<{}> = () => {
   );
 };
 
-const StatusIndicators: React.SFC<any> = ({
-  BaseCoinPrice,
-  CurrentMarketCondition,
-  TopCoinChange
-}) => {
-  return (
-    <Segment basic floated="right">
-      <Label>
-        BaseCoinPrice <Label.Detail>{BaseCoinPrice || 0}</Label.Detail>{" "}
-      </Label>
-      <Label>
-        CurrentMarketConditions{" "}
-        <Label.Detail>{CurrentMarketCondition || 0}</Label.Detail>
-      </Label>
-      <Label>
-        TopCoinChangee <Label.Detail>{TopCoinChange || 0}</Label.Detail>{" "}
-      </Label>
-    </Segment>
-  );
-};
+
+const StatusIndicators: React.SFC<any> = inject("appSettings")(
+  observer(
+    ({
+      BaseCoinPrice,
+      CurrentMarketCondition,
+      TopCoinChange,
+      appSettings: { connected }
+    }) => {
+      return (
+        <Segment basic floated="right">
+          {connected ? (
+            <Label circular color={"green"}>
+              Connected
+            </Label>
+          ) : (
+            <Label circular color={"red"}>
+              Offline
+            </Label>
+          )}
+          {CLIENTONLY && (
+            <Label circular color={"blue"}>
+              Debug
+            </Label>
+          )}
+          <Label>
+            BaseCoinPrice <Label.Detail>{BaseCoinPrice || 0}</Label.Detail>
+          </Label>
+          <Label>
+            CurrentMarketConditions
+            <Label.Detail>{CurrentMarketCondition || 0}</Label.Detail>
+          </Label>
+          <Label>
+            TopCoinChangee <Label.Detail>{TopCoinChange || 0}</Label.Detail>
+          </Label>
+        </Segment>
+      );
+    }
+  )
+);
 
 const ImportExport: React.SFC<any> = ({ save, fileImport }) => {
   return (
