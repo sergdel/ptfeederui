@@ -9,7 +9,6 @@ export const InfoLabel: React.SFC<any> = ({ title, wiki }) => {
           onClick={() =>
             window.open("https://github.com/mehtadone/PTFeeder/wiki", "_blank")
           }
-          icon="add"
         >
           {title || ""}
         </Label>
