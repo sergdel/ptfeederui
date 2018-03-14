@@ -14,8 +14,7 @@ io.listen(8000);
 const server = {
   get: () =>
     axios.get("http://localhost:5001/api/v1/app/settings").then(results => {
-      console.info("info: server has received data");
-
+      console.info("info: received settings");
       return results.data;
     }),
   set: body =>
