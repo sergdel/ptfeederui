@@ -2,8 +2,10 @@ import * as React from "react";
 import { inject, observer } from "mobx-react";
 import { ComponentFactory, Preloader } from "app/components";
 import { componentDefinitions, settings } from "app/stores";
-import { CLIENTONLY } from "app/constants";
+import { CLIENTONLY, APP_SETTINGS, SETTINGS } from "app/constants";
 import logo from "../../../assets/logo.png";
+import deepEqual from "deep-equal";
+import _ from "lodash";
 import {
   Grid,
   Segment,
@@ -115,6 +117,20 @@ const GridBody: React.SFC<{}> = inject(
                   >
                     {selectedMenuItem}
                   </Header>
+
+                  {selectedMenuItem !== "General" && (
+                    <Button
+                      fluid
+                      tiny
+                      onClick={e => {
+                        e.preventDefault();
+                        settings.addConfigGroup(selectedMenuItem);
+                      }}
+                    >
+                      +
+                    </Button>
+                  )}
+
                   {menuData["Configs"] ? (
                     menuData["Configs"].map(
                       (configObject: object, index: number) => (
@@ -154,30 +170,44 @@ const GridBody: React.SFC<{}> = inject(
   )
 );
 
-const ConfigGroup: React.SFC<{
-  configObject: Array<object>;
-  configGroupIndex: number;
-}> = ({ configObject, configGroupIndex }) => {
-  return (
-    <div
-      style={{
-        marginTop: "30px",
-        backgroundColor: "#2F4259",
-        padding: "30px",
-        borderRadius: "30px"
-      }}
-    >
-      {configObject.map(value => (
-        <ComponentFactory
-          key={value[0]}
-          item={value[0]}
-          value={value[1]}
-          index={configGroupIndex}
-        />
-      ))}
-    </div>
-  );
-};
+const ConfigGroup: React.SFC<any> = inject(SETTINGS, APP_SETTINGS)(
+  observer(
+    ({ configObject, appSettings: { selectedMenuItem }, configGroupIndex }) => {
+      return (
+        <div
+          style={{
+            marginTop: "30px",
+            backgroundColor: "#2F4259",
+            padding: "30px",
+            borderRadius: "30px"
+          }}
+        >
+          {selectedMenuItem !== "General" && (
+            <Button
+              icon="-"
+              onClick={e => {
+                e.preventDefault();
+                debugger;
+                settings.removeConfigGroup(selectedMenuItem, configGroupIndex);
+              }}
+            >
+              Remove
+            </Button>
+          )}
+
+          {configObject.map(value => (
+            <ComponentFactory
+              key={value[0]}
+              item={value[0]}
+              value={value[1]}
+              index={configGroupIndex}
+            />
+          ))}
+        </div>
+      );
+    }
+  )
+);
 
 const TopMenu: React.SFC<{}> = () => {
   return (
@@ -233,13 +263,14 @@ const TopMenu: React.SFC<{}> = () => {
   );
 };
 
-const StatusIndicators: React.SFC<any> = inject("appSettings")(
+const StatusIndicators: React.SFC<any> = inject(APP_SETTINGS, SETTINGS)(
   observer(
     ({
       BaseCoinPrice,
       CurrentMarketCondition,
       TopCoinChange,
-      appSettings: { connected }
+      settings: { snapshot },
+      appSettings: { connected, getSettingsFromLS }
     }) => {
       return (
         <Segment basic floated="right">
@@ -273,23 +304,54 @@ const StatusIndicators: React.SFC<any> = inject("appSettings")(
   )
 );
 
-const ImportExport: React.SFC<any> = ({ save, fileImport }) => {
-  return (
-    <Segment basic>
-      <Button primary onClick={save}>
-        Save Settings
-      </Button>
-      <br />
-      <Button basic onClick={fileImport}>
-        Import Settings
-      </Button>
-      <br />
-      <Button basic href="/download">
-        Export Settings
-      </Button>
-    </Segment>
-  );
-};
+const ImportExport: React.SFC<any> = inject(SETTINGS, APP_SETTINGS)(
+  observer(
+    ({
+      save,
+      fileImport,
+      settings: { snapshot },
+      appSettings: { getSettingsFromLS, lastData }
+    }) => {
+      function difference(object, base) {
+        function changes(object, base) {
+          return _.transform(object, function(result, value, key) {
+            if (!_.isEqual(value, base[key])) {
+              result[key] =
+                _.isObject(value) && _.isObject(base[key])
+                  ? changes(value, base[key])
+                  : value;
+            }
+          });
+        }
+        return changes(object, base);
+      }
+
+      const ls = getSettingsFromLS();
+      const diff = difference(ls, lastData);
+      diff;
+      const isDirty = !deepEqual(getSettingsFromLS(), snapshot);
+
+      return (
+        <Segment basic>
+          {/* <pre style={{ color: "white" }}>{JSON.stringify(diff, null, 2)}</pre> */}
+          <Button primary onClick={save} className={isDirty ? "pulse" : ""}>
+            Save Settings
+          </Button>
+          <br />
+          <Button onClick={() => window["ap"](window["sh"].pop())}>Undo</Button>
+          <br />
+          <Button basic onClick={fileImport}>
+            Import Settifdngs
+          </Button>
+          <br />
+          <Button basic href="/download">
+            Export Settings
+          </Button>
+        </Segment>
+      );
+    }
+  )
+);
 ImportExport;
 const LeftNav: React.SFC<any> = inject(
   "appSettings",

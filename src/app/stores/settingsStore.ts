@@ -111,6 +111,9 @@ const Settings = t
     get menuItems() {
       return Object.keys(self);
     },
+    get snapshot() {
+      return getSnapshot(self);
+    },
     getMenuData(title = "General") {
       return self[title];
     }
@@ -125,8 +128,24 @@ const Settings = t
         console.error("Failed to fetch projects", e);
       }
     }),
+    addConfigGroup: section => {
+      self[section]["Configs"].unshift({});
+    },
+    removeConfigGroup: (section: string, configIndex: number) => {
+      self[section]["Configs"].splice(configIndex);
+    },
     set: snapshot => {
-      applySnapshot(self, snapshot);
+      let data = {};
+      if (typeof snapshot === "string") {
+        try {
+          data = JSON.parse(snapshot);
+        } catch (e) {
+          console.log("error parsing snapshot");
+        }
+      } else {
+        data = snapshot;
+      }
+      applySnapshot(self, data);
     },
     save: () => {
       const output = getSnapshot(self);
@@ -150,5 +169,6 @@ const Settings = t
       localStorage.setItem("settings", JSON.stringify(output));
     }
   }));
-
 export const settings = Settings.create(dummyData);
+
+window["settings"] = settings;

@@ -5,12 +5,16 @@ import { createBrowserHistory } from "history";
 import { createStores } from "app/stores";
 import { App } from "app";
 import io from "socket.io-client";
+import { onPatch, applyPatch } from "mobx-state-tree";
+import { autorun, observable } from "mobx";
 
 require("./theme/semantic.flatly.css");
 require("./app/styles.global.css");
 
 const history = createBrowserHistory();
 const rootStore = createStores(history);
+
+const { settings, appSettings } = rootStore;
 
 ReactDOM.render(
   <Provider {...rootStore}>
@@ -23,27 +27,27 @@ if (process.env.NODE_ENV !== "production") {
   window["store"] = rootStore;
 }
 
-const localSettings = localStorage.getItem("settings");
-if (localSettings)
-  try {
-    rootStore.settings.set(JSON.parse(localSettings));
-  } catch (e) {
-    console.error("unable to fetch from local storage " + e.message);
-  }
+const ls = localStorage.getItem("settings");
+
+if (ls) {
+  settings.set(ls);
+}
 
 if (process.env.NODE_ENV !== "client") {
   const socket = io("http://localhost:8000");
   socket.on("server", function(data) {
-    console.info(data);
     if (data.settings) {
-      rootStore.settings.set(data.settings);
+      settings.set(data.settings);
+      if (!ls) {
+        rootStore.appSettings.persistSettingsToLS(data.settings);
+      }
       socket.emit("client", { info: "received settings" });
-      rootStore.appSettings.lastData = data.settings;
-      rootStore.appSettings.dataLoaded();
+      appSettings.setLastData(data.settings);
+      appSettings.dataLoaded();
     }
   });
 
-  const { setConnected } = rootStore.appSettings;
+  const { setConnected } = appSettings;
 
   let timeout;
   socket.on("server", data => {
@@ -57,3 +61,19 @@ if (process.env.NODE_ENV !== "client") {
     }
   });
 }
+
+const settingsHistory = observable([]);
+
+setTimeout(
+  () =>
+    onPatch(settings, patch => {
+      settingsHistory.push(patch);
+      console.dir(patch);
+    }),
+  1000
+);
+
+window["ap"] = x => applyPatch(settings, x);
+
+autorun;
+window["sh"] = settingsHistory;
