@@ -132,7 +132,7 @@ const Settings = t
       self[section]["Configs"].unshift({});
     },
     removeConfigGroup: (section: string, configIndex: number) => {
-      self[section]["Configs"].splice(configIndex);
+      self[section]["Configs"].splice(configIndex, 1);
     },
     set: snapshot => {
       let data = {};
