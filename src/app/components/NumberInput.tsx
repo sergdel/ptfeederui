@@ -70,7 +70,7 @@ export const NumberInput: React.SFC<{
         <div style={{ marginTop: "15px" }}>
           <InfoLabel title={title} wiki={wiki} />
           <Input
-            type="text"
+            type="number"
             fluid
             pattern="[0-9]*"
             control="input"
