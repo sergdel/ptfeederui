@@ -121,7 +121,7 @@ const GridBody: React.SFC<{}> = inject(
                   {selectedMenuItem !== "General" && (
                     <Button
                       fluid
-                      tiny
+                      tiny="true"
                       onClick={e => {
                         e.preventDefault();
                         settings.addConfigGroup(selectedMenuItem);
@@ -137,6 +137,7 @@ const GridBody: React.SFC<{}> = inject(
                         <ConfigGroup
                           configObject={Object.entries(configObject)}
                           configGroupIndex={index}
+                          key={index}
                         />
                       )
                     )
@@ -184,7 +185,6 @@ const ConfigGroup: React.SFC<any> = inject(SETTINGS, APP_SETTINGS)(
         >
           {selectedMenuItem !== "General" && (
             <Button
-              icon="-"
               onClick={e => {
                 e.preventDefault();
                 debugger;
