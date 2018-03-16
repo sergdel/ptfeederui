@@ -23,7 +23,7 @@ const profitTrailer = {
 };
 
 const Settings = t
-  .model({
+  .model("General", {
     General: t.model({
       BaseCurrency: t.optional(t.string, ""),
       BuyStrategy: t.optional(t.string, ""),
@@ -54,56 +54,71 @@ const Settings = t
       MinutesToMeasureTrend: t.optional(t.string, ""),
       TopCurrenciesToCheck: t.optional(t.string, "")
     }),
-    MarketConditions: t.model({
-      Configs: t.array(
-        t.model({
-          FolderName: t.optional(t.string, ""),
-          MaxTopCoinAverageChange: t.optional(t.string, ""),
-          BuyValueOffset: t.optional(t.string, ""),
-          SellOnlyMode: t.optional(t.string, ""),
-          SellValueOffset: t.optional(t.string, ""),
-          DcaTrailingBuyOffset: t.optional(t.string, ""),
-          DcaTrailingProfitOffset: t.optional(t.string, "")
-        })
+    MarketConditions: t.model("MarketConditions", {
+      Configs: t.optional(
+        t.array(
+          t.model({
+            FolderName: t.optional(t.string, ""),
+            MaxTopCoinAverageChange: t.optional(t.string, ""),
+            BuyValueOffset: t.optional(t.string, ""),
+            SellOnlyMode: t.optional(t.string, ""),
+            SellValueOffset: t.optional(t.string, ""),
+            DcaTrailingBuyOffset: t.optional(t.string, ""),
+            DcaTrailingProfitOffset: t.optional(t.string, "")
+          })
+        ),
+        []
       )
     }),
-    Volume: t.model({
-      Configs: t.array(
-        t.model({
-          MaxVolume: t.optional(t.string, ""),
-          TrailingBuyOffset: t.optional(t.string, ""),
-          TrailingProfitOffset: t.optional(t.string, ""),
-          DcaEnabled: t.optional(t.string, "")
-        })
+    Volume: t.model("Volume", {
+      Configs: t.optional(
+        t.array(
+          t.model({
+            MaxVolume: t.optional(t.string, ""),
+            TrailingBuyOffset: t.optional(t.string, ""),
+            TrailingProfitOffset: t.optional(t.string, ""),
+            DcaEnabled: t.optional(t.string, "")
+          })
+        ),
+        []
       )
     }),
-    Exchange: t.model({
-      Configs: t.array(
-        t.model({
-          ExchangeName: t.optional(t.string, ""),
-          DcaTrailingBuyOffset: t.optional(t.string, ""),
-          DcaTrailingProfitOffset: t.optional(t.string, ""),
-          DcaMaxCostOffset: t.optional(t.string, ""),
-          TrailingBuyOffset: t.optional(t.string, ""),
-          TrailingProfitOffset: t.optional(t.string, "")
-        })
+    Exchange: t.model("Exchange", {
+      Configs: t.optional(
+        t.array(
+          t.model({
+            ExchangeName: t.optional(t.string, ""),
+            DcaTrailingBuyOffset: t.optional(t.string, ""),
+            DcaTrailingProfitOffset: t.optional(t.string, ""),
+            DcaMaxCostOffset: t.optional(t.string, ""),
+            TrailingBuyOffset: t.optional(t.string, ""),
+            TrailingProfitOffset: t.optional(t.string, "")
+          })
+        ),
+        []
       )
     }),
-    NewCoins: t.model({
-      Configs: t.array(
-        t.model({
-          CoinAge: t.optional(t.string, ""),
-          SellOnlyMode: t.optional(t.string, "")
-        })
+    NewCoins: t.model("NewCoins", {
+      Configs: t.optional(
+        t.array(
+          t.model({
+            CoinAge: t.optional(t.string, ""),
+            SellOnlyMode: t.optional(t.string, "")
+          })
+        ),
+        []
       )
     }),
-    PriceTrendChange: t.model({
-      Configs: t.array(
-        t.model({
-          MaxPriceTrendPercentageChange: t.optional(t.string, ""),
-          SellOnlyMode: t.optional(t.string, ""),
-          SellValueOffset: t.optional(t.string, "")
-        })
+    PriceTrendChange: t.model("PriceTrendChange", {
+      Configs: t.optional(
+        t.array(
+          t.model({
+            MaxPriceTrendPercentageChange: t.optional(t.string, ""),
+            SellOnlyMode: t.optional(t.string, ""),
+            SellValueOffset: t.optional(t.string, "")
+          })
+        ),
+        []
       )
     })
   })
@@ -169,6 +184,13 @@ const Settings = t
       localStorage.setItem("settings", JSON.stringify(output));
     }
   }));
-export const settings = Settings.create(dummyData);
+
+export let settings = Settings.create(dummyData);
+
+try {
+  Settings.create(dummyData);
+} catch (error) {
+  console.error(error);
+}
 
 window["settings"] = settings;
