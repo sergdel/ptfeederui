@@ -128,8 +128,8 @@ export default {
       },
       {
         MaxPriceTrendPercentageChange: "0.5",
-        TrailingBuyOffset: "-70",
-        TrailingProfitOffset: "5"
+        SellOnlyMode: "-70",
+        SellValueOffset: "5"
       }
     ]
   },
