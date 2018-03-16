@@ -8,7 +8,8 @@ const AppSettings = t
     dataFetched: false,
     connected: false,
     lastData: t.frozen,
-    localStorageSettings: t.frozen
+    localStorageSettings: t.frozen,
+    filter: t.optional(t.string, "")
   })
   .actions(self => ({
     selectMenuItem: newMenuItem => (self.selectedMenuItem = newMenuItem),
@@ -26,15 +27,10 @@ const AppSettings = t
         console.log("error reading local storage", e.message);
       }
     },
-    dataLoaded: () => {
-      self.dataFetched = true;
-    },
-    setConnected: connected => {
-      self.connected = connected;
-    },
-    setLastData: data => {
-      self.lastData = data; //TODO how to reference another model
-    }
+    dataLoaded: () => (self.dataFetched = true),
+    setFilter: v => (self.filter = v),
+    setConnected: connected => (self.connected = connected),
+    setLastData: data => (self.lastData = data) //TODO how to reference another model
   }))
   .views(self => ({
     get isLoaded() {

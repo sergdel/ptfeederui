@@ -6,6 +6,7 @@ import { CLIENTONLY, APP_SETTINGS, SETTINGS } from "app/constants";
 import logo from "../../../assets/logo.png";
 import deepEqual from "deep-equal";
 import _ from "lodash";
+// import { filter as fuzzy } from "fuzzy";
 import {
   Grid,
   Segment,
@@ -64,7 +65,13 @@ const GridBody: React.SFC<{}> = inject(
 )(
   observer(
     ({
-      appSettings: { menuItems, advancedMode, selectedMenuItem },
+      appSettings: {
+        menuItems,
+        advancedMode,
+        selectedMenuItem,
+        setFilter,
+        filter
+      },
       settings: { getMenuData, save },
       componentDefinitions: { menuItemsMeta }
     }) => {
@@ -100,7 +107,9 @@ const GridBody: React.SFC<{}> = inject(
                   icon="search"
                   type="text"
                   placeholder="Search..."
-                  // onChange={onFilterList}
+                  onChange={(e, target: { value }) => {
+                    setFilter(target.value);
+                  }}
                   transparent
                   fluid
                   small="true"
@@ -174,7 +183,11 @@ const GridBody: React.SFC<{}> = inject(
 
 const ConfigGroup: React.SFC<any> = inject(SETTINGS, APP_SETTINGS)(
   observer(
-    ({ configObject, appSettings: { selectedMenuItem }, configGroupIndex }) => {
+    ({
+      configObject,
+      appSettings: { selectedMenuItem, filter },
+      configGroupIndex
+    }) => {
       return (
         <Segment
           style={{
@@ -187,14 +200,17 @@ const ConfigGroup: React.SFC<any> = inject(SETTINGS, APP_SETTINGS)(
           }}
         >
           <Form.Field>
-            {configObject.map(value => (
-              <ComponentFactory
-                key={value[0]}
-                item={value[0]}
-                value={value[1]}
-                index={configGroupIndex}
-              />
-            ))}
+            {configObject.map(
+              value =>
+                new RegExp(filter, "i").test(value[0]) && (
+                  <ComponentFactory
+                    key={value[0]}
+                    item={value[0]}
+                    value={value[1]}
+                    index={configGroupIndex}
+                  />
+                )
+            )}
 
             {selectedMenuItem !== "General" && (
               <Label
@@ -365,7 +381,6 @@ const ImportExport: React.SFC<any> = inject(SETTINGS, APP_SETTINGS)(
     }
   )
 );
-ImportExport;
 const LeftNav: React.SFC<any> = inject(
   "appSettings",
   "settings",
