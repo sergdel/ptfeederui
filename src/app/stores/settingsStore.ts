@@ -54,7 +54,7 @@ const Settings = t
       MinutesToMeasureTrend: t.optional(t.string, ""),
       TopCurrenciesToCheck: t.optional(t.string, "")
     }),
-    MarketConditionGrouping: t.model("MarketConditionGrouping", {
+    MarketConditionsGrouping: t.model("MarketConditionGrouping", {
       Configs: t.optional(
         t.array(
           t.model({
@@ -120,7 +120,47 @@ const Settings = t
         ),
         []
       )
-    })
+    }),
+    VolumeTrendChangeGrouping: t.model("VolumeTrendChange", {
+      Configs: t.optional(
+        t.array(
+          t.model({
+            MMaxVolumeTrendPercentageChange: t.optional(t.string, "")
+          })
+        ),
+        []
+        )
+      }),
+      LongerTermVolumeChangeGrouping: t.model("LongerTermVolumeChange", {
+        Configs: t.optional(
+          t.array(
+            t.model({
+              MaxVolumeTrendPercentageChange: t.optional(t.string, "")
+            })
+          ),
+          []
+        )
+      }),
+      HighLowVolumePercentageGrouping: t.model("HighLowVolumePercentage", {
+        Configs: t.optional(
+          t.array(
+            t.model({
+              MaxHighLowVolumePercentage: t.optional(t.string, "")
+            })
+          ),
+          []
+        )
+      }),
+      LongerTermHighLowVolumePercentageGrouping: t.model("LongerTermHighLowVolumePercentage", {
+        Configs: t.optional(
+          t.array(
+            t.model({
+              MaxHighLowVolumePercentage: t.optional(t.string, "")
+            })
+          ),
+          []
+        )
+      })
   })
   .views(self => ({
     get menuItems() {
