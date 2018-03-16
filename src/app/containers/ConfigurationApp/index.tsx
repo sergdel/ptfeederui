@@ -181,7 +181,9 @@ const ConfigGroup: React.SFC<any> = inject(SETTINGS, APP_SETTINGS)(
             marginTop: "30px",
             backgroundColor: "#2F4259",
             padding: "30px",
-            borderRadius: "30px"
+            borderRadius: "30px",
+            border: "none",
+            boxShadow: "10px 10px 5px 0px rgba(0,0,0,0.55)"
           }}
         >
           <Form.Field>
