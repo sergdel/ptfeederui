@@ -6,7 +6,6 @@ import { CLIENTONLY, APP_SETTINGS, SETTINGS } from "app/constants";
 import logo from "../../../assets/logo.png";
 import deepEqual from "deep-equal";
 import _ from "lodash";
-// import { filter as fuzzy } from "fuzzy";
 import {
   Grid,
   Segment,
