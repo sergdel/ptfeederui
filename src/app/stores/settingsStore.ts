@@ -1,5 +1,5 @@
 import axios from "axios";
-import dummyData from "./dumyData";
+import dummyData from "./dummyData";
 import { types as t, applySnapshot, flow, getSnapshot } from "mobx-state-tree";
 
 const onReject = err => console.error(err);
@@ -54,7 +54,7 @@ const Settings = t
       MinutesToMeasureTrend: t.optional(t.string, ""),
       TopCurrenciesToCheck: t.optional(t.string, "")
     }),
-    MarketConditionGroupings: t.model("Market Condition Groupings", {
+    MarketConditionGroupings: t.model("MarketConditionGroupings", {
       Configs: t.optional(
         t.array(
           t.model({
@@ -70,7 +70,7 @@ const Settings = t
         []
       )
     }),
-    Volume: t.model("Volume", {
+    VolumeGrouping: t.model("Volume", {
       Configs: t.optional(
         t.array(
           t.model({
@@ -83,7 +83,7 @@ const Settings = t
         []
       )
     }),
-    Exchange: t.model("Exchange", {
+    ExchangeGrouping: t.model("Exchange", {
       Configs: t.optional(
         t.array(
           t.model({
@@ -98,7 +98,7 @@ const Settings = t
         []
       )
     }),
-    NewCoins: t.model("NewCoins", {
+    NewCoinsGrouping: t.model("NewCoins", {
       Configs: t.optional(
         t.array(
           t.model({
@@ -109,7 +109,7 @@ const Settings = t
         []
       )
     }),
-    PriceTrendChange: t.model("PriceTrendChange", {
+    PriceTrendChangeGrouping: t.model("PriceTrendChange", {
       Configs: t.optional(
         t.array(
           t.model({
