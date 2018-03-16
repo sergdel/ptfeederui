@@ -187,7 +187,6 @@ const ConfigGroup: React.SFC<any> = inject(SETTINGS, APP_SETTINGS)(
             <Button
               onClick={e => {
                 e.preventDefault();
-                debugger;
                 settings.removeConfigGroup(selectedMenuItem, configGroupIndex);
               }}
             >
