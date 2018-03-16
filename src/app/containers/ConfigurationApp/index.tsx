@@ -119,16 +119,17 @@ const GridBody: React.SFC<{}> = inject(
                   </Header>
 
                   {selectedMenuItem !== "General" && (
-                    <Button
+                    <Label
                       fluid
                       tiny="true"
+                      style={{ cursor: "pointer" }}
                       onClick={e => {
                         e.preventDefault();
                         settings.addConfigGroup(selectedMenuItem);
                       }}
                     >
-                      +
-                    </Button>
+                      + add config
+                    </Label>
                   )}
 
                   {menuData["Configs"] ? (
@@ -175,7 +176,7 @@ const ConfigGroup: React.SFC<any> = inject(SETTINGS, APP_SETTINGS)(
   observer(
     ({ configObject, appSettings: { selectedMenuItem }, configGroupIndex }) => {
       return (
-        <div
+        <Segment
           style={{
             marginTop: "30px",
             backgroundColor: "#2F4259",
@@ -183,26 +184,37 @@ const ConfigGroup: React.SFC<any> = inject(SETTINGS, APP_SETTINGS)(
             borderRadius: "30px"
           }}
         >
-          {selectedMenuItem !== "General" && (
-            <Button
-              onClick={e => {
-                e.preventDefault();
-                settings.removeConfigGroup(selectedMenuItem, configGroupIndex);
-              }}
-            >
-              Remove
-            </Button>
-          )}
+          <Form.Field>
+            {configObject.map(value => (
+              <ComponentFactory
+                key={value[0]}
+                item={value[0]}
+                value={value[1]}
+                index={configGroupIndex}
+              />
+            ))}
 
-          {configObject.map(value => (
-            <ComponentFactory
-              key={value[0]}
-              item={value[0]}
-              value={value[1]}
-              index={configGroupIndex}
-            />
-          ))}
-        </div>
+            {selectedMenuItem !== "General" && (
+              <Label
+                attached="top right"
+                style={{ cursor: "pointer" }}
+                as="a"
+                tag
+                color="grey"
+                // circular={true}
+                onClick={e => {
+                  e.preventDefault();
+                  settings.removeConfigGroup(
+                    selectedMenuItem,
+                    configGroupIndex
+                  );
+                }}
+              >
+                remove config
+              </Label>
+            )}
+          </Form.Field>
+        </Segment>
       );
     }
   )
