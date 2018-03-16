@@ -20,7 +20,8 @@ export const ComponentFactory: React.SFC<any> = inject(
         item
       );
 
-      if (!componentMeta) return null;
+      if (!componentMeta)
+        return <NameInput title={item} value={value} index={index} />;
 
       const {
         title,
