@@ -7,7 +7,7 @@
       "advanced": false
     },
     {
-      "title": "MarketConditions",
+      "title": "Market Conditions",
       "description": "Market conditions description",
       "wiki": "/wiki/appsettings.json---Market-Conditions"
     },
@@ -99,13 +99,15 @@
     { "title": "DcaSellStrategy", "type": "Number" },
     {
       "title": "FolderName",
-      "type": "String"
+      "type": "String",
+      "required": true
     },
     {
       "title": "MaxTopCoinAverageChange",
       "type": "Number",
       "acceptBoolean": false,
-      "note": "one or other"
+      "note": "one or other",
+      "required": true
     },
     {
       "title": "MinBaseCoinPriceChange",

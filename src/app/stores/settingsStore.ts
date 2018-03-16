@@ -54,7 +54,7 @@ const Settings = t
       MinutesToMeasureTrend: t.optional(t.string, ""),
       TopCurrenciesToCheck: t.optional(t.string, "")
     }),
-    MarketConditions: t.model("MarketConditions", {
+    MarketConditionGroupings: t.model("Market Condition Groupings", {
       Configs: t.optional(
         t.array(
           t.model({
