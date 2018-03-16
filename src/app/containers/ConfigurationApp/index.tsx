@@ -441,6 +441,7 @@ const LeftNav: React.SFC<any> = inject(
       settings: { menuItems },
       componentDefinitions: { menuItemsMeta }
     }) => {
+      debugger;
       return (
         <Grid.Column width={4} align="center">
           <Sticky>
@@ -456,11 +457,10 @@ const LeftNav: React.SFC<any> = inject(
               }}
             >
               {menuItems.map((item, index) => {
-                const blah = menuItemsMeta(item);
-                blah;
-                return !!!blah.advanced || advancedMode ? (
+                const meta = menuItemsMeta(item);
+                return !!!meta.advanced || advancedMode ? (
                   <MenuItem
-                    name={item}
+                    name={meta.title || item}
                     key={item}
                     active={selectedMenuItem === item}
                     onClick={selectMenuItem.bind(this, item)}
@@ -469,7 +469,7 @@ const LeftNav: React.SFC<any> = inject(
                     }}
                     menuIndex={index}
                   >
-                    {item}
+                    {meta.title}
                   </MenuItem>
                 ) : null;
               })}

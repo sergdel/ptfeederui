@@ -5,6 +5,7 @@ const Config = t
   .model("menuItem", {
     Menu: t.array(
       t.model({
+        key: t.string,
         title: t.string,
         wiki: t.string,
         description: t.optional(t.string, ""),
@@ -34,10 +35,10 @@ const Config = t
     )
   })
   .views(self => ({
-    menuItemsMeta(title: string = "General"): object {
-      const menuData = _.find(self.Menu, { title: title });
+    menuItemsMeta(key: string = "General"): object {
+      const menuData = _.find(self.Menu, { key: key });
       if (!menuData) {
-        console.error("configuration for menu data not found " + title);
+        console.error("configuration for menu data not found " + key);
         return { description: "" };
       }
       return menuData;
