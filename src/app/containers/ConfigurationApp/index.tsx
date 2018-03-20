@@ -1,8 +1,9 @@
 import * as React from "react";
 import { inject, observer } from "mobx-react";
 import { ComponentFactory, Preloader } from "app/components";
-import { componentDefinitions, settings } from "app/stores";
-import { CLIENTONLY, APP_SETTINGS, SETTINGS } from "app/constants";
+import { APP_SETTINGS, SETTINGS, UI_DEFS } from "app/constants/stores";
+import { CLIENTONLY } from "app/constants";
+
 import logo from "../../../assets/logo.png";
 import deepEqual from "deep-equal";
 import _ from "lodash";
@@ -29,12 +30,10 @@ import {
 //   primary: '#2F3959'
 // };
 
-componentDefinitions;
-settings;
 export const ConfigurationApp: React.SFC<any> = inject(
-  "settings",
-  "componentDefinitions",
-  "appSettings"
+  SETTINGS,
+  UI_DEFS,
+  APP_SETTINGS
 )(
   observer(
     ({
@@ -57,11 +56,7 @@ export const ConfigurationApp: React.SFC<any> = inject(
   )
 );
 
-const GridBody: React.SFC<{}> = inject(
-  "appSettings",
-  "settings",
-  "componentDefinitions"
-)(
+const GridBody: React.SFC<{}> = inject(APP_SETTINGS, SETTINGS, UI_DEFS)(
   observer(
     ({
       appSettings: {
@@ -71,7 +66,14 @@ const GridBody: React.SFC<{}> = inject(
         setFilter,
         filter
       },
-      settings: { getMenuData, save, importfunc },
+
+      settings: {
+        getMenuData,
+        save,
+        importfunc,
+        addConfigGroup,
+        removeConfigGroup
+      },
       componentDefinitions: { menuItemsMeta }
     }) => {
       const menuData = getMenuData(selectedMenuItem);
@@ -133,7 +135,7 @@ const GridBody: React.SFC<{}> = inject(
                       style={{ cursor: "pointer" }}
                       onClick={e => {
                         e.preventDefault();
-                        settings.addConfigGroup(selectedMenuItem);
+                        addConfigGroup(selectedMenuItem);
                       }}
                     >
                       + add config
@@ -144,7 +146,7 @@ const GridBody: React.SFC<{}> = inject(
                     menuData["Configs"].map(
                       (configObject: object, index: number) => (
                         <ConfigGroup
-                          configObject={Object.entries(configObject)}
+                          configObject={configObject}
                           configGroupIndex={index}
                           key={index}
                         />
@@ -152,7 +154,7 @@ const GridBody: React.SFC<{}> = inject(
                     )
                   ) : (
                     <ConfigGroup
-                      configObject={Object.entries(menuData)}
+                      configObject={menuData}
                       configGroupIndex={-1}
                     />
                   )}
@@ -164,9 +166,10 @@ const GridBody: React.SFC<{}> = inject(
             <Responsive as={Grid.Column} {...Responsive.onlyComputer}>
               <Grid.Row>
                 <ImportExport
-                  save={() => settings.save()}
-                  importfunc={(newconfig) => settings.importfunc(newconfig)}
-                  // export={this.export }
+                  save={() => save()}
+                  importfunc={newconfig => importfunc(newconfig)}
+                  // export={this.export}
+                  // import={this.import}
                 />
                 <Segment basic style={{ color: "#fff" }}>
                   <strong>{description ? description : ""}</strong>
@@ -180,13 +183,17 @@ const GridBody: React.SFC<{}> = inject(
   )
 );
 
-const ConfigGroup: React.SFC<any> = inject(SETTINGS, APP_SETTINGS)(
+const ConfigGroup: React.SFC<any> = inject(SETTINGS, APP_SETTINGS, UI_DEFS)(
   observer(
     ({
+      settings: { removeConfigGroup },
       configObject,
       appSettings: { selectedMenuItem, filter },
-      configGroupIndex
+      configGroupIndex,
+      componentDefinitions: { menuItemsMeta }
     }) => {
+      const { fixedItems } = menuItemsMeta(selectedMenuItem);
+
       return (
         <Segment
           style={{
@@ -199,37 +206,55 @@ const ConfigGroup: React.SFC<any> = inject(SETTINGS, APP_SETTINGS)(
           }}
         >
           <Form.Field>
-            {configObject.map(
-              value =>
-                new RegExp(filter, "i").test(value[0]) && (
-                  <ComponentFactory
-                    key={value[0]}
-                    item={value[0]}
-                    value={value[1]}
-                    index={configGroupIndex}
-                  />
-                )
-            )}
+            {fixedItems &&
+              fixedItems.length > -1 &&
+              selectedMenuItem !== "General" &&
+              fixedItems.map(value => {
+                const component = configObject[value];
 
-            {selectedMenuItem !== "General" && (
-              <Label
-                attached="top right"
-                style={{ cursor: "pointer" }}
-                as="a"
-                tag
-                color="grey"
-                // circular={true}
-                onClick={e => {
-                  e.preventDefault();
-                  settings.removeConfigGroup(
-                    selectedMenuItem,
-                    configGroupIndex
-                  );
-                }}
-              >
-                remove config
-              </Label>
-            )}
+                return (
+                  new RegExp(filter, "i").test(component) && (
+                    <div style={{ border: "1px solid red" }}>
+                      <ComponentFactory
+                        key={component}
+                        item={value}
+                        value={component}
+                        index={component}
+                      />
+                    </div>
+                  )
+                );
+              })}
+            {Object.keys(configObject).map(value => {
+              return (
+                new RegExp(filter, "i").test(value) &&
+                !_.includes(fixedItems, value) && (
+                  <div>
+                    <ComponentFactory
+                      key={value}
+                      item={value}
+                      value={configObject[value]}
+                      index={configGroupIndex}
+                    />
+                    <Button>Delete</Button>
+                  </div>
+                )
+              );
+            })}
+            <Label
+              attached="top right"
+              style={{ cursor: "pointer" }}
+              as="a"
+              tag
+              color="grey"
+              // circular={true}
+              onClick={e => {
+                e.preventDefault();
+                removeConfigGroup(selectedMenuItem, configGroupIndex);
+              }}
+            >
+              remove config
+            </Label>
           </Form.Field>
         </Segment>
       );
@@ -332,58 +357,57 @@ const StatusIndicators: React.SFC<any> = inject(APP_SETTINGS, SETTINGS)(
   )
 );
 
-class ImportButton extends React.Component<{}, {}>  {
-    constructor(props) {
-        super(props);
-        this.importFileFunc = this.importFileFunc.bind(this);
-        this.updateConfig = this.updateConfig.bind(this);
-        this.importBut = null;
+class ImportButton extends React.Component<{}, {}> {
+  constructor(props) {
+    super(props);
+    this.importFileFunc = this.importFileFunc.bind(this);
+    this.updateConfig = this.updateConfig.bind(this);
+    this.importBut = null;
+  }
+  importBut;
+
+  importFileFunc() {
+    this.importBut.click();
+  }
+
+  updateConfig = evt => {
+    var files = evt.target.files; // FileList object
+
+    // Loop through the FileList and render image files as thumbnails.
+    for (var i = 0, f; (f = files[i]); i++) {
+      var reader = new FileReader();
+
+      // Closure to capture the file information.
+      reader.onload = (function(theFile) {
+        return function(e) {
+          this.props.importfunc(e.target.result);
+        };
+      })(f);
+
+      // Read in the image file as a data URL.
+      reader.readAsDataURL(f);
     }
-    importBut;
+  };
 
-    importFileFunc() {
-        this.importBut.click();
-    }
-
-    updateConfig = evt => {
-        var files = evt.target.files; // FileList object
-
-        // Loop through the FileList and render image files as thumbnails.
-        for (var i = 0, f; f = files[i]; i++) {
-
-            var reader = new FileReader();
-
-            // Closure to capture the file information.
-            reader.onload = (function(theFile) {
-                return function(e) {
-                    this.props.importfunc(e.target.result);
-                };
-            })(f);
-
-            // Read in the image file as a data URL.
-            reader.readAsDataURL(f);
-        }
-    };
-
-    render() {
-        return (
-            <div>
-                <div className="hidden" style={{display:'none'}}>
-                    <input
-                        type="file"
-                        onChange={this.updateConfig}
-                        ref={input => {
-                            this.importBut = input;
-                        }}
-                    />
-                </div>
-                <Button basic onClick={this.importFileFunc}>
-                    Import Settings
-                </Button>
-                <br />
-            </div>
-        );
-    }
+  render() {
+    return (
+      <div>
+        <div className="hidden" style={{ display: "none" }}>
+          <input
+            type="file"
+            onChange={this.updateConfig}
+            ref={input => {
+              this.importBut = input;
+            }}
+          />
+        </div>
+        <Button basic onClick={this.importFileFunc}>
+          Import Settings
+        </Button>
+        <br />
+      </div>
+    );
+  }
 }
 
 const ImportExport: React.SFC<any> = inject(SETTINGS, APP_SETTINGS)(
@@ -421,7 +445,7 @@ const ImportExport: React.SFC<any> = inject(SETTINGS, APP_SETTINGS)(
           <br />
           {/* {<Button onClick={() => window["ap"](window["sh"].pop())}>Undo</Button>} */}
           <br />
-          <ImportButton/>
+          <ImportButton />
           <Button basic href="/download">
             Export Settings
           </Button>
@@ -430,18 +454,13 @@ const ImportExport: React.SFC<any> = inject(SETTINGS, APP_SETTINGS)(
     }
   )
 );
-const LeftNav: React.SFC<any> = inject(
-  "appSettings",
-  "settings",
-  "componentDefinitions"
-)(
+const LeftNav: React.SFC<any> = inject(APP_SETTINGS, SETTINGS, UI_DEFS)(
   observer(
     ({
       appSettings: { selectMenuItem, selectedMenuItem, advancedMode },
       settings: { menuItems },
       componentDefinitions: { menuItemsMeta }
     }) => {
-      debugger;
       return (
         <Grid.Column width={4} align="center">
           <Sticky>
@@ -499,7 +518,7 @@ const MenuItem: React.SFC<any> = ({ name, style, active, onClick }) => {
   );
 };
 
-const AdvancedModeToggle: React.SFC<any> = inject("appSettings")(
+const AdvancedModeToggle: React.SFC<any> = inject(APP_SETTINGS)(
   observer(({ appSettings: { advancedMode, toggleAdvancedMode } }) => {
     return (
       <Segment basic align="left" floated="left">

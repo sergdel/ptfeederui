@@ -2,19 +2,22 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { Provider } from "mobx-react";
 import { createBrowserHistory } from "history";
-import { createStores } from "app/stores";
+import { RootStore } from "./app/stores/createRootStore";
 import { App } from "app";
 import io from "socket.io-client";
 import { onPatch, applyPatch } from "mobx-state-tree";
-import { autorun, observable } from "mobx";
+import { observable } from "mobx";
 
 require("./theme/semantic.flatly.css");
 require("./app/styles.global.css");
 
 const history = createBrowserHistory();
-const rootStore = createStores(history);
-
-const { settings, appSettings } = rootStore;
+const rootStore = RootStore(history);
+const {
+  settings,
+  settings: { set },
+  appSettings: { setLastData, dataLoaded, setConnected, persistSettingsToLS }
+} = rootStore;
 
 ReactDOM.render(
   <Provider {...rootStore}>
@@ -23,32 +26,28 @@ ReactDOM.render(
   document.getElementById("root")
 );
 
-if (process.env.NODE_ENV !== "production") {
-  window["store"] = rootStore;
-}
-
-const ls = localStorage.getItem("settings");
-
-if (ls) {
-  settings.set(ls);
+try {
+  const ls = localStorage.getItem("settings");
+  if (ls) {
+    set(ls);
+  }
+} catch (e) {
+  console.log("unable to convert from local storage", e);
 }
 
 if (process.env.NODE_ENV !== "client") {
   const socket = io("http://localhost:8000");
   socket.on("server", function(data) {
     if (data.settings) {
-        console.log (data.settings);
-      settings.set(data.settings);
-      if (!ls) {
-        rootStore.appSettings.persistSettingsToLS(data.settings);
+      set(data.settings);
+      if (!localStorage.getItem("settings")) {
+        persistSettingsToLS(data.settings);
       }
       socket.emit("client", { info: "received settings" });
-      appSettings.setLastData(data.settings);
-      appSettings.dataLoaded();
+      setLastData(data.settings);
+      dataLoaded();
     }
   });
-
-  const { setConnected } = appSettings;
 
   let timeout;
   socket.on("server", data => {
@@ -74,7 +73,8 @@ setTimeout(
   1000
 );
 
-window["ap"] = x => applyPatch(settings, x);
-
-autorun;
-window["sh"] = settingsHistory;
+if (process.env.NODE_ENV !== "production") {
+  window["ap"] = x => applyPatch(settings, x);
+  window["sh"] = settingsHistory;
+  window["store"] = rootStore;
+}

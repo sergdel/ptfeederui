@@ -1,10 +1,9 @@
-import { Settings } from "./models/Settings";
-import dummyData from "./dummyData";
+import axios from "axios";
+import { types as t, applySnapshot, flow, getSnapshot } from "mobx-state-tree";
 
-<<<<<<< HEAD
 const onReject = err => console.error(err);
 
-const profitTrailer = {
+export const profitTrailer = {
   get: () =>
     axios
       .get("/settings")
@@ -22,7 +21,7 @@ const profitTrailer = {
       .catch(onReject)
 };
 
-const Settings = t
+export const Settings = t
   .model("General", {
     General: t.model({
       BaseCurrency: t.optional(t.string, ""),
@@ -129,19 +128,31 @@ const Settings = t
           })
         ),
         []
-        )
-      }),
-      LongerTermVolumeChangeGrouping: t.model("LongerTermVolumeChange", {
-        Configs: t.optional(
-          t.array(
-            t.model({
-              MaxVolumeTrendPercentageChange: t.optional(t.string, "")
-            })
-          ),
-          []
-        )
-      }),
-      HighLowVolumePercentageGrouping: t.model("HighLowVolumePercentage", {
+      )
+    }),
+    LongerTermVolumeChangeGrouping: t.model("LongerTermVolumeChange", {
+      Configs: t.optional(
+        t.array(
+          t.model({
+            MaxVolumeTrendPercentageChange: t.optional(t.string, "")
+          })
+        ),
+        []
+      )
+    }),
+    HighLowVolumePercentageGrouping: t.model("HighLowVolumePercentage", {
+      Configs: t.optional(
+        t.array(
+          t.model({
+            MaxHighLowVolumePercentage: t.optional(t.string, "")
+          })
+        ),
+        []
+      )
+    }),
+    LongerTermHighLowVolumePercentageGrouping: t.model(
+      "LongerTermHighLowVolumePercentage",
+      {
         Configs: t.optional(
           t.array(
             t.model({
@@ -150,17 +161,8 @@ const Settings = t
           ),
           []
         )
-      }),
-      LongerTermHighLowVolumePercentageGrouping: t.model("LongerTermHighLowVolumePercentage", {
-        Configs: t.optional(
-          t.array(
-            t.model({
-              MaxHighLowVolumePercentage: t.optional(t.string, "")
-            })
-          ),
-          []
-        )
-      })
+      }
+    )
   })
   .views(self => ({
     get menuItems() {
@@ -191,9 +193,6 @@ const Settings = t
     },
     set: snapshot => {
       let data = {};
-      const topOptions=["General", "MarketConditionsGrouping", "ExchangeGrouping","HighLowVolumePercentageGrouping",
-          "LongerTermHighLowVolumePercentageGrouping","LongerTermVolumeChangeGrouping",
-        "NewCoinsGrouping","PriceTrendChangeGrouping", "VolumeGrouping", "VolumeTrendChangeGrouping"];
       if (typeof snapshot === "string") {
         try {
           data = JSON.parse(snapshot);
@@ -203,11 +202,6 @@ const Settings = t
       } else {
         data = snapshot;
       }
-      topOptions.forEach(function (option) {
-          if (!data[option]) {
-              data[option]={};
-          }
-      });
       applySnapshot(self, data);
     },
     save: () => {
@@ -215,7 +209,7 @@ const Settings = t
       profitTrailer.save(output);
       localStorage.setItem("settings", JSON.stringify(output));
     },
-      importfunc: (newconfig) => {
+    importfunc: newconfig => {
       profitTrailer.save(newconfig);
       localStorage.setItem("settings", JSON.stringify(newconfig));
     },
@@ -236,20 +230,3 @@ const Settings = t
       localStorage.setItem("settings", JSON.stringify(output));
     }
   }));
-
-export let settings = Settings.create(dummyData);
-
-try {
-  Settings.create(dummyData);
-} catch (error) {
-  console.error(error);
-=======
-export class SettingsStore {
-  root;
-  store;
-  constructor(rootStore) {
-    this.root = rootStore;
-    this.store = Settings.create(dummyData);
-  }
->>>>>>> abstract models from stores
-}
