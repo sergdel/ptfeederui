@@ -207,6 +207,10 @@ const Settings = t
       profitTrailer.save(output);
       localStorage.setItem("settings", JSON.stringify(output));
     },
+      importfunc: (newconfig) => {
+      profitTrailer.save(newconfig);
+      localStorage.setItem("settings", JSON.stringify(newconfig));
+    },
     updateField: (category, key, newValue, index) => {
       if (category != "General") {
         if (index > -1) {

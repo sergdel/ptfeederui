@@ -71,7 +71,7 @@ const GridBody: React.SFC<{}> = inject(
         setFilter,
         filter
       },
-      settings: { getMenuData, save },
+      settings: { getMenuData, save, importfunc },
       componentDefinitions: { menuItemsMeta }
     }) => {
       const menuData = getMenuData(selectedMenuItem);
@@ -165,8 +165,8 @@ const GridBody: React.SFC<{}> = inject(
               <Grid.Row>
                 <ImportExport
                   save={() => settings.save()}
-                  // export={this.export}
-                  // import={this.import}
+                  importfunc={(newconfig) => settings.importfunc(newconfig)}
+                  // export={this.export }
                 />
                 <Segment basic style={{ color: "#fff" }}>
                   <strong>{description ? description : ""}</strong>
@@ -332,6 +332,60 @@ const StatusIndicators: React.SFC<any> = inject(APP_SETTINGS, SETTINGS)(
   )
 );
 
+class ImportButton extends React.Component<{}, {}>  {
+    constructor(props) {
+        super(props);
+        this.importFileFunc = this.importFileFunc.bind(this);
+        this.updateConfig = this.updateConfig.bind(this);
+        this.importBut = null;
+    }
+    importBut;
+
+    importFileFunc() {
+        this.importBut.click();
+    }
+
+    updateConfig = evt => {
+        var files = evt.target.files; // FileList object
+
+        // Loop through the FileList and render image files as thumbnails.
+        for (var i = 0, f; f = files[i]; i++) {
+
+            var reader = new FileReader();
+
+            // Closure to capture the file information.
+            reader.onload = (function(theFile) {
+                return function(e) {
+                    this.props.importfunc(e.target.result);
+                };
+            })(f);
+
+            // Read in the image file as a data URL.
+            reader.readAsDataURL(f);
+        }
+    };
+
+    render() {
+        return (
+            <div>
+                <div className="hidden" style={{display:'none'}}>
+                    <input
+                        type="file"
+                        onChange={this.updateConfig}
+                        ref={input => {
+                            this.importBut = input;
+                        }}
+                    />
+                </div>
+                <Button basic onClick={this.importFileFunc}>
+                    Import Settings
+                </Button>
+                <br />
+            </div>
+        );
+    }
+}
+
 const ImportExport: React.SFC<any> = inject(SETTINGS, APP_SETTINGS)(
   observer(
     ({
@@ -358,7 +412,6 @@ const ImportExport: React.SFC<any> = inject(SETTINGS, APP_SETTINGS)(
       const diff = difference(ls, lastData);
       diff;
       const isDirty = !deepEqual(getSettingsFromLS(), snapshot);
-
       return (
         <Segment basic>
           {/* <pre style={{ color: "white" }}>{JSON.stringify(diff, null, 2)}</pre> */}
@@ -368,10 +421,7 @@ const ImportExport: React.SFC<any> = inject(SETTINGS, APP_SETTINGS)(
           <br />
           {/* {<Button onClick={() => window["ap"](window["sh"].pop())}>Undo</Button>} */}
           <br />
-          <Button basic onClick={fileImport}>
-            Import Settings
-          </Button>
-          <br />
+          <ImportButton/>
           <Button basic href="/download">
             Export Settings
           </Button>
