@@ -141,3 +141,7 @@ input[type="checkbox"] {
   -ms-text-rendering: optimizeLegibility;
   text-rendering: optimizeLegibility;
 }
+
+.hidden {
+  display: none;
+}
