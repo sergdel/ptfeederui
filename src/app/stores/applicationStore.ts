@@ -4,9 +4,6 @@ export class ApplicationStore {
   store;
   constructor(rootStore) {
     this.rootStore = rootStore;
-    this.store = ApplicationModel.create({
-      advancedMode: false,
-      selectedMenuItem: "General"
-    });
+    this.store = ApplicationModel.create();
   }
 }
