@@ -189,6 +189,7 @@ export const Settings = t
       self[section]["Configs"].unshift({});
     },
     removeConfigGroup: (section: string, configIndex: number) => {
+      if (section === "General") return;
       self[section]["Configs"].splice(configIndex, 1);
     },
     set: snapshot => {
@@ -223,10 +224,10 @@ export const Settings = t
       } else {
         self[category][key] = newValue;
       }
-
-      //TODO - how to invoke other actions?
-      //self.save();
       const output = getSnapshot(self);
       localStorage.setItem("settings", JSON.stringify(output));
+    },
+    afterCreate: () => {
+      debugger;
     }
   }));

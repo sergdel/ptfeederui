@@ -241,20 +241,22 @@ const ConfigGroup: React.SFC<any> = inject(SETTINGS, APP_SETTINGS, UI_DEFS)(
                 )
               );
             })}
-            <Label
-              attached="top right"
-              style={{ cursor: "pointer" }}
-              as="a"
-              tag
-              color="grey"
-              // circular={true}
-              onClick={e => {
-                e.preventDefault();
-                removeConfigGroup(selectedMenuItem, configGroupIndex);
-              }}
-            >
-              remove config
-            </Label>
+            {selectedMenuItem !== "General" && (
+              <Label
+                attached="top right"
+                style={{ cursor: "pointer" }}
+                as="a"
+                tag
+                color="grey"
+                // circular={true}
+                onClick={e => {
+                  e.preventDefault();
+                  removeConfigGroup(selectedMenuItem, configGroupIndex);
+                }}
+              >
+                remove config
+              </Label>
+            )}
           </Form.Field>
         </Segment>
       );
