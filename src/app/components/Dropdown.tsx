@@ -4,7 +4,7 @@ import InfoLabel from "./InfoLabel";
 import { observer, inject } from "mobx-react";
 
 export const DropDown: React.SFC<{
-  options: Array<object>;
+  options: Array<{ key: string; text: string; value: string }>;
   title: string;
   wiki: string;
   allowAdditions?: boolean;
