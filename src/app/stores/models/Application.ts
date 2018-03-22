@@ -32,7 +32,8 @@ export const ApplicationModel = t
     dataLoaded: () => (self.dataFetched = true),
     setFilter: v => (self.filter = v),
     setConnected: connected => (self.connected = connected),
-    setLastData: data => (self.lastData = data) //TODO how to reference another model
+    setLastData: data => (self.lastData = data), //TODO how to reference another model
+    setOffsets: offsets => (self.offsets = offsets)
   }))
   .views(self => ({
     get isLoaded() {
