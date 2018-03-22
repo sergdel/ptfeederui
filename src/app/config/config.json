@@ -11,7 +11,8 @@
       "key": "MarketConditionsGrouping",
       "title": "Market Conditions Grouping",
       "description": "Market conditions description",
-      "wiki": "/wiki/appsettings.json---Market-Conditions"
+      "wiki": "/wiki/appsettings.json---Market-Conditions",
+      "fixedItems": ["FolderName", "MaxTopCoinAverageChange"]
     },
     {
       "key": "VolumeGrouping",
