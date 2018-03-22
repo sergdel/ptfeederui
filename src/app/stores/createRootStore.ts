@@ -14,6 +14,7 @@ export const RootStore = (history: History) => {
       Object.keys(settingsStore.General).reduce((r, k) => {
         if (_.find(componentStore.ComponentTypes, { title: k, type: "Number" }))
           r.push(k + "Offset");
+        else r.push(k);
         return r;
       }, [])
     )
