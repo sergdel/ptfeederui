@@ -247,7 +247,6 @@ const ConfigGroup: React.SFC<{
                       value={configObject[value]}
                       index={configGroupIndex}
                     />
-                    <Button>Delete</Button>
                   </div>
                 )
               );
