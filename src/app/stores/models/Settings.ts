@@ -226,8 +226,5 @@ export const Settings = t
       }
       const output = getSnapshot(self);
       localStorage.setItem("settings", JSON.stringify(output));
-    },
-    afterCreate: () => {
-      debugger;
     }
   }));
