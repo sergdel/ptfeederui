@@ -32,3 +32,41 @@ Options and menu items can be configured in config.json
 GET settings file: http://localhost:5001/api/v1/app/settings
 POST settings file: http://localhost:5001/api/v1/app/settings
 
+### Authentication on api calls
+
+I have implemented a basic authorization system. It requires standard `Authorization` header with the plain secret token value (no hashing yet).
+
+Initially there is no security token set in the `hostsettings.json`. So all the API endpoints will be closed by default except the `api/v1/app/hostsettings/token`. This endpoint allows to set the token initially. 
+
+Sample request `api/v1/app/hostsettings/token`:
+```
+var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": "http://localhost:5001/api/v1/app/hostsettings/token",
+  "method": "POST",
+  "headers": {
+    "Content-Type": "application/x-www-form-urlencoded",
+    "Cache-Control": "no-cache",
+    "Postman-Token": "6136d16f-de79-5bef-743d-157eca97db10"
+    //"Authorization" : "<current token value>"
+  },
+  "data": {
+    "token": "newtoken"
+  }
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+```
+Please note that for changing the security token after the initial set you have to pass the current token value as well.
+
+Possible results:
+401 - not authorized
+400 - bad request (in case if empty new token or equals to the current one)
+502 - server error (exception)
+
+For all the rest API endpoints need to pass the `"Authorization" : "<current token value>"` header with the plain token value (right now I have applied the Authorization header checking only to the status controller `api/v1/app/status`).
+
+
