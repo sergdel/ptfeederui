@@ -1,6 +1,6 @@
 import * as React from "react";
 import { inject, observer } from "mobx-react";
-import { ComponentFactory, Preloader } from "app/components";
+import { ComponentFactory, Preloader, DropDown } from "app/components";
 import { APP_SETTINGS, SETTINGS, UI_DEFS } from "app/constants/stores";
 import { CLIENTONLY } from "app/constants";
 
@@ -183,17 +183,26 @@ const GridBody: React.SFC<{}> = inject(APP_SETTINGS, SETTINGS, UI_DEFS)(
   )
 );
 
-const ConfigGroup: React.SFC<any> = inject(SETTINGS, APP_SETTINGS, UI_DEFS)(
+const ConfigGroup: React.SFC<{
+  configObject: {};
+  configGroupIndex: number;
+}> = inject(SETTINGS, APP_SETTINGS, UI_DEFS)(
   observer(
     ({
       settings: { removeConfigGroup },
       configObject,
-      appSettings: { selectedMenuItem, filter },
+      appSettings: { selectedMenuItem, filter, offsets },
       configGroupIndex,
       componentDefinitions: { menuItemsMeta }
     }) => {
       const { fixedItems } = menuItemsMeta(selectedMenuItem);
-
+      const keys = ["key", "text", "value"];
+      const p = c => _.zipObject(keys, _.times(3, () => c));
+      const offsetOptions = offsets
+        .filter(o => {
+          return !configObject[o];
+        })
+        .map(p);
       return (
         <Segment
           style={{
@@ -209,22 +218,24 @@ const ConfigGroup: React.SFC<any> = inject(SETTINGS, APP_SETTINGS, UI_DEFS)(
             {fixedItems &&
               fixedItems.length > -1 &&
               selectedMenuItem !== "General" &&
-              fixedItems.map(value => {
-                const component = configObject[value];
-
+              fixedItems.map(name => {
+                const value = configObject[name];
                 return (
-                  new RegExp(filter, "i").test(component) && (
+                  new RegExp(filter, "i").test(name) && (
                     <div style={{ border: "1px solid red" }}>
                       <ComponentFactory
-                        key={component}
-                        item={value}
-                        value={component}
-                        index={component}
+                        key={value}
+                        item={name}
+                        value={value}
+                        index={value}
                       />
                     </div>
                   )
                 );
               })}
+
+            {<DropDown options={offsetOptions} title="Offsets Dropdown" />}
+
             {Object.keys(configObject).map(value => {
               return (
                 new RegExp(filter, "i").test(value) &&
