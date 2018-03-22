@@ -8,8 +8,8 @@ export const DropDown: React.SFC<{
   title: string;
   wiki?: string;
   allowAdditions?: boolean;
-  value?: string;
-  index?: number;
+  index: number;
+  onChange?: Function;
 }> = inject("settings", "appSettings")(
   observer(
     ({
@@ -19,21 +19,23 @@ export const DropDown: React.SFC<{
       settings: { updateField },
       appSettings: { selectedMenuItem },
       allowAdditions = false,
-      value,
+      onChange,
       index = -1
     }) => {
       //TODO
       const handleAddition = (e, { value }) => {};
 
-      const handleChange = (evt, { value }) => {
-        updateField(selectedMenuItem, title, value, index);
-      };
+      const handleChange = onChange
+        ? onChange
+        : (evt, { value }) => {
+            updateField(selectedMenuItem, title, value, index);
+          };
 
       return (
         <Form.Field style={{ paddingTop: "20px" }}>
           <InfoLabel title={title} wiki={wiki} />
           <Dropdown
-            placeholder={value || title}
+            placeholder={title}
             size="large"
             id={title}
             fluid
@@ -41,7 +43,6 @@ export const DropDown: React.SFC<{
             selection
             name={title}
             options={options}
-            value={value}
             allowAdditions={allowAdditions}
             onAddItem={handleAddition}
             onChange={handleChange}

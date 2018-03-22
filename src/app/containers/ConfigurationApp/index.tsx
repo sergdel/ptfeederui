@@ -97,7 +97,7 @@ const GridBody: React.SFC<{}> = inject(APP_SETTINGS, SETTINGS, UI_DEFS)(
           </Grid.Row>
           <Grid.Row columns="equal" stretched centered padded="true">
             <Grid.Column>
-                <LeftNav />
+              <LeftNav />
             </Grid.Column>
             {/* Main Content */}
             <Grid.Column>
@@ -182,7 +182,8 @@ const ConfigGroup: React.SFC<{
 }> = inject(SETTINGS, APP_SETTINGS, UI_DEFS)(
   observer(
     ({
-      settings: { removeConfigGroup },
+      settings: { removeConfigGroup, addConfigItem },
+      settings,
       configObject,
       appSettings: { selectedMenuItem, filter, offsets },
       configGroupIndex,
@@ -216,7 +217,7 @@ const ConfigGroup: React.SFC<{
                 const value = configObject[name];
                 return (
                   new RegExp(filter, "i").test(name) && (
-                    <div style={{ border: "1px solid red" }}>
+                    <div style={{ backgroundColor: "#CEEE" }}>
                       <ComponentFactory
                         key={value}
                         item={name}
@@ -229,7 +230,24 @@ const ConfigGroup: React.SFC<{
               })}
 
             {grouping && (
-              <DropDown options={offsetOptions} title="Offsets Dropdown" />
+              <div style={{ backgroundColor: "#CABCAB" }}>
+                <pre style={{ color: "white" }}>
+                  {grouping &&
+                    JSON.stringify(
+                      settings[selectedMenuItem]["Configs"][configGroupIndex],
+                      null,
+                      2
+                    )}
+                </pre>
+                <DropDown
+                  options={offsetOptions}
+                  title="Add Offsets"
+                  index={configGroupIndex}
+                  onChange={(e, { value }) => {
+                    addConfigItem(value, selectedMenuItem, configGroupIndex);
+                  }}
+                />
+              </div>
             )}
 
             {Object.keys(configObject).map(value => {

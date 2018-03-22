@@ -1,8 +1,7 @@
 import axios from "axios";
 import { types as t, applySnapshot, flow, getSnapshot } from "mobx-state-tree";
-
 const onReject = err => console.error(err);
-
+import { extendObservable } from "mobx";
 export const profitTrailer = {
   get: () =>
     axios
@@ -187,6 +186,19 @@ export const Settings = t
     }),
     addConfigGroup: section => {
       self[section]["Configs"].unshift({});
+    },
+    addConfigItem: (
+      value: string,
+      section: string,
+      configGroupIndex: number
+    ) => {
+      const o = self[section]["Configs"][configGroupIndex];
+      extendObservable(self[section]["Configs"][configGroupIndex], {
+        [value]: ""
+      });
+      self[section]["Configs"][configGroupIndex][value] = "";
+      o[value] = "";
+      self[section]["Configs"][configGroupIndex] = o;
     },
     removeConfigGroup: (section: string, configIndex: number) => {
       if (section === "General") return;
