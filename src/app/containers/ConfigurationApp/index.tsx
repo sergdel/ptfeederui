@@ -103,63 +103,58 @@ const GridBody: React.SFC<{}> = inject(APP_SETTINGS, SETTINGS, UI_DEFS)(
             </Grid.Column>
             {/* Main Content */}
             <Grid.Column>
-              <Grid.Column width={5}>
-                <Input
-                  icon="search"
-                  type="text"
-                  placeholder="Search..."
-                  onChange={(e, target: { value }) => {
-                    setFilter(target.value);
-                  }}
-                  transparent
-                  fluid
-                  small="true"
-                  inverted
-                  padded="false"
-                />
+              <Input
+                icon="search"
+                type="text"
+                placeholder="Search..."
+                onChange={(e, target: { value }) => {
+                  setFilter(target.value);
+                }}
+                transparent
+                fluid
+                small="true"
+                inverted
+                padded="false"
+              />
 
-                <Divider />
-                <Form inverted id="form" action="">
-                  <Header
-                    style={{
-                      color: "white"
+              <Divider />
+              <Form inverted id="form" action="">
+                <Header
+                  style={{
+                    color: "white"
+                  }}
+                >
+                  {selectedMenuItem}
+                </Header>
+
+                {selectedMenuItem !== "General" && (
+                  <Label
+                    fluid
+                    tiny="true"
+                    style={{ cursor: "pointer" }}
+                    onClick={e => {
+                      e.preventDefault();
+                      addConfigGroup(selectedMenuItem);
                     }}
                   >
-                    {selectedMenuItem}
-                  </Header>
+                    + add config
+                  </Label>
+                )}
 
-                  {selectedMenuItem !== "General" && (
-                    <Label
-                      fluid
-                      tiny="true"
-                      style={{ cursor: "pointer" }}
-                      onClick={e => {
-                        e.preventDefault();
-                        addConfigGroup(selectedMenuItem);
-                      }}
-                    >
-                      + add config
-                    </Label>
-                  )}
-
-                  {menuData["Configs"] ? (
-                    menuData["Configs"].map(
-                      (configObject: object, index: number) => (
-                        <ConfigGroup
-                          configObject={configObject}
-                          configGroupIndex={index}
-                          key={index}
-                        />
-                      )
+                {menuData["Configs"] ? (
+                  menuData["Configs"].map(
+                    (configObject: object, index: number) => (
+                      <ConfigGroup
+                        configObject={configObject}
+                        configGroupIndex={index}
+                        key={index}
+                      />
                     )
-                  ) : (
-                    <ConfigGroup
-                      configObject={menuData}
-                      configGroupIndex={-1}
-                    />
-                  )}
-                </Form>
-              </Grid.Column>
+                  )
+                ) : (
+                  <ConfigGroup configObject={menuData} configGroupIndex={-1} />
+                )}
+              </Form>
             </Grid.Column>
 
             {/* RIGHT Side  */}
