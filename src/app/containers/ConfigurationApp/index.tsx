@@ -97,9 +97,7 @@ const GridBody: React.SFC<{}> = inject(APP_SETTINGS, SETTINGS, UI_DEFS)(
           </Grid.Row>
           <Grid.Row columns="equal" stretched centered padded="true">
             <Grid.Column>
-              <Segment basic>
                 <LeftNav />
-              </Segment>
             </Grid.Column>
             {/* Main Content */}
             <Grid.Column>
