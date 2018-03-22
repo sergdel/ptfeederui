@@ -16,7 +16,8 @@
     {
       "key": "VolumeGrouping",
       "title": "Volume Grouping",
-      "wiki": "/wiki/general"
+      "wiki": "/wiki/general",
+      "fixedItems": ["MaxVolume"]
     },
     {
       "key": "VolumeTrendChangeGrouping",
@@ -425,6 +426,11 @@
     },
     {
       "title": "DcaMinBuyBalanceOffset",
+      "type": "Number",
+      "acceptBoolean": false
+    },
+    {
+      "title": "MinBuyPrice",
       "type": "Number",
       "acceptBoolean": false
     },
