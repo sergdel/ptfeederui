@@ -299,6 +299,11 @@
       "type": "Boolean"
     },
     {
+      "title": "SellValue",
+      "type": "Number",
+      "acceptBoolean": false
+    },
+    {
       "title": "SellValueOffset",
       "type": "Number",
       "acceptBoolean": true
