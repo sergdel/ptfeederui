@@ -6,10 +6,10 @@ import { observer, inject } from "mobx-react";
 export const DropDown: React.SFC<{
   options: Array<{ key: string; text: string; value: string }>;
   title: string;
-  wiki: string;
+  wiki?: string;
   allowAdditions?: boolean;
-  value: string;
-  index: number;
+  value?: string;
+  index?: number;
 }> = inject("settings", "appSettings")(
   observer(
     ({
