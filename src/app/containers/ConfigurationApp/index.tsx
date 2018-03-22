@@ -198,6 +198,7 @@ const ConfigGroup: React.SFC<{
       const { fixedItems } = menuItemsMeta(selectedMenuItem);
       const keys = ["key", "text", "value"];
       const p = c => _.zipObject(keys, _.times(3, () => c));
+      const grouping = selectedMenuItem !== "General";
       const offsetOptions = offsets
         .filter(o => {
           return !configObject[o];
@@ -234,7 +235,9 @@ const ConfigGroup: React.SFC<{
                 );
               })}
 
-            {<DropDown options={offsetOptions} title="Offsets Dropdown" />}
+            {grouping && (
+              <DropDown options={offsetOptions} title="Offsets Dropdown" />
+            )}
 
             {Object.keys(configObject).map(value => {
               return (
@@ -251,7 +254,7 @@ const ConfigGroup: React.SFC<{
                 )
               );
             })}
-            {selectedMenuItem !== "General" && (
+            {grouping && (
               <Label
                 attached="top right"
                 style={{ cursor: "pointer" }}
