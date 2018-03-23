@@ -265,7 +265,7 @@ const ConfigGroup: React.SFC<{
               return (
                 new RegExp(filter, "i").test(value) &&
                 !_.includes(fixedItems, value) && (
-                  <div>
+                  <div style={{ width: "300px" }}>
                     <ComponentFactory
                       key={value}
                       item={value}
