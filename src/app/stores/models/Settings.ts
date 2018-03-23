@@ -135,6 +135,13 @@ export const Settings = t
       profitTrailer.save(newconfig);
       localStorage.setItem("settings", JSON.stringify(newconfig));
     },
+    removeField: (category, key, index) => {
+      const configGroupArray: List<object> = List(self[category].Configs);
+      const configGroup = Map(configGroupArray.get(index));
+      const modifyGroup = configGroup.remove(key);
+      const result = configGroupArray.set(index, modifyGroup);
+      self[category].Configs = result.toJS();
+    },
     updateField: (
       category: string,
       key: string,
