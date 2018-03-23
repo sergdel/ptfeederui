@@ -272,16 +272,18 @@ const ConfigGroup: React.SFC<{
                       value={configObject[value]}
                       index={configGroupIndex}
                     />
-                    <Label
-                      color="red"
-                      style={{ opacity: "0.4" }}
-                      circular
-                      onClick={(e, target) =>
-                        removeField(selectedMenuItem, value, configGroupIndex)
-                      }
-                    >
-                      Remove
-                    </Label>
+                    {grouping && (
+                      <Label
+                        color="red"
+                        style={{ opacity: "0.4" }}
+                        circular
+                        onClick={(e, target) =>
+                          removeField(selectedMenuItem, value, configGroupIndex)
+                        }
+                      >
+                        Remove
+                      </Label>
+                    )}
                   </div>
                 )
               );
