@@ -69,4 +69,9 @@ Possible results:
 
 For all the rest API endpoints need to pass the `"Authorization" : "<current token value>"` header with the plain token value (right now I have applied the Authorization header checking only to the status controller `api/v1/app/status`).
 
+### Status endpoints
+
+http://localhost:5001/api/v1/app/status/BasePairPriceChange
+http://localhost:5001/api/v1/app/status/FolderName
+http://localhost:5001/api/v1/app/status/MonitoredAltCoinTrendVersusBitcoin
 
