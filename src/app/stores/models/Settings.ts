@@ -1,7 +1,9 @@
 import axios from "axios";
 import { types as t, applySnapshot, flow, getSnapshot } from "mobx-state-tree";
 const onReject = err => console.error(err);
-import { extendObservable } from "mobx";
+import { configure } from "mobx";
+configure({ enforceActions: false });
+import { List, Map } from "immutable";
 export const profitTrailer = {
   get: () =>
     axios
@@ -53,113 +55,33 @@ export const Settings = t
       TopCurrenciesToCheck: t.optional(t.string, "")
     }),
     MarketConditionsGrouping: t.model("MarketConditionGrouping", {
-      Configs: t.optional(
-        t.array(
-          t.model({
-            FolderName: t.optional(t.string, ""),
-            MaxTopCoinAverageChange: t.optional(t.string, ""),
-            BuyValueOffset: t.optional(t.string, ""),
-            SellOnlyMode: t.optional(t.string, ""),
-            SellValueOffset: t.optional(t.string, ""),
-            DcaTrailingBuyOffset: t.optional(t.string, ""),
-            DcaTrailingProfitOffset: t.optional(t.string, "")
-          })
-        ),
-        []
-      )
+      Configs: t.array(t.frozen)
     }),
     VolumeGrouping: t.model("Volume", {
-      Configs: t.optional(
-        t.array(
-          t.model({
-            MaxVolume: t.optional(t.string, ""),
-            TrailingBuyOffset: t.optional(t.string, ""),
-            TrailingProfitOffset: t.optional(t.string, ""),
-            DcaEnabled: t.optional(t.string, "")
-          })
-        ),
-        []
-      )
+      Configs: t.array(t.frozen)
     }),
     ExchangeGrouping: t.model("Exchange", {
-      Configs: t.optional(
-        t.array(
-          t.model({
-            ExchangeName: t.optional(t.string, ""),
-            DcaTrailingBuyOffset: t.optional(t.string, ""),
-            DcaTrailingProfitOffset: t.optional(t.string, ""),
-            DcaMaxCostOffset: t.optional(t.string, ""),
-            TrailingBuyOffset: t.optional(t.string, ""),
-            TrailingProfitOffset: t.optional(t.string, "")
-          })
-        ),
-        []
-      )
+      Configs: t.array(t.frozen)
     }),
     NewCoinsGrouping: t.model("NewCoins", {
-      Configs: t.optional(
-        t.array(
-          t.model({
-            CoinAge: t.optional(t.string, ""),
-            SellOnlyMode: t.optional(t.string, "")
-          })
-        ),
-        []
-      )
+      Configs: t.array(t.frozen)
     }),
     PriceTrendChangeGrouping: t.model("PriceTrendChange", {
-      Configs: t.optional(
-        t.array(
-          t.model({
-            MaxPriceTrendPercentageChange: t.optional(t.string, ""),
-            SellOnlyMode: t.optional(t.string, ""),
-            SellValueOffset: t.optional(t.string, "")
-          })
-        ),
-        []
-      )
+      Configs: t.array(t.frozen)
     }),
     VolumeTrendChangeGrouping: t.model("VolumeTrendChange", {
-      Configs: t.optional(
-        t.array(
-          t.model({
-            MMaxVolumeTrendPercentageChange: t.optional(t.string, "")
-          })
-        ),
-        []
-      )
+      Configs: t.array(t.frozen)
     }),
-    LongerTermVolumeChangeGrouping: t.model("LongerTermVolumeChange", {
-      Configs: t.optional(
-        t.array(
-          t.model({
-            MaxVolumeTrendPercentageChange: t.optional(t.string, "")
-          })
-        ),
-        []
-      )
+    LongerTermVolumeChangeGrouping: t.model("VolumeTrendChange", {
+      Configs: t.array(t.frozen)
     }),
     HighLowVolumePercentageGrouping: t.model("HighLowVolumePercentage", {
-      Configs: t.optional(
-        t.array(
-          t.model({
-            MaxHighLowVolumePercentage: t.optional(t.string, "")
-          })
-        ),
-        []
-      )
+      Configs: t.array(t.frozen)
     }),
     LongerTermHighLowVolumePercentageGrouping: t.model(
       "LongerTermHighLowVolumePercentage",
       {
-        Configs: t.optional(
-          t.array(
-            t.model({
-              MaxHighLowVolumePercentage: t.optional(t.string, "")
-            })
-          ),
-          []
-        )
+        Configs: t.array(t.frozen)
       }
     )
   })
@@ -187,19 +109,6 @@ export const Settings = t
     addConfigGroup: section => {
       self[section]["Configs"].unshift({});
     },
-    addConfigItem: (
-      value: string,
-      section: string,
-      configGroupIndex: number
-    ) => {
-      const o = self[section]["Configs"][configGroupIndex];
-      extendObservable(self[section]["Configs"][configGroupIndex], {
-        [value]: ""
-      });
-      self[section]["Configs"][configGroupIndex][value] = "";
-      o[value] = "";
-      self[section]["Configs"][configGroupIndex] = o;
-    },
     removeConfigGroup: (section: string, configIndex: number) => {
       if (section === "General") return;
       self[section]["Configs"].splice(configIndex, 1);
@@ -226,17 +135,23 @@ export const Settings = t
       profitTrailer.save(newconfig);
       localStorage.setItem("settings", JSON.stringify(newconfig));
     },
-    updateField: (category, key, newValue, index) => {
-      if (category != "General") {
-        if (index > -1) {
-          self[category]["Configs"][index][key] = newValue;
-        } else {
-          self[category]["Configs"][key] = newValue;
-        }
-      } else {
-        self[category][key] = newValue;
+    updateField: (
+      category: string,
+      key: string,
+      index: number,
+      value: string = ""
+    ) => {
+      if (index === -1) {
+        const configGroupArray: Map<string, string> = Map(self[category]);
+        const result = configGroupArray.set(key, value);
+        self[category] = result.toJS();
+        return;
       }
-      const output = getSnapshot(self);
-      localStorage.setItem("settings", JSON.stringify(output));
+
+      const configGroupArray: List<any> = List(self[category].Configs);
+      const m = Map(configGroupArray.get(index));
+      const mod = m.setIn([key], value);
+      const result = configGroupArray.set(index, mod);
+      self[category].Configs = result.toJS();
     }
   }));

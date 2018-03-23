@@ -20,7 +20,7 @@ export const NameInput: React.SFC<{
       index
     }) => {
       const handleChange = (evt, { value }) => {
-        updateField(selectedMenuItem, title, value, index);
+        updateField(selectedMenuItem, title, index, value);
       };
 
       return (

@@ -217,6 +217,10 @@
       "acceptBoolean": false
     },
     {
+      "title": "MaxVolumeTrendPercentageChange",
+      "type": "Number"
+    },
+    {
       "title": "DcaMaxBuyTimesOffset",
       "type": "Number",
       "acceptBoolean": false

@@ -182,7 +182,7 @@ const ConfigGroup: React.SFC<{
 }> = inject(SETTINGS, APP_SETTINGS, UI_DEFS)(
   observer(
     ({
-      settings: { removeConfigGroup, addConfigItem },
+      settings: { removeConfigGroup, updateField },
       settings,
       configObject,
       appSettings: { selectedMenuItem, filter, offsets },
@@ -244,7 +244,7 @@ const ConfigGroup: React.SFC<{
                   title="Add Offsets"
                   index={configGroupIndex}
                   onChange={(e, { value }) => {
-                    addConfigItem(value, selectedMenuItem, configGroupIndex);
+                    updateField(selectedMenuItem, value, configGroupIndex, "");
                   }}
                 />
               </div>

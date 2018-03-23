@@ -24,11 +24,11 @@ export const DropDown: React.SFC<{
     }) => {
       //TODO
       const handleAddition = (e, { value }) => {};
-
+      // category: string, key: string, index: number, value = ""
       const handleChange = onChange
         ? onChange
         : (evt, { value }) => {
-            updateField(selectedMenuItem, title, value, index);
+            updateField(selectedMenuItem, title || value, index, value);
           };
 
       return (

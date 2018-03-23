@@ -26,7 +26,7 @@ export const NumberInput: React.SFC<{
     }) => {
       const handleChange = (evt, { value }) => {
         // this.value = value; TODO
-        updateField(selectedMenuItem, title, value, index);
+        updateField(selectedMenuItem, title, index, value);
       };
 
       const onKeyPress = event => {
