@@ -25,7 +25,6 @@ export const NumberInput: React.SFC<{
       index
     }) => {
       const handleChange = (evt, { value }) => {
-        // this.value = value; TODO
         updateField(selectedMenuItem, title, index, value);
       };
 

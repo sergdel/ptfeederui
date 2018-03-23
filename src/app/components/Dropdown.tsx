@@ -22,9 +22,7 @@ export const DropDown: React.SFC<{
       onChange,
       index = -1
     }) => {
-      //TODO
       const handleAddition = (e, { value }) => {};
-      // category: string, key: string, index: number, value = ""
       const handleChange = onChange
         ? onChange
         : (evt, { value }) => {

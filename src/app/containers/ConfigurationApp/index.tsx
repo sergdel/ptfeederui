@@ -272,7 +272,6 @@ const ConfigGroup: React.SFC<{
                 as="a"
                 tag
                 color="grey"
-                // circular={true}
                 onClick={e => {
                   e.preventDefault();
                   removeConfigGroup(selectedMenuItem, configGroupIndex);
