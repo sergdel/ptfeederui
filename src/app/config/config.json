@@ -276,6 +276,14 @@
       "acceptBoolean": false
     },
     {
+      "title": "MinutesForLongerTermTrendOffset",
+      "type": "Number"
+    },
+    {
+      "title": "MinutesForLongerTermTrend",
+      "type": "Number"
+    },
+    {
       "title": "DcaEnabled",
       "type": "Number",
       "acceptBoolean": true
