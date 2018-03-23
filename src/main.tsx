@@ -37,6 +37,7 @@ if (process.env.NODE_ENV !== "client") {
   const socket = io("http://localhost:8000");
   socket.on("server", function(data) {
     if (data.settings) {
+        console.log (data.settings);
       settings.set(data.settings);
       if (!ls) {
         rootStore.appSettings.persistSettingsToLS(data.settings);
