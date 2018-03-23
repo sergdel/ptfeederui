@@ -217,7 +217,13 @@ const ConfigGroup: React.SFC<{
                 const value = configObject[name];
                 return (
                   new RegExp(filter, "i").test(name) && (
-                    <div style={{ backgroundColor: "#CEEE" }}>
+                    <div
+                      style={{
+                        backgroundColor: "rgba(355,235,255,0.1)",
+                        marginBottom: "30px",
+                        borderRadius: "30px"
+                      }}
+                    >
                       <ComponentFactory
                         key={value}
                         item={name}
@@ -230,18 +236,24 @@ const ConfigGroup: React.SFC<{
               })}
 
             {grouping && (
-              <div style={{ backgroundColor: "#CABCAB" }}>
-                <pre style={{ color: "white" }}>
+              <div
+                style={{
+                  backgroundColor: "rgba(355,235,255,0.1)",
+                  width: "300px",
+                  borderRadius: "30px"
+                }}
+              >
+                {/* <pre style={{ color: "white" }}>
                   {grouping &&
                     JSON.stringify(
                       settings[selectedMenuItem]["Configs"][configGroupIndex],
                       null,
                       2
                     )}
-                </pre>
+                </pre> */}
                 <DropDown
                   options={offsetOptions}
-                  title="Add Offsets"
+                  title="Offsets and Overrides"
                   index={configGroupIndex}
                   onChange={(e, { value }) => {
                     updateField(selectedMenuItem, value, configGroupIndex, "");
