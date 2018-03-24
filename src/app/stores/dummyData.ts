@@ -15,7 +15,6 @@ export default {
     SellValue: "0.75",
     DcaEnabled: "-3",
     HiddenCoins: "BNB",
-
     DcaMaxBuySpread: "1",
     DcaMaxBuyTimes: "5",
     DcaMaxCost: "0.1",

@@ -42,7 +42,6 @@ export const ComponentFactory: React.SFC<any> = inject(
               options={options.peek()}
               allowAdditions={allowAdditions}
               wiki={wiki}
-              value={value}
               index={index}
             />
           );
@@ -68,7 +67,6 @@ export const ComponentFactory: React.SFC<any> = inject(
                 { key: "false", value: "false", text: "false" }
               ]}
               wiki={wiki}
-              value={value}
               index={index}
             />
           );

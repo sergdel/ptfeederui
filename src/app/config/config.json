@@ -1,47 +1,84 @@
 {
   "Menu": [
     {
+      "key": "General",
       "title": "General",
       "wiki": "/wiki",
       "description": "This is the general section",
       "advanced": false
     },
     {
-      "title": "Market Conditions",
+      "key": "MarketConditionsGrouping",
+      "title": "Market Conditions Grouping",
       "description": "Market conditions description",
-      "wiki": "/wiki/appsettings.json---Market-Conditions"
+      "wiki": "/wiki/appsettings.json---Market-Conditions",
+      "fixedItems": ["FolderName", "MaxTopCoinAverageChange"]
     },
     {
-      "title": "Volume",
+      "key": "VolumeGrouping",
+      "title": "Volume Grouping",
+      "wiki": "/wiki/general",
+      "fixedItems": ["MaxVolume"]
+    },
+    {
+      "key": "VolumeTrendChangeGrouping",
+      "title": "Volume Trend Change Grouping",
       "wiki": "/wiki/general"
     },
     {
+      "key": "Price",
       "title": "Price",
-      "wiki": "/wiki/general"
+      "wiki": "/wiki/general",
+      "advanced": true
     },
     {
+      "key": "Price Change",
       "title": "Price Change",
       "wiki": "/wiki/general",
       "advanced": true
     },
 
     {
-      "title": "LongerTermPriceChange",
+      "key": "LongerTermPriceChange",
+      "title": "Longer Term Price Change",
       "wiki": "/wiki/general",
       "advanced": true
     },
     {
-      "title": "NewCoins",
+      "key": "LongerTermVolumeChangeGrouping",
+      "title": "Longer Term Volume Change",
+      "wiki": "/wiki/general",
+      "advanced": true
+    },
+    {
+      "key": "HighLowVolumePercentageGrouping",
+      "title": "High Low Volume Percentage",
+      "wiki": "/wiki/general",
+      "advanced": true
+    },
+    {
+      "key": "LongerTermHighLowVolumePercentageGrouping",
+      "title": "Longer Term High Low Volume",
+      "wiki": "/wiki/general",
+      "advanced": true
+    },
+    {
+      "key": "NewCoinsGrouping",
+      "title": "New Coins",
       "wiki": "wiki/coins",
       "advanced": true
     },
     {
+      "key": "ExchangeGrouping",
       "title": "Exchange",
-      "wiki": "/wiki/general"
+      "wiki": "/wiki/general",
+      "advanced": true
     },
     {
-      "title": "PriceTrendChange",
-      "wiki": "/wiki/general"
+      "key": "PriceTrendChangeGrouping",
+      "title": "Price Trend Change",
+      "wiki": "/wiki/general",
+      "advanced": true
     }
   ],
   "ComponentTypes": [
@@ -180,6 +217,10 @@
       "acceptBoolean": false
     },
     {
+      "title": "MaxVolumeTrendPercentageChange",
+      "type": "Number"
+    },
+    {
       "title": "DcaMaxBuyTimesOffset",
       "type": "Number",
       "acceptBoolean": false
@@ -235,6 +276,14 @@
       "acceptBoolean": false
     },
     {
+      "title": "MinutesForLongerTermTrendOffset",
+      "type": "Number"
+    },
+    {
+      "title": "MinutesForLongerTermTrend",
+      "type": "Number"
+    },
+    {
       "title": "DcaEnabled",
       "type": "Number",
       "acceptBoolean": true
@@ -262,6 +311,11 @@
     {
       "title": "SellOnlyMode",
       "type": "Boolean"
+    },
+    {
+      "title": "SellValue",
+      "type": "Number",
+      "acceptBoolean": false
     },
     {
       "title": "SellValueOffset",
@@ -385,6 +439,11 @@
     },
     {
       "title": "DcaMinBuyBalanceOffset",
+      "type": "Number",
+      "acceptBoolean": false
+    },
+    {
+      "title": "MinBuyPrice",
       "type": "Number",
       "acceptBoolean": false
     },
