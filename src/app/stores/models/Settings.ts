@@ -115,6 +115,9 @@ export const Settings = t
     },
     set: snapshot => {
       let data = {};
+      const topOptions=["General", "MarketConditionsGrouping", "ExchangeGrouping","HighLowVolumePercentageGrouping",
+        "LongerTermHighLowVolumePercentageGrouping","LongerTermVolumeChangeGrouping",
+        "NewCoinsGrouping","PriceTrendChangeGrouping", "VolumeGrouping", "VolumeTrendChangeGrouping"];
       if (typeof snapshot === "string") {
         try {
           data = JSON.parse(snapshot);
@@ -124,6 +127,12 @@ export const Settings = t
       } else {
         data = snapshot;
       }
+
+      topOptions.forEach(function (option) {
+        if (!data[option]) {
+            data[option]={Configs:[]};
+        }
+      });
       applySnapshot(self, data);
     },
     save: () => {

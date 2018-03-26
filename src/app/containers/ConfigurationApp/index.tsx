@@ -494,7 +494,7 @@ const ImportExport: React.SFC<any> = inject(SETTINGS, APP_SETTINGS)(
           {/* {<Button onClick={() => window["ap"](window["sh"].pop())}>Undo</Button>} */}
           <br />
           <ImportButton />
-          <Button basic href="/download">
+          <Button basic href="/download" target="blank">
             Export Settings
           </Button>
         </Segment>

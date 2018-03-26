@@ -8,12 +8,14 @@ const serve = require('http').Server(app);
 const fs = require('fs');
 const axios = require('axios');
 const io = require('socket.io')(serve);
+var current_config = {}
 
 io.listen(8000);
 
 const server = {
   get: () =>
     axios.get('http://localhost:5001/api/v1/app/settings').then(results => {
+      current_config = results.data;
       return results.data;
     }),
   set: body =>
@@ -96,8 +98,15 @@ const handleError = (error, response) => {
 };
 
 app.get('/download', function(req, res) {
-  var file = __dirname + '/src/config/config.json';
-  res.download(file); // Set disposition and send it.
+  //var file = __dirname + '/src/config/config.json';
+  //res.download(file); // Set disposition and send it.
+  var Readable = require('stream').Readable;
+  var s = new Readable();
+  s._read = function noop() {}; // redundant? see update below
+  s.push(JSON.stringify(current_config));
+  s.push(null);
+  //res.end(JSON.stringify(current_config));
+  s.pipe(res);
 });
 
 app.route('/settings').get(async (req, res) => {
