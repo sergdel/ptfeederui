@@ -10,7 +10,7 @@ export const StatusIndicators: React.SFC<any> = inject(APP_SETTINGS, SETTINGS)(
       CurrentMarketCondition,
       TopCoinChange,
       settings: { snapshot },
-      appSettings: { connected, getSettingsFromLS }
+      appSettings: { connected, getSettingsFromLS, statusIndicators }
     }) => {
       return (
         <Segment basic floated="right">
@@ -28,16 +28,14 @@ export const StatusIndicators: React.SFC<any> = inject(APP_SETTINGS, SETTINGS)(
               Debug
             </Label>
           )}
-          <Label>
-            BaseCoinPrice <Label.Detail>{BaseCoinPrice || 0}</Label.Detail>
-          </Label>
-          <Label>
-            CurrentMarketConditions
-            <Label.Detail>{CurrentMarketCondition || 0}</Label.Detail>
-          </Label>
-          <Label>
-            TopCoinChangee <Label.Detail>{TopCoinChange || 0}</Label.Detail>
-          </Label>
+          {statusIndicators.map((indicator: object, index: number) => {
+            return (
+              <Label>
+                {Object.keys(indicator)}
+                <Label.Detail>{indicator[index] || 0}</Label.Detail>
+              </Label>
+            );
+          })}
         </Segment>
       );
     }

@@ -10,7 +10,8 @@ export const ApplicationModel = t
     lastData: t.frozen,
     localStorageSettings: t.frozen,
     filter: t.optional(t.string, ""),
-    offsets: t.optional(t.array(t.string), [])
+    offsets: t.optional(t.array(t.string), []),
+    statusIndicators: t.optional(t.array(t.frozen), [])
   })
   .actions(self => ({
     selectMenuItem: newMenuItem => (self.selectedMenuItem = newMenuItem),
