@@ -8,17 +8,24 @@ const serve = require('http').Server(app);
 const fs = require('fs');
 const axios = require('axios');
 const io = require('socket.io')(serve);
-var current_config = {}
+var current_config = {};
 
 io.listen(8000);
 
 const server = {
-  get: () =>
+  getSettings: () =>
     axios.get('http://localhost:5001/api/v1/app/settings').then(results => {
       current_config = results.data;
       return results.data;
     }),
-  set: body =>
+  getIndicator: indicator => {
+    return axios
+      .get('http://localhost:5001/api/v1/app/status/' + indicator)
+      .then(results => {
+        return results.data;
+      });
+  },
+  saveSettings: body =>
     axios
       .post('http://localhost:5001/api/v1/app/settings', body, {
         headers: { 'Content-Type': 'application/json; charset=utf-8' }
@@ -35,7 +42,7 @@ io.on('connection', function(socket) {
   requestWithRetry().then(result => {
     console.info('server: sending data to client ' + result);
     setInterval(() => {
-      server.get().then(() => io.emit('server', { info: 'pulse' }));
+      server.getSettings().then(() => io.emit('server', { info: 'pulse' }));
     }, 5000);
     io.emit('server', { settings: result });
   });
@@ -53,7 +60,7 @@ async function requestWithRetry() {
   let response;
   while (!response)
     try {
-      response = await server.get();
+      response = await server.getSettings();
       return response;
     } catch (err) {
       await wait(5000);
@@ -106,16 +113,22 @@ app.get('/download', function(req, res) {
 
 app.route('/settings').get(async (req, res) => {
   try {
-    res.json(await server.get());
+    res.json(await server.getSettings());
   } catch (e) {
     console.error(e);
   }
 });
 
+app.route('/status/:indicator').get(async (req, res) => {
+  console.log(req.params.indicator);
+  if (!req.params.indicator) return res.status(500, 'must provide indicator');
+  return res.json(await server.getIndicator(req.params.indicator));
+});
+
 app
   .route('/save')
   .post(req => {
-    server.set(req.body);
+    server.saveSettings(req.body);
   })
   .get((req, res) => res.send('hello'));
 
