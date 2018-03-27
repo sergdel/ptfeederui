@@ -98,15 +98,10 @@ const handleError = (error, response) => {
 };
 
 app.get('/download', function(req, res) {
-  //var file = __dirname + '/src/config/config.json';
-  //res.download(file); // Set disposition and send it.
-  var Readable = require('stream').Readable;
-  var s = new Readable();
-  s._read = function noop() {}; // redundant? see update below
-  s.push(JSON.stringify(current_config));
-  s.push(null);
-  //res.end(JSON.stringify(current_config));
-  s.pipe(res);
+  var tmpfile = __dirname + '/config.json';
+
+  fs.writeFileSync(tmpfile, JSON.stringify(current_config));
+  res.download(tmpfile); // Set disposition and send it.
 });
 
 app.route('/settings').get(async (req, res) => {
