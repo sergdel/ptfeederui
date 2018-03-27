@@ -4,3 +4,4 @@ export * from "./NumberInput";
 export * from "./NameInput";
 export * from "./InfoLabel";
 export * from "./Preloader";
+export * from "./StatusIndicators";
