@@ -32,7 +32,7 @@ export const StatusIndicators: React.SFC<any> = inject(APP_SETTINGS, SETTINGS)(
             return (
               <Label>
                 {Object.keys(indicator)}
-                <Label.Detail>{indicator[index] || 0}</Label.Detail>
+                <Label.Detail>{Object.values(indicator)}</Label.Detail>
               </Label>
             );
           })}

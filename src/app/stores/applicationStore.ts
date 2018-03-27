@@ -7,9 +7,9 @@ export class ApplicationStore {
     this.rootStore = rootStore;
     this.store = ApplicationModel.create({
       statusIndicators: [
-        { CurrentMarketConditions: 0 },
-        { TopCoinChange: 0 },
-        { BaseCoinPrice: 0 }
+        { MonitoredAltCoinTrendVersusBitcoin: 0 },
+        { FolderName: 0 },
+        { BasePairPriceChange: 0 }
       ]
     });
     protect(this.store);
