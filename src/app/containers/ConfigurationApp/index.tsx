@@ -164,8 +164,6 @@ const GridBody: React.SFC<{}> = inject(APP_SETTINGS, SETTINGS, UI_DEFS)(
                 <ImportExport
                   save={() => save()}
                   importfunc={newconfig => importfunc(newconfig)}
-                  // export={this.export}
-                  // import={this.import}
                 />
                 <Segment basic style={{ color: "#fff" }}>
                   <strong>{description ? description : ""}</strong>
