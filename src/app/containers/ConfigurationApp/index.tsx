@@ -1,8 +1,10 @@
 import * as React from "react";
 import { inject, observer } from "mobx-react";
+import Lottie from "react-lottie";
+import * as data from "../../config/intro.json";
 import {
   ComponentFactory,
-  Preloader,
+  // Preloader,
   DropDown,
   StatusIndicators
 } from "app/components";
@@ -42,18 +44,40 @@ export const ConfigurationApp: React.SFC<any> = inject(
     ({
       settings: { menuItems },
       componentDefinitions,
-      appSettings: { selectMenuItem, advancedMode, isLoaded }
+      appSettings: {
+        selectMenuItem,
+        advancedMode,
+        isLoaded,
+        setIntroPlayed,
+        introPlayed
+      }
     }) => {
-      return isLoaded || process.env.NODE_ENV === "client" ? (
+      const defaultOptions = {
+        loop: false,
+        autoplay: true,
+        animationData: data,
+        rendererSettings: {
+          preserveAspectRatio: "xMidYMid slice"
+        }
+      };
+      return (isLoaded && introPlayed) || process.env.NODE_ENV === "client" ? (
         <GridBody />
       ) : (
-        <Responsive as={Grid} style={{ height: "100vh" }} centered>
-          <Grid.Row columns={1} verticalAlign="middle">
-            <Grid.Column style={{ textAlign: "center" }}>
-              <Preloader />
-            </Grid.Column>
-          </Grid.Row>
-        </Responsive>
+        // <div>
+        /* <Preloader /> */
+        <Lottie
+          options={defaultOptions}
+          eventListeners={[
+            {
+              eventName: "complete",
+              callback: () => setIntroPlayed(true)
+            }
+          ]}
+          complete={() => {
+            debugger;
+          }}
+        />
+        // </div>
       );
     }
   )

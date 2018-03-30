@@ -12,9 +12,13 @@ export const ApplicationModel = t
     localStorageSettings: t.frozen,
     filter: t.optional(t.string, ""),
     offsets: t.optional(t.array(t.string), []),
-    statusIndicators: t.optional(t.array(t.frozen), [])
+    statusIndicators: t.optional(t.array(t.frozen), []),
+    introPlayed: t.optional(t.boolean, false)
   })
   .actions(self => ({
+    setIntroPlayed: (playedStatus: boolean) => {
+      self.introPlayed = playedStatus;
+    },
     setStatusIndicators(indicators: IObservableArray<object>) {
       self.statusIndicators = indicators;
     },
