@@ -2,6 +2,7 @@ import * as React from "react";
 import { inject, observer } from "mobx-react";
 import Lottie from "react-lottie";
 import * as data from "../../config/intro.json";
+import { lifecycle } from "recompose";
 import {
   ComponentFactory,
   // Preloader,
@@ -60,8 +61,14 @@ export const ConfigurationApp: React.SFC<any> = inject(
           preserveAspectRatio: "xMidYMid slice"
         }
       };
+
+      const LoadedBody = lifecycle({
+        componentDidMount() {
+          document.querySelector(".MainContent").classList.add("mounted");
+        }
+      })(GridBody);
       return (isLoaded && introPlayed) || process.env.NODE_ENV === "client" ? (
-        <GridBody />
+        <LoadedBody />
       ) : (
         // <div>
         /* <Preloader /> */
