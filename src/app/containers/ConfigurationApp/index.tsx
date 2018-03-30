@@ -73,9 +73,6 @@ export const ConfigurationApp: React.SFC<any> = inject(
               callback: () => setIntroPlayed(true)
             }
           ]}
-          complete={() => {
-            debugger;
-          }}
         />
         // </div>
       );
@@ -107,7 +104,7 @@ const GridBody: React.SFC<{}> = inject(APP_SETTINGS, SETTINGS, UI_DEFS)(
       const menuMeta = menuItemsMeta(selectedMenuItem);
       const { description = "" } = menuMeta;
       return (
-        <Grid>
+        <Grid className="MainContent">
           <Grid.Row columns={1}>
             <Grid.Column>
               <TopMenu />
@@ -347,7 +344,8 @@ const TopMenu: React.SFC<{}> = () => {
       <Menu>
         <Menu.Item name="logo">
           <img src={logo} alt="icon" />
-          PTFeeder
+          <span style={{ color: "#FFAC1E" }}>PT</span>
+          <span style={{ color: "#63B8FF" }}>Feeder</span>
         </Menu.Item>
 
         <Menu.Menu position="right" padded="true">
